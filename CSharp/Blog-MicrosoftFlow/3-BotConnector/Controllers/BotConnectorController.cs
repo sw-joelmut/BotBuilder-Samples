@@ -12,10 +12,6 @@
 
     public class BotConnectorController : ApiController
     {
-        /// <summary>
-        /// POST: api/Messages
-        /// Receive a message from a user and reply to it
-        /// </summary>
         public async Task<HttpResponseMessage> Post([FromBody]BotConnectorEventRequest request)
         {
             try
@@ -34,11 +30,13 @@
 
         private static async Task<string> ObtainBotAccessToken(string applicationId, string applicationPassword)
         {
-            const string loginUrl = "https://login.microsoftonline.com/common/oauth2/v2.0/token";
+            // Using Bot Framework security protocol v3.1
+            // More info @ https://docs.microsoft.com/en-us/bot-framework/rest-api/bot-framework-rest-connector-authentication
+            const string loginUrl = "https://login.microsoftonline.com/botframework.com/oauth2/v2.0/token";
 
             var body = new List<KeyValuePair<string, string>>();
             body.Add(new KeyValuePair<string, string>("grant_type", "client_credentials"));
-            body.Add(new KeyValuePair<string, string>("scope", "https://graph.microsoft.com/.default"));
+            body.Add(new KeyValuePair<string, string>("scope", string.Format("{0}/.default", applicationId)));
             body.Add(new KeyValuePair<string, string>("client_id", applicationId));
             body.Add(new KeyValuePair<string, string>("client_secret", applicationPassword));
 
