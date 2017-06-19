@@ -1,0 +1,86 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "BotConnector",
+    "version": "1.0.0"
+  },
+  "host": "[THIS SHOULD BE THE HOSTNAME WHERE YOUR BOTCONNECTOR IS HOSTED]",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/BotConnector": {
+      "post": {
+        "tags": [
+          "BotConnector"
+        ],
+        "operationId": "BotConnector_Post",
+        "parameters": [
+          {
+            "name": "request",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/BotConnectorEventRequest"
+            },
+            "x-nullable": true,
+            "x-ms-visibility": "important",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "file"
+            },
+            "x-nullable": true
+          }
+        },
+        "summary": "Bot Framework - Invoke Event Activity"
+      }
+    }
+  },
+  "definitions": {
+    "BotConnectorEventRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "MicrosoftApplicationId": {
+          "type": "string",
+          "title": "MicrosoftApplicationId",
+          "x-ms-visibility": "important",
+          "description": "Bot's Application ID"
+        },
+        "MicrosoftApplicationPassword": {
+          "type": "string",
+          "title": "MicrosoftApplicationPassword",
+          "x-ms-visibility": "important",
+          "description": "Bot's Application Password",
+          "format": "password"
+        },
+        "BotEndpointUri": {
+          "type": "string",
+          "title": "BotEndpointUri",
+          "description": "Bot's Endpoint URL to call with EventActivity",
+          "x-ms-visibility": "important"
+        },
+        "EventActivityValue": {
+          "type": "object"
+        }
+      }
+    }
+  },
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {},
+  "security": [],
+  "tags": [],
+  "x-generator": "NSwag v11.1.0.0 (NJsonSchema v9.1.11.0)"
+}
