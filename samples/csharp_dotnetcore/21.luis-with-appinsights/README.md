@@ -17,7 +17,7 @@ git clone https://github.com/Microsoft/botbuilder-samples.git
 
 - Click on the `Import new app` button.
 
-- Click on the `Choose File` and select [LUIS-Reminders.json](LUIS-Reminders.json) from the `botbuilder-samples\samples\csharp_dotnetcore\23.luis-with-appinsights\CognitiveModels` folder.
+- Click on the `Choose File` and select [LUIS-Reminders.json](CognitiveModels/LUIS-Reminders.json) from the `botbuilder-samples\samples\csharp_dotnetcore\23.luis-with-appinsights\CognitiveModels` folder.
 
 - Update [BotConfiguration.bot](BotConfiguration.bot) file with your AppId, SubscriptionKey, Region and Version. 
     You can find this information under "Publish" tab for your LUIS application at [LUIS portal](https://www.luis.ai).  
@@ -57,7 +57,7 @@ git clone https://github.com/Microsoft/botbuilder-samples.git
 - Select `BotConfiguration.bot` file.
 
 # Deploy this bot to Azure
-You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to install this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md).
+You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to ins	tall this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md).
 
 To clone this bot, run
 ```bash
