@@ -40,7 +40,7 @@ namespace Microsoft.BotBuilderSamples.AppInsights
         /// <summary>
         /// Gets a value indicating whether to log the <see cref="Activity"/> message text that came from the user.
         /// </summary>
-        /// <value>If true, will log the Activity Message text into the AppInsight Custome Event for LUIS intents.</value>
+        /// <value>If true, will log the Activity Message text into the AppInsight Custom Event for LUIS intents.</value>
         public bool LogOriginalMessage { get; }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Microsoft.BotBuilderSamples.AppInsights
                     telemetryProperties.Add(MyLuisConstants.ConversationIdProperty, conversationId);
                 }
 
-                // Add LUIS Entitites
+                // Add LUIS Entities
                 var entities = new List<string>();
                 foreach (var entity in recognizerResult.Entities)
                 {
@@ -113,7 +113,7 @@ namespace Microsoft.BotBuilderSamples.AppInsights
                     }
                 }
 
-                // For some customers, logging user name within Application Insights might be an issue so have provided a config setting to disable this feature
+                // For some customers, logging user name within Application Insights might be an issue so have provided a configuration setting to disable this feature
                 if (logOriginalMessage && !string.IsNullOrEmpty(turnContext.Activity.Text))
                 {
                     telemetryProperties.Add(MyLuisConstants.QuestionProperty, turnContext.Activity.Text);

@@ -50,7 +50,7 @@ namespace Microsoft.BotBuilderSamples.AppInsights
         /// <summary>
         /// Initializes a new instance of the <see cref="MyAppInsightsLoggerMiddleware"/> class.
         /// </summary>
-        /// <param name="instrumentationKey">The Application Insights instrumentation key.  See Application Insights for more information.</param>
+        /// <param name="instrumentationKey">The Application Insights instrumentation key. See Application Insights for more information.</param>
         /// <param name="logUserName"> (Optional) Enable/Disable logging user name within Application Insights.</param>
         /// <param name="logOriginalMessage"> (Optional) Enable/Disable logging original message name within Application Insights.</param>
         /// <param name="config"> (Optional) TelemetryConfiguration to use for Application Insights.</param>
@@ -196,13 +196,13 @@ namespace Microsoft.BotBuilderSamples.AppInsights
                     { AppInsightsConstants.LocaleProperty, activity.Locale },
                 };
 
-            // For some customers, logging user name within Application Insights might be an issue so have provided a config setting to disable this feature
+            // For some customers, logging user name within Application Insights might be an issue so have provided a configuration setting to disable this feature
             if (LogUserName && !string.IsNullOrWhiteSpace(activity.From.Name))
             {
                 properties.Add(AppInsightsConstants.FromNameProperty, activity.From.Name);
             }
 
-            // For some customers, logging the utterances within Application Insights might be an so have provided a config setting to disable this feature
+            // For some customers, logging the utterances within Application Insights might be an so have provided a configuration setting to disable this feature
             if (LogOriginalMessage && !string.IsNullOrWhiteSpace(activity.Text))
             {
                 properties.Add(AppInsightsConstants.TextProperty, activity.Text);
@@ -232,13 +232,13 @@ namespace Microsoft.BotBuilderSamples.AppInsights
                     { AppInsightsConstants.LocaleProperty, activity.Locale },
                 };
 
-            // For some customers, logging user name within Application Insights might be an issue so have provided a config setting to disable this feature
+            // For some customers, logging user name within Application Insights might be an issue so have provided a configuration setting to disable this feature
             if (LogUserName && !string.IsNullOrWhiteSpace(activity.Recipient.Name))
             {
                 properties.Add(AppInsightsConstants.RecipientNameProperty, activity.Recipient.Name);
             }
 
-            // For some customers, logging the utterances within Application Insights might be an so have provided a config setting to disable this feature
+            // For some customers, logging the utterances within Application Insights might be an so have provided a configuration setting to disable this feature
             if (LogOriginalMessage && !string.IsNullOrWhiteSpace(activity.Text))
             {
                 properties.Add(AppInsightsConstants.TextProperty, activity.Text);
@@ -269,7 +269,7 @@ namespace Microsoft.BotBuilderSamples.AppInsights
                     { AppInsightsConstants.LocaleProperty, activity.Locale },
                 };
 
-            // For some customers, logging the utterances within Application Insights might be an so have provided a config setting to disable this feature
+            // For some customers, logging the utterances within Application Insights might be an so have provided a configuration setting to disable this feature
             if (LogOriginalMessage && !string.IsNullOrWhiteSpace(activity.Text))
             {
                 properties.Add(AppInsightsConstants.TextProperty, activity.Text);
@@ -280,7 +280,7 @@ namespace Microsoft.BotBuilderSamples.AppInsights
 
         /// <summary>
         /// Fills the Application Insights Custom Event properties for BotMessageDelete.
-        /// These properties are logged in the custom event when an activity message is deleted by the Bot.  This is a relatively rare case.
+        /// These properties are logged in the custom event when an activity message is deleted by the Bot. This is a relatively rare case.
         /// </summary>
         /// <param name="activity">The Delete activity to harvest properties to be placed into the Application Insights custom event.</param>
         /// <returns>A dictionary that is sent as "Properties" to Application Insights
