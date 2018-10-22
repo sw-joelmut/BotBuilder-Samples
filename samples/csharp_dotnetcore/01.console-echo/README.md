@@ -32,8 +32,6 @@ Other available adapters connect your bot to the web, or through the BotFramewor
 git clone https://github.com/microsoft/botbuilder-samples.git
 ```
 
-# Prerequisites
-
 ## Visual studio
 
 - Navigate to the samples folder (`botbuilder-samples/samples/csharp_dotnetcore/01.console-echo`) and open **Console-EchoBot.csproj** in Visual Studio 
