@@ -32,7 +32,7 @@ Other available adapters connect your bot to the web, or through the BotFramewor
   git clone https://github.com/microsoft/botbuilder-samples.git
   ```
 
-- In a terminal, navigate to samples/javascript_nodejs/01.console-echo
+- In a terminal, navigate to `samples/javascript_nodejs/01.console-echo`
 
   ```bash
   cd samples/javascript_nodejs/01.console-echo
