@@ -47,8 +47,8 @@ developers to test and debug their bots on localhost or running remotely through
 
 ## Connect to bot using Bot Framework Emulator **V4**
 
-- Launch the Bot Framework Emulator.
-- File -> Open bot and navigate to `botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter` folder.
+- Launch the **Bot Framework Emulator**.
+- **File** -> **Open Bot Configuration** and navigate to `botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter` folder.
 - Select `BotConfiguration.bot` file.
 
 # Deploy this bot to Azure

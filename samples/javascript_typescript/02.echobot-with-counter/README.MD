@@ -30,8 +30,7 @@ In this example, the bot's state is used to track number of messages.
     cd samples/javascript_nodejs/02.echobot-with-counter
     ```
 
-  - **Optional**: Update the .env file under `samples/javascript_nodejs/02.echobot-with-counter` with your botFileSecret
-    For Azure Bot Service bots, you can find the botFileSecret under application settings.
+  - **Optional**: Update the `.env` file under `samples/javascript_nodejs/02.echobot-with-counter` with your `botFileSecret`. For Azure Bot Service bots, you can find the `botFileSecret` under application settings.
 
   - Install modules and start the bot
 
@@ -64,8 +63,8 @@ developers to test and debug their bots on localhost or running remotely through
 
 ## Connect to bot using Bot Framework Emulator **V4**
 
-- Launch the Bot Framework Emulator.
-- File -> Open bot and navigate to `botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter` folder.
+- Launch the **Bot Framework Emulator**.
+- **File** -> **Open Bot Configuration** and navigate to `botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter` folder.
 - Select `BotConfiguration.bot` file.
 
 # Deploy this bot to Azure
