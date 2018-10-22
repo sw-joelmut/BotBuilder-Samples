@@ -26,7 +26,7 @@ In other channels such as Teams, Skype, or Slack, you can expect to receive the 
 git clone https://github.com/Microsoft/botbuilder-samples.git
 ```
 
-- **Optional**: Update the `appsettings.json` file under `botbuilder-samples/samples/csharp_dotnetcore/WelcomeUser.csproj` with your botFileSecret.  For Azure Bot Service bots, you can find the botFileSecret under application settings.
+- **Optional**: Update the `appsettings.json` file under `botbuilder-samples/samples/csharp_dotnetcore/WelcomeUser.csproj` with your `botFileSecret`. For Azure Bot Service bots, you can find the `botFileSecret` under application settings.
 
 ## Visual Studio
 
@@ -42,7 +42,7 @@ git clone https://github.com/Microsoft/botbuilder-samples.git
 
 ## Update packages
 
-- In Visual Studio right click on the solution and select "Restore NuGet Packages".
+- In Visual Studio right click on the solution and select "**Restore NuGet Packages**".
 - In Visual Studio Code type `dotnet restore`
 
 ## Testing the bot using Bot Framework Emulator V4
@@ -53,8 +53,8 @@ Microsoft Bot Framework Emulator is a desktop application that allows bot develo
 
 ## Connect to bot using Bot Framework Emulator V4
 
-- Launch Bot Framework Emulator
-- File -> Open Bot Configuration and navigate to `botbuilder-samples/samples/csharp_dotnetcore/03.welcome-user folder`
+- Launch **Bot Framework Emulator**
+- **File** -> **Open Bot Configuration** and navigate to `botbuilder-samples/samples/csharp_dotnetcore/03.welcome-user folder`
 - Select `BotConfiguration.bot` file
 
 # Deploy this bot to Azure

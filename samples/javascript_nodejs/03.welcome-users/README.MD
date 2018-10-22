@@ -32,8 +32,8 @@ In other channels such as Teams, Skype, or Slack, you can expect to receive the 
   cd samples/javascript_nodejs/03.welcome-users
   ```
 
-- **Optional**: Update the .env file under `samples/javascript_nodejs/03.welcome-users` with your botFileSecret
-  For Azure Bot Service bots, you can find the botFileSecret under application settings.
+- **Optional**: Update the `.env` file under `samples/javascript_nodejs/03.welcome-users` with your botFileSecret
+  For Azure Bot Service bots, you can find the `botFileSecret` under application settings.
 
 - Install modules and start the bot
 
@@ -55,8 +55,8 @@ Microsoft Bot Framework Emulator is a desktop application that allows bot develo
 
 ## Connect to bot using Bot Framework Emulator V4
 
-- Launch Bot Framework Emulator
-- File -> Open Bot Configuration and navigate to `botbuilder-samples/samples/javascript_nodejs/03.welcome-users`
+- Launch **Bot Framework Emulator**
+- **File** -> **Open Bot Configuration** and navigate to `botbuilder-samples/samples/javascript_nodejs/03.welcome-users`
 - Select `BotConfiguration.bot` file
 
 # Deploy this bot to Azure
