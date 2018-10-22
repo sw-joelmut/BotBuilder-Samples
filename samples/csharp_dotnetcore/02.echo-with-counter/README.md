@@ -24,11 +24,11 @@ In this example, the bot's state is used to track number of messages.
 git clone https://github.com/Microsoft/botbuilder-samples.git
 ```
 
-- **Optional**: Update the `appsettings.json` file under `botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter` with your botFileSecret.  For Azure Bot Service bots, you can find the botFileSecret under application settings.
+- **Optional**: Update the `appsettings.json` file under `botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter` with your `botFileSecret`.  For Azure Bot Service bots, you can find the `botFileSecret` under application settings.
 
 ## Visual Studio
 
-- Navigate to the samples folder (`botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter`) and open EchoBotWithCounter.csproj in Visual Studio.
+- Navigate to the samples folder (`botbuilder-samples/samples/csharp_dotnetcore/02.echo-with-counter`) and open `EchoBotWithCounter.csproj` in Visual Studio.
 - From the **Startup Projects** select `EchoBotWithCounter`
 - Run the project (press `F5` key).
 
