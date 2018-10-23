@@ -1,4 +1,4 @@
-This sample shows how to create a bot that uses Rich Cards. This bot example uses [`restify`](https://www.npmjs.com/package/restify) and [`dotenv`](https://www.npmjs.com/package/dotenv). 
+This sample shows how to create a bot that uses Rich Cards.
 
 # Concepts introduced in this sample
 
