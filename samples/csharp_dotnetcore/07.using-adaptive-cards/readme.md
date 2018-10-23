@@ -1,4 +1,4 @@
-This sample shows how to send an Adaptive Card. This bot example uses [`restify`](https://www.npmjs.com/package/restify) and [`dotenv`](https://www.npmjs.com/package/dotenv).
+This sample shows how to send an Adaptive Card.
 
 # Concepts introduced in this sample
 
