@@ -1,53 +1,68 @@
-This sample shows how to use the prompt classes included in `botbuilder-dialogs`.
-This bot will ask for multiple pieces of information from the user, each using a
-different type of prompt, each with its own validation rules. This sample also
-demonstrates using the `ComponentDialog` class to encapsulate related sub-dialogs.
+This sample shows how to use the prompt classes included in `botbuilder-dialogs`. This sample also demonstrates using the `ComponentDialog` class to encapsulate related sub-dialogs.Concepts introduced in this sample 
 
+# Concepts introduced in this sample
+## Prompts
+
+A conversation between a bot and a user often involves asking (prompting) the user for information, parsing the user's response, and then acting on that information. This sample demonstrates how to prompt users for information and validate the incoming responses using the different prompt types included in the [botbuilder-dialogs](https://github.com/Microsoft/botbuilder-js/tree/master/libraries/botbuilder-dialogs) library.
+
+The `botbuilder-dialogs` library includes a variety of pre-built prompt classes, including text, number, and datetime types. In this sample, each prompt is wrapped in a custom class that includes a validation function. These prompts are chained together into a `WaterfallDialog`, and the final results are stored using the state manager.
 # To try this sample
-- Clone the repository
-    ```bash
-    git clone https://github.com/microsoft/botbuilder-samples.git
-    ```
-- In a terminal, navigate to `samples/javascript_nodejs/10.prompt-validations`
-    ```bash
-    cd samples/javascript_nodejs/10.prompt-validations
-    ```
-- Install modules and start the bot
+## Prerequisites
+### Clone the repo
+To clone the repository:
+```bash
+git clone https://github.com/microsoft/botbuilder-samples.git
+```
+
+## Run the Sample
+### Visual Studio Code
+- In a terminal, navigate to the following directory:
+  ```bash
+  cd samples\javascript_nodejs\10.prompt-validations
+  ```
+
+  **Optional:** Update the `.env` file under `samples\javascript_nodejs\10.prompt-validations` with your **botFileSecret**.
+  For Azure Bot Service bots, you can find the botFileSecret under application settings.
+
+- Install modules and start the bot:
     ```bash
     npm i && npm start
     ```
+    Alternatively you can also use nodemon via:
+    ```bash
+    npm i && npm run watch
+    ```
 
-# Testing the bot using Bot Framework Emulator
-[Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is
-a desktop application that allows bot developers to test and debug their bots on localhost
-or running remotely through a tunnel.
+## Testing the bot using Bot Framework Emulator
+[Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
 
-- Install the Bot Framework Emulator from [here](https://aka.ms/botframework-emulator)
+Install the Bot Framework emulator from [here](https://github.com/Microsoft/BotFramework-Emulator/releases).
 
-## Connect to bot using Bot Framework Emulator V4
+### Connect to bot using Bot Framework Emulator **V4**
 - Launch Bot Framework Emulator
-- File -> Open Bot Configuration and navigate to `javascript_nodejs/10.prompt-validations`
-- Select `prompt-validations-bot.bot` file
+- From the *File* menu select *Open Bot Configuration*
+- Navigate to your `.bot` file
 
-# Deploy this bot to Azure
-You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to install this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md). 
+## Deploy to Azure
+### Using CLI Tools
+You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to install this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md).
 
-To clone this bot, run
-```
+To clone this bot, run:
+
+```bash
 msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-location> --subscriptionId <Azure-subscription-id>
 ```
-
-# Prompts
-A conversation between a bot and a user often involves asking (prompting) the user for information,
-parsing the user's response, and then acting on that information. This sample demonstrates how to
-prompt users for information and validate the incoming responses using the different prompt types included in the
-[botbuilder-dialogs](https://github.com/Microsoft/botbuilder-js/tree/master/libraries/botbuilder-dialogs)
-library.
-
-The `botbuilder-dialogs` library includes a variety of pre-built prompt classes, including text, number,
-and datetime types. In this sample, each prompt is wrapped in a custom class that includes a validation
-function. These prompts are chained together into a `WaterfallDialog`, and the final results are stored
-using the state manager.
-
+- Write down the secret generated by `MSBot`. 
+- The secret key is used later for the emulator and configuration:
+  ```bash
+  The secret used to decrypt <NAME>.bot is:
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+    NOTE: This secret is not recoverable and you should store this secret in a secure place according to best security practices.
+    Your project may be configured to rely on this secret and you should update it as appropriate.
+  ```
+- Inspect Bot configuration file.
+- The `msbot clone` command above generates a bot configuration file.
+- The name of the bot configuration file is `<NAME>.bot`, where `<NAME>` is the name of your bot used in the `msbot clone` step.
+- The configuration file can be loaded by the [Microsoft Bot Framework Emulator](https://aka.ms/botframeworkemulator).
 # Further reading
-- [Prompt types](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-prompts?view=azure-bot-service-4.0&tabs=javascript)
+- [Prompt types](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-prompts?view=azure-bot-service-4.0&tabs=csharp)
