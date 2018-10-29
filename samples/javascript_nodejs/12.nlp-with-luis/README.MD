@@ -1,50 +1,31 @@
-This sample shows how to create a bot that uses Language Understanding (LUIS). This bot example uses [`restify`](https://www.npmjs.com/package/restify) and [`dotenv`](https://npmjs.com/package/dotenv). 
+This sample shows how to create a bot that uses Language Understanding (LUIS). 
 
 # Concepts introduced in this sample
+## Language Understanding
+
 [Language Understanding (LUIS)](https://www.luis.ai) is a cloud-based API service that applies custom machine-learning intelligence to a user's conversational, natural language text to predict overall meaning, and pull out relevant, detailed information.
 
 In this sample, we demonstrate how to call LUIS to extract the intents from a user's message.
-
 # To try this sample
-- Clone the repository
-    ```bash
-    git clone https://github.com/Microsoft/botbuilder-samples.git
-    ```
-- In a console, navigate to samples/javascript_nodejs/12.nlp-with-luis
-    ```bash
-    cd samples/javascript_nodejs/12.nlp-with-luis
-    ```
-- [Optional] Update the .env file under samples/javascript_nodejs/12.nlp-with-luis with your botFileSecret
-    For Azure Bot Service bots, you can find the botFileSecret under application settings.
-- Install modules and start the bot
-    ```bash
-    npm i && npm start
-    ```
-    Alternatively you can also use nodemon via
-    ```bash
-    npm i && npm run watch
-    ```
-
-# Testing the bot using Bot Framework Emulator
-[Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
-
-- Install the Bot Framework Emulator from [here](https://aka.ms/botframework-emulator)
-
-## Connect to bot using Bot Framework Emulator V4
-- Launch Bot Framework Emulator
-- File -> Open Bot Configuration and navigate to samples/javascript_nodejs/12.nlp-with-luis folder
-- Select nlp-with-luis.bot file
-
 ## Prerequisites
-### Set up LUIS
+###	Required Tools
+#### Set up LUIS
 - Navigate to [LUIS portal](https://www.luis.ai).
+
 - Click the `Sign in` button.
+
 - Click on `My Apps`.
+
 - Click on the `Import new app` button.
+
 - Click on the `Choose File` and select [reminders.json](cognitiveModels/reminders.json) from the `BotBuilder-Samples/javascript_nodejs/12.nlp-with-luis/cognitiveModels` folder.
-- Update [nlp-with-luis.bot](nlp-with-luis.bot) file with your AppId, SubscriptionKey, Region and Version. 
-    You can find this information under "Publish" tab for your LUIS application at [LUIS portal](https://www.luis.ai).  For example, for
-https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/{LuisAppID}?subscription-key={LuisSubscriptionKey}&verbose=true&timezoneOffset=0&q=
+
+- Update [nlp-with-luis.bot](nlp-with-luis.bot) file with your AppId, SubscriptionKey, Region and Version. You can find this information under "Manage" tab for your LUIS application at [LUIS portal](https://www.luis.ai).
+
+    - The `AppID` can be found in "Application Information"
+    - The `AuthoringKey` can be found in "Keys and Endpoints"
+    - The `SubscriptionKey` can be found in "Keys and Endpoints", under the `Key 1` column
+    - The `region` can be found in "Keys and Endpoints", under the `Region` column
 
     The Version is listed on the page.
     Note: Enter the either "authoringKey" OR "subscriptionKey", not both.
@@ -59,41 +40,79 @@ https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/{LuisAppID}?subscripti
 
 - Your .bot file should now include an item in the services array that looks like this:
 
-```javascript
-{
-    "type":"luis",
-    "name":"<some name>",
-    "appId":"<an app id>",
-    "version":"<a version number>",
-    "authoringKey":"<your authoring key>",
-    "subscriptionKey":"<your subscription key>",
-    "region":"<region>",
-    "id":"<some number>"
-}
-```
-
-### (Optional) Install `ludown` and `luis`
+    ```javascript
+    {
+        "type":"luis",
+        "name":"<some name>",
+        "appId":"<an app id>",
+        "version":"<a version number>",
+        "authoringKey":"<your authoring key>",
+        "subscriptionKey":"<your subscription key>",
+        "region":"<region>",
+        "id":"<some number>"
+    }
+    ```
+#### (Optional) Install ludown and luis
 - Install the `ludown` CLI tool [here](https://aka.ms/using-ludown) to help describe language understanding components for your bot.
 - Install the `luis` CLI tool [here](https://aka.ms/using-luis-cli) to create and manage your LUIS applications.
+### Clone the repo
+To clone the repository:
+```bash
+git clone https://github.com/microsoft/botbuilder-samples.git
+```
+## Run the Sample
+### Visual Studio Code
+- In a terminal, navigate to the following directory:
+  ```bash
+  cd samples\javascript_nodejs\12.nlp-with-luis
+  ```
 
-# LUIS
-Language Understanding service (LUIS) allows your application to understand what a person wants in their own words. LUIS uses machine learning to allow developers to build applications that can receive user input in natural language and extract meaning from it.
+  **Optional:** Update the `.env` file under `samples\javascript_nodejs\12.nlp-with-luis` with your **botFileSecret**.
+  For Azure Bot Service bots, you can find the botFileSecret under application settings.
 
-# Deploy this bot to Azure
-You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. 
+- Install modules and start the bot:
+    ```bash
+    npm i && npm start
+    ```
+    Alternatively you can also use nodemon via:
+    ```bash
+    npm i && npm run watch
+    ```
 
-To install all Bot Builder tools - 
+## Testing the bot using Bot Framework Emulator
+[Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
 
-Ensure you have [Node.js](https://nodejs.org/) version 8.5 or higher
+Install the Bot Framework emulator from [here](https://github.com/Microsoft/BotFramework-Emulator/releases).
+
+### Connect to bot using Bot Framework Emulator **V4**
+- Launch Bot Framework Emulator
+- From the *File* menu select *Open Bot Configuration*
+- Navigate to your `.bot` file
+
+## Deploy to Azure
+### Using CLI Tools
+You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to install this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md).
+
+To clone this bot, run:
 
 ```bash
-npm i -g msbot chatdown ludown qnamaker luis-apis botdispatch luisgen
-```
-
-To clone this bot, run
-```
 msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-location> --subscriptionId <Azure-subscription-id>
 ```
+- Write down the secret generated by `MSBot`. 
+- The secret key is used later for the emulator and configuration:
+  ```bash
+  The secret used to decrypt <NAME>.bot is:
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+    NOTE: This secret is not recoverable and you should store this secret in a secure place according to best security practices.
+    Your project may be configured to rely on this secret and you should update it as appropriate.
+  ```
+- Inspect Bot configuration file.
+- The `msbot clone` command above generates a bot configuration file.
+- The name of the bot configuration file is `<NAME>.bot`, where `<NAME>` is the name of your bot used in the `msbot clone` step.
+- The configuration file can be loaded by the [Microsoft Bot Framework Emulator](https://aka.ms/botframeworkemulator).
+### Deploy from Visual Studio
+### Deprovision your bot
+<STEPS TO DEPROVISION>
 
 # Further reading
 - [Using LUIS for Language Understanding](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-v4-luis?view=azure-bot-service-4.0&tabs=js)
