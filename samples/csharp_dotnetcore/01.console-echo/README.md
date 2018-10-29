@@ -17,7 +17,40 @@ The bot adapter encapsulates authentication processes and sends activities to an
 ```bash
 git clone https://github.com/microsoft/botbuilder-samples.git
 ```
-# Prerequisites
+
+**NOTE**: this sample requires `Microsoft.Bot.Builder`.
+- In Visual Studio right click on the solution and select "Restore NuGet Packages".
+- In Visual Studio Code type `dotnet restore`
+
+## Run the Sample
+### Visual Studio
+- Navigate to the samples folder `sample\csharp_dotnetcore\01.console-echo` and open **Console-EchoBot.csproj** in Visual Studio 
+- From the **Startup Projects** select `Console-EchoBot`
+- Run the project (press `F5` key)
+
+### Visual Studio Code
+- In Visual Studio Code open the `sample\csharp_dotnetcore\01.console-echo` folder
+- In the console type `dotnet run`
+
+## Testing the bot using Bot Framework Emulator
+[Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
+
+- Install the Bot Framework emulator from [here](https://github.com/Microsoft/BotFramework-Emulator/releases)
+
+### Connect to bot using Bot Framework Emulator **V4**
+- Launch Bot Framework Emulator
+- From the *File* menu select *Open Bot Configuration*
+- Navigate to your `.bot` file
+
+## Deploy to Azure
+### Using CLI Tools
+You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to install this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md).
+
+To clone this bot, run:
+```bash
+msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-location> --subscriptionId <Azure-subscription-id>
+```
+
 ## Visual studio
 - Navigate to the samples folder (`botbuilder-samples/samples/csharp_dotnetcore/01.console-echo`) and open Console-EchoBot.csproj in Visual studio 
 - Run the project (press `F5` key)
