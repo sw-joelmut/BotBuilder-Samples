@@ -1,44 +1,13 @@
-# Multilingual Bot Sample
+This sample shows how to translate incoming and outgoing text using a custom middleware and the [Microsoft Translator Text API](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/). 
 
-This sample shows how to translate incoming and outgoing text using a custom middleware and the [Microsoft Translator Text API](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/). This bot example uses [`restify`](https://www.npmjs.com/package/restify) and [`dotenv`](https://www.npmjs.com/package/dotenv).
+# Table of Contents
+<LINKS TO SECTIONS OF THE README>
 
-# To try this sample
-- Clone the repository
-    ```bash
-    git clone https://github.com/Microsoft/botbuilder-samples.git
-    ```
-- In a terminal, navigate to samples/javascript_nodejs/17.multilingual-conversations
-    ```bash
-    cd samples/javascript_nodejs/17.multilingual-conversations
-    ```
-- [Optional] Update the .env file under samples/javascript_nodejs/17.multilingual-conversations with your botFileSecret
-    For Azure Bot Service bots, you can find the botFileSecret under application settings.
-- Install modules and start the bot
-    ```bash
-    npm i && npm start
-    ```
-    Alternatively you can also use nodemon via
-    ```bash
-    npm i && npm run watch
-    ```
-## Microsoft Translator Text API
+# Concepts introduced in this sample
+## Creating a custom middleware
 
-To consume the Microsoft Translator Text API, first obtain a key following the instructions in the [Microsoft Translator Text API documentation](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/translator-text-how-to-signup). 
-Paste the key in the `translationKey` setting in the .env file, or use your preferred configuration and update the following line in index.js with your translation key:
-
-```js
-adapter.use(new TranslatorMiddleware(languagePreferenceProperty, process.env.translatorKey));
-```
-
-# Testing the bot using Bot Framework Emulator
-[Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
-
-Install the Bot Framework Emulator from [here](https://aka.ms/botframework-emulator)
-
-## Connect to bot using Bot Framework Emulator V4
-- Launch Bot Framework Emulator
-- File -> Open Bot Configuration and navigate to samples/javascript_nodejs/17.multilingual-conversations folder
-- Select multilingual-conversations.bot file
+Translation Middleware: We create a translation middleware than can translate text from bot to user and from user to bot, allowing the creation of multilingual bots. 
+Users can specify their language preference, which is stored in the user state. The translation middleware translates to and from the user's preferred language.
 
 ## Creating a custom middleware
 
@@ -50,22 +19,70 @@ Users can specify their language preference, which is stored in the user state. 
 The [Microsoft Translator Text API](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/), Microsoft Translator Text API is a cloud-based machine translation service. With this API you can translate text in near real-time from any app or service through a simple REST API call. 
 The API uses the most modern neural machine translation technology, as well as offering statistical machine translation technology.
 
-# Deploy this bot to Azure
-You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. 
+- Services used in this sample
+  - [`restify`](https://www.npmjs.com/package/restify)
+  - [`dotenv`](https://www.npmjs.com/package/dotenv)
 
-To install all Bot Builder tools - 
+# To try this sample
+## Prerequisites
+### Clone the repo
+To clone the repository:
+```bash
+git clone https://github.com/microsoft/botbuilder-samples.git
+```
 
-Ensure you have [Node.js](https://nodejs.org/) version 8.5 or higher
+## Run the Sample
+### Visual Studio Code
+- In a terminal, navigate to the following directory:
+  ```bash
+  cd samples\javascript_nodejs\17.multilingual-conversations
+  ```
+
+  **Optional:** Update the `.env` file under `samples\javascript_nodejs\17.multilingual-conversations` with your **botFileSecret**.
+  For Azure Bot Service bots, you can find the botFileSecret under application settings.
+
+- Install modules and start the bot:
+    ```bash
+    npm i && npm start
+    ```
+    Alternatively you can also use nodemon via:
+    ```bash
+    npm i && npm run watch
+    ```
+
+## Testing the bot using Bot Framework Emulator
+[Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
+
+Install the Bot Framework emulator from [here](https://github.com/Microsoft/BotFramework-Emulator/releases).
+
+### Connect to bot using Bot Framework Emulator **V4**
+- Launch Bot Framework Emulator
+- From the *File* menu select *Open Bot Configuration*
+- Navigate to your `.bot` file
+
+## Deploy to Azure
+### Using CLI Tools
+You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to install this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md).
+
+To clone this bot, run:
 
 ```bash
-npm i -g msbot chatdown ludown qnamaker luis-apis botdispatch luisgen
-```
-
-To clone this bot, run
-```
 msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-location> --subscriptionId <Azure-subscription-id>
 ```
-
+- Write down the secret generated by `MSBot`. 
+- The secret key is used later for the emulator and configuration:
+  ```bash
+  The secret used to decrypt <NAME>.bot is:
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+    NOTE: This secret is not recoverable and you should store this secret in a secure place according to best security practices.
+    Your project may be configured to rely on this secret and you should update it as appropriate.
+  ```
+- Inspect Bot configuration file.
+- The `msbot clone` command above generates a bot configuration file.
+- The name of the bot configuration file is `<NAME>.bot`, where `<NAME>` is the name of your bot used in the `msbot clone` step.
+- The configuration file can be loaded by the [Microsoft Bot Framework Emulator](https://aka.ms/botframeworkemulator).
 # Further reading
 - [Azure Bot Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
+- [Microsoft Translator Text API](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/)
 - [Bot State](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-storage-concept?view=azure-bot-service-4.0)
+- [Middleware](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-middleware?view=azure-bot-service-4.0)
