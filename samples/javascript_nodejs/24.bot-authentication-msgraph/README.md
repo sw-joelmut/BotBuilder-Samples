@@ -1,12 +1,16 @@
-# Authentication Bot Utilizing MS Graph
+This sample uses the bot authentication capabilities of Azure Bot Service. In this sample we are assuming the OAuth 2 provider is Azure Active Directory v2 (AADv2) and are utilizing the Microsoft Graph API to retrieve data about the user.  
 
-This bot has been created using [Microsoft Bot Framework](https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0).
+# Table of Contents
+<LINKS TO SECTIONS OF THE README>
 
-This sample uses the bot authentication capabilities of Azure Bot Service. In this sample we are assuming the OAuth 2 provider
-is Azure Active Directory v2 (AADv2) and are utilizing the Microsoft Graph API to retrieve data about the
-user. [Check here](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-authentication?view=azure-bot-service-4.0&tabs=csharp) for information about getting an AADv2
-application setup for use in Azure Bot Service.
+# Concepts introduced in this sample
+## Authentication Bot Utilizing MS Graph
+This sample demonstrates using Azure Active Directory v2 as the OAuth2 provider and utilizes the Microsoft Graph API.
+Microsoft Graph is a Microsoft developer platform that connects multiple services and devices. Initially released in 2015, the Microsoft Graph builds on Office 365 APIs and allows developers to integrate their services with Microsoft products including Windows, Office 365, and Azure.
+
+[Check here](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-authentication?view=azure-bot-service-4.0&tabs=csharp) for information about getting an AADv2 application setup for use in Azure Bot Service.
 The [scopes](https://developer.microsoft.com/en-us/graph/docs/concepts/permissions_reference) used in this sample are the following:
+
 - `email`
 - `Mail.Read`
 - `Mail.Send.Shared`
@@ -15,55 +19,74 @@ The [scopes](https://developer.microsoft.com/en-us/graph/docs/concepts/permissio
 - `User.Read`
 - `User.ReadBasic.All`
 
-## To try this sample
-- Clone the repository
+# To try this sample
+## Prerequisites
+### Clone the repo
+To clone the repository:
+```bash
+git clone https://github.com/microsoft/botbuilder-samples.git
+```
+
+## Run the Sample
+### Visual Studio Code
+- In a terminal, navigate to the following directory:
   ```bash
-  git clone https://github.com/microsoft/botbuilder-samples.git
-  ```
-- In a terminal, navigate to samples/javascript_nodejs/24.bot-authentication-msgraph
-  ```bash
-  cd samples/javascript_nodejs/24.bot-authentication-msgraph
-  ```
-- [Optional] Update the .env file under samples/javascript_nodejs/24.bot-authentication-msgraph with your botFileSecret
-    For Azure Bot Service bots, you can find the botFileSecret under application settings.
-- Install modules
-  ```bash
-  npm i
-  ```
-- Update `authentication-msgraph.bot` with required configuration settings
-  - App ID and Key for registered bots
-- Update `CONNECTION_SETTING_NAME` in `bot.js` so the bot can perform OAuth calls through Azure Bot Service
-- Run the sample
-  ```bash
-  npm start
+  cd samples\javascript_nodejs\24.bot-authentication-msgraph
   ```
 
+  **Optional:** Update the `.env` file under `samples\javascript_nodejs\24.bot-authentication-msgraph` with your **botFileSecret**.
+  For Azure Bot Service bots, you can find the botFileSecret under application settings.
+
+- Update `authentication-msgraph.bot` with required configuration settings
+
+    - App ID and Key for registered bots
+
+- Update `CONNECTION_SETTING_NAME` in `bot.js` so the bot can perform OAuth calls through Azure Bot Service
+
+- Install modules and start the bot:
+
+    ```bash
+    npm i && npm start
+    ```
+    Alternatively you can also use nodemon via:
+    ```bash
+    npm i && npm run watch
+    ```
 
 ## Testing the bot using Bot Framework Emulator
 [Microsoft Bot Framework Emulator](https://github.com/microsoft/botframework-emulator) is a desktop application that allows bot developers to test and debug their bots on localhost or running remotely through a tunnel.
 
-- Install the Bot Framework Emulator from [here](https://aka.ms/botframework-emulator)
+- Install the Bot Framework emulator from [here](https://github.com/Microsoft/BotFramework-Emulator/releases).
 - In Settings, enable `Use a sign-in verification code for OAuthCards` to receive the magic code
 
-### Connect to bot using Bot Framework Emulator v4
+### Connect to bot using Bot Framework Emulator **V4**
 - Launch Bot Framework Emulator
-- File -> Open Bot Configuration and navigate to `samples/javascript_nodejs/24.bot-authentication-msgraph` folder
-- Select `authentication-msgraph.bot` file
+- From the *File* menu select *Open Bot Configuration*
+- Navigate to your `.bot` file
 
-## Additional Resources
+## Deploy to Azure
+### Using CLI Tools
+You can use the [MSBot](https://github.com/microsoft/botbuilder-tools) Bot Builder CLI tool to clone and configure any services this sample depends on. In order to install this and other tools, you can read [Installing CLI Tools](../../../Installing_CLI_tools.md).
 
-### Dependencies
+To clone this bot, run:
 
-- **[Restify](http://restify.com)** Used to host the web service for the bot, and for making REST calls
-- **[dotenv](https://github.com/motdotla/dotenv)** Used to manage environmental variables
-
-### Configuring the bot
-
-Update `.env` with the appropriate keys:
-
-- App ID and Key for registered bots.
-- botFilePath and botFileSecret from `authentication-msgraph.bot` file
-
-## Further Reading
-- [Azure Bot Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
+```bash
+msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-location> --subscriptionId <Azure-subscription-id>
+```
+- Write down the secret generated by `MSBot`. 
+- The secret key is used later for the emulator and configuration:
+  ```bash
+  The secret used to decrypt <NAME>.bot is:
+    XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=
+    NOTE: This secret is not recoverable and you should store this secret in a secure place according to best security practices.
+    Your project may be configured to rely on this secret and you should update it as appropriate.
+  ```
+- Inspect Bot configuration file.
+- The `msbot clone` command above generates a bot configuration file.
+- The name of the bot configuration file is `<NAME>.bot`, where `<NAME>` is the name of your bot used in the `msbot clone` step.
+- The configuration file can be loaded by the [Microsoft Bot Framework Emulator](https://aka.ms/botframeworkemulator).
+# Further reading
+- [Channels and Bot Connector service](https://docs.microsoft.com/en-us/azure/bot-service/bot-concepts?view=azure-bot-service-4.0)
+- [Activity processing](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-concept-activity-processing?view=azure-bot-service-4.0)
+- [Microsoft Graph API](https://developer.microsoft.com/en-us/graph)
 - [MS Graph Docs](https://developer.microsoft.com/en-us/graph/docs/concepts/overview) and [SDK](https://github.com/microsoftgraph/msgraph-sdk-javascript)
