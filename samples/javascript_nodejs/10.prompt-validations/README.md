@@ -1,4 +1,19 @@
-This sample shows how to use the prompt classes included in `botbuilder-dialogs`. This sample also demonstrates using the `ComponentDialog` class to encapsulate related sub-dialogs.Concepts introduced in this sample 
+This sample shows how to use the prompt classes included in `botbuilder-dialogs`. This sample also demonstrates using the `ComponentDialog` class to encapsulate related sub-dialogs.
+
+# Table of Contents
+
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Prompts](#prompts)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## Prompts

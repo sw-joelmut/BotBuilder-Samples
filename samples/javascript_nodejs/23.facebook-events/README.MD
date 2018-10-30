@@ -1,16 +1,25 @@
 Your bot can be connected to both Facebook Messenger and Facebook Workplace, so that it can communicate with users on both platforms.  
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+- [Facebook events](#facebook-events)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+    + [Enable Facebook Channel](#enable-facebook-channel)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 # Facebook events
 
 This sample shows how to integrate and consume Facebook specific payloads, such as postbacks, quick replies and optin events. 
 Since Bot Framework supports multiple Facebook pages for a single bot, we also show how to know the page to which the message was sent, so developers can have custom behavior per page.
-- Services used in this sample
-  -  [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://www.npmjs.com/package/dotenv)
 
 # To try this sample
 ## Prerequisites
@@ -76,6 +85,6 @@ msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-loc
 - The configuration file can be loaded by the [Microsoft Bot Framework Emulator](https://aka.ms/botframeworkemulator).
 # Further reading
 - [Azure Bot Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
-- [Facebook Quick Replies](https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies/0)
+- [Facebook Quick Replies](https://developers.facebook.com/docs/messenger-platform/send-messages/quick-replies/)
 - [Facebook PostBack](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_postbacks/)
 - [Facebook Optin](https://developers.facebook.com/docs/messenger-platform/reference/webhook-events/messaging_optins/)

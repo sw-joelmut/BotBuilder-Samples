@@ -1,4 +1,25 @@
-This sample shows how to integrate QnA Maker in a simple bot with Application Insights.  
+This sample shows how to integrate QnA Maker in a simple bot with Application Insights.
+
+# Table of Contents
+
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Configure Services](#configure-services)
+    + [Using CLI Tools](#using-cli-tools)
+  * [Manually configure required services](#manually-configure-required-services)
+    + [Configure the LUIS service](#configure-the-luis-service)
+    + [Train and publish the LUIS models](#train-and-publish-the-luis-models)
+    + [Configure QnA Maker service](#configure-qna-maker-service)
+    + [Train and publish the QnA Maker KB](#train-and-publish-the-qna-maker-kb)
+    + [Configure the Dispatch application](#configure-the-dispatch-application)
+  * [Securing keys in your .bot file](#securing-keys-in-your-bot-file)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 [Dispatch](https://github.com/Microsoft/botbuilder-tools/tree/master/packages/Dispatch) is a tool to create and evaluate LUIS models used for NLP (Natural Language Processing). 
@@ -29,7 +50,7 @@ git clone https://github.com/microsoft/botbuilder-samples.git
 ```
 
 ## Configure Services
-This sample relies on [LUIS](https://luis.ai), [QnA Maker](https://qnamaker.ai) and [Dispatch](https://github.com/microsoft/botbuilder-tools//tree/master/packages/Dispatch) services.
+This sample relies on [LUIS](https://www.luis.ai), [QnA Maker](https://qnamaker.ai) and [Dispatch](https://github.com/microsoft/botbuilder-tools//tree/master/packages/Dispatch) services.
 See [here](https://github.com/microsoft/botbuilder-tools) to learn more about the Bot Builder CLI tools used to configure required services.
 
 ### Using CLI Tools

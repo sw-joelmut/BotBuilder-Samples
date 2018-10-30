@@ -1,4 +1,24 @@
-This sample shows how to create a bot that uses Language Understanding (LUIS). 
+This sample shows how to create a bot that uses Language Understanding (LUIS).
+
+# Table of Contents
+
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Language Understanding](#language-understanding)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Required Tools](#required-tools)
+      - [Set up LUIS](#set-up-luis)
+      - [(Optional) Install ludown and luis](#-optional--install-ludown-and-luis)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+    + [Deploy from Visual Studio](#deploy-from-visual-studio)
+    + [Deprovision your bot](#deprovision-your-bot)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## Language Understanding

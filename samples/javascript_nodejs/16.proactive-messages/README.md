@@ -3,7 +3,17 @@ capturing a conversation reference, then using it later to initialize
 outbound messages. 
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Proactive Messages](#proactive-messages)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## Proactive Messages

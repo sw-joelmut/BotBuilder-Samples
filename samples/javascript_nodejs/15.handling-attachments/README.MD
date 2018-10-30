@@ -1,17 +1,23 @@
 This sample shows how to send outgoing attachments and how to save attachments to disk. 
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Attachments](#attachments)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## Attachments
 A message exchange between user and bot may contain cards and media attachments, such as images, video, audio, and files.
 The types of attachments that may be sent and received varies by channel. Additionally, a bot may also receive file attachments.
-
-- Services used in this sample
-  - [`axios`](https://www.npmjs.com/package/axios)
-  - [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://npmjs.com/package/dotenv)
 
 # To try this sample
 ## Prerequisites

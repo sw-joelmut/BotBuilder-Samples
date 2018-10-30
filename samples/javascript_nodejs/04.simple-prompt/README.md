@@ -1,5 +1,22 @@
 This sample shows how to use the prompts classes included in `botbuilder-dialogs`. It demonstrates a 2-step dialog flow using a prompt, as well as using the state accessors to store and retrieve values. 
 
+# Table of Contents
+
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Prompts](#prompts)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+    + [Deploy from Visual Studio](#deploy-from-visual-studio)
+    + [Deprovision your bot](#deprovision-your-bot)
+- [Further reading](#further-reading)
+
 # Concepts introduced in this sample
 ## Prompts
 
@@ -52,10 +69,6 @@ To clone this bot, run:
 ```bash
 msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-location> --subscriptionId <Azure-subscription-id>
 ```
-### Deploy from Visual Studio
-### Deprovision your bot
-<STEPS TO DEPROVISION>
-
 # Further reading
 - [Prompt types](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-prompts?view=azure-bot-service-4.0&tabs=javascript)
 - [Azure Bot Service Introduction](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)

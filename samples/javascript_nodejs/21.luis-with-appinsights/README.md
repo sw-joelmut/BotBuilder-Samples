@@ -1,7 +1,19 @@
 This sample shows how to create a bot that uses Language Understanding (LUIS) with Application Insights to get telemetry around bot and your LUIS application's performance. 
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Table of Contents](#table-of-contents)
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [LUIS with Application Insights](#luis-with-application-insights)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## LUIS with Application Insights
@@ -10,11 +22,6 @@ This sample shows how to create a bot that uses Language Understanding (LUIS) wi
 The [Application Insights](https://azure.microsoft.com/en-us/services/application-insights/) enables you to discover actionable insights through application performance management and instant analytics.
 
 In this sample, we demonstrate how to call LUIS to extract the intents from a user's message and use Application Insights to gather user-bot interaction telemetry.
-- Services used in this sample
-  -  [`applicationinsights`](https://www.npmjs.com/package/applicationinsights)
-  - [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://npmjs.com/package/dotenv)
-
 # To try this sample
 ## Prerequisites
 ### Clone the repo

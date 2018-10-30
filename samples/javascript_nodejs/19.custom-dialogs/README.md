@@ -2,7 +2,18 @@ This sample demonstrates how to sub-class the Dialog class to create
 different bot control mechanism like simple slot filling. 
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Custom Dialogs](#custom-dialogs)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## Custom Dialogs
@@ -70,5 +81,5 @@ msbot clone services -f deploymentScripts/msbotClone -n <BOT-NAME> -l <Azure-loc
 - The configuration file can be loaded by the [Microsoft Bot Framework Emulator](https://aka.ms/botframeworkemulator).
 # Further reading
 - [Dialog class reference](https://docs.microsoft.com/en-us/javascript/api/botbuilder-dialogs/dialog)
-- [WaterfallDialog class reference](https://docs.microsoft.com/en-us/javascript/api/botbuilder-dialogs/waterfall)
+- [WaterfallDialog class reference](https://docs.microsoft.com/en-us/dotnet/api/microsoft.bot.builder.dialogs.waterfalldialog?view=botbuilder-dotnet-stable)
 - [Manage complex conversation flows with dialogs](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-dialog-manage-complex-conversation-flow?view=azure-bot-service-4.0&tabs=javascript)

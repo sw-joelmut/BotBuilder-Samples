@@ -1,7 +1,21 @@
 This sample shows how to create a bot that uses QnA Maker with Application Insights to get telemetry around bot and QnA Maker performance. 
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Table of Contents](#table-of-contents)
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [QnA Maker](#qna-maker)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Configure Services](#configure-services)
+    + [Use portals](#use-portals)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## QnA Maker
@@ -10,11 +24,6 @@ The [QnA Maker Service](https://www.qnamaker.ai) enables you to build, train and
 The [Application Insights](https://azure.microsoft.com/en-us/services/application-insights/) enables you to discover actionable insights through application performance management and instant analytics.
 
 In this sample, we demonstrate how to use the QnA Maker service to answer questions based on a FAQ text file as input.
-- Services used in this sample
-  - [`applicationinsights`](https://www.npmjs.com/package/applicationinsights)
-  - [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://npmjs.com/package/dotenv).
-
 # To try this sample
 ## Prerequisites
 ### Clone the repo

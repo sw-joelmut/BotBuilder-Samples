@@ -1,6 +1,23 @@
 This sample shows how to send an Adaptive Card.
 
+# Table of Contents
+
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Adaptive Cards](#adaptive-cards)
+  * [Adding media to messages](#adding-media-to-messages)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
+
 # Concepts introduced in this sample
+
 ## Adaptive Cards
 
 Card authors describe their content as a simple JSON object. That content can then be rendered natively inside a host application, automatically adapting to the look and feel of the host.

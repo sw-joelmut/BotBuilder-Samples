@@ -1,6 +1,22 @@
 This sample shows how to create a bot that uses Rich Cards.
 
+# Table of Contents
+
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Rich Cards](#rich-cards)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
+
 # Concepts introduced in this sample
+
 ## Rich Cards
 
 A key to good bot design is to send interactive media, such as Rich Cards. There are several different types of Rich Cards, which are as follows:
@@ -14,10 +30,6 @@ A key to good bot design is to send interactive media, such as Rich Cards. There
 - Video Card
 
 When [designing the user experience](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-design-user-experience?view=azure-bot-service-4.0#cards) developers should consider adding visual elements such as Rich Cards.
-- Services used in this sample:
-  - [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://www.npmjs.com/package/dotenv)
-
 # To try this sample
 ## Prerequisites
 ### Clone the repo

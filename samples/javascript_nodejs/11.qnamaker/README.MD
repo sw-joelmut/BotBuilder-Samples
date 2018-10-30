@@ -1,6 +1,22 @@
-In this sample, we demonstrate how to use the QnA Maker service to answer questions based on a FAQ text file as input. 
+In this sample, we demonstrate how to use the QnA Maker service to answer questions based on a FAQ text file as input.
+
+# Table of Contents
+
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [QnA Maker service](#qna-maker-service)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
+
 ## QnA Maker service
 
 The [QnA Maker Service](https://www.qnamaker.ai) enables you to build, train and publish a simple question
@@ -9,10 +25,6 @@ and answer bot based on FAQ URLs, structured documents or editorial content in m
 One of the basic requirements in writing your own bot is to seed it with questions and answers. In many cases, the questions and answers already exist in content like FAQ URLs/documents, product manuals, etc. With QnA Maker, users can query your application in a natural, conversational manner.
 
 QnA Maker uses machine learning to extract relevant question-answer pairs from your content. It also uses powerful matching and ranking algorithms to provide the best possible match between the user query and the questions.
-- Services used in this sample
-  - [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://npmjs.com/package/dotenv)
-
 # To try this sample
 ## Prerequisites
 ### Clone the repo

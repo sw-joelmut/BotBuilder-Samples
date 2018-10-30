@@ -1,7 +1,20 @@
 This sample shows how to translate incoming and outgoing text using a custom middleware and the [Microsoft Translator Text API](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/). 
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Creating a custom middleware](#creating-a-custom-middleware)
+  * [Creating a custom middleware](#creating-a-custom-middleware-1)
+  * [Microsoft Translator Text API](#microsoft-translator-text-api)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 ## Creating a custom middleware
@@ -18,10 +31,6 @@ Users can specify their language preference, which is stored in the user state. 
 
 The [Microsoft Translator Text API](https://docs.microsoft.com/en-us/azure/cognitive-services/translator/), Microsoft Translator Text API is a cloud-based machine translation service. With this API you can translate text in near real-time from any app or service through a simple REST API call. 
 The API uses the most modern neural machine translation technology, as well as offering statistical machine translation technology.
-
-- Services used in this sample
-  - [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://www.npmjs.com/package/dotenv)
 
 # To try this sample
 ## Prerequisites

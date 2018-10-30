@@ -1,7 +1,18 @@
 This sample shows how to use authentication in your bot using OAuth.  
 
 # Table of Contents
-<LINKS TO SECTIONS OF THE README>
+- [Concepts introduced in this sample](#concepts-introduced-in-this-sample)
+  * [Authentication](#authentication)
+- [To try this sample](#to-try-this-sample)
+  * [Prerequisites](#prerequisites)
+    + [Clone the repo](#clone-the-repo)
+  * [Run the Sample](#run-the-sample)
+    + [Visual Studio Code](#visual-studio-code)
+  * [Testing the bot using Bot Framework Emulator](#testing-the-bot-using-bot-framework-emulator)
+    + [Connect to bot using Bot Framework Emulator **V4**](#connect-to-bot-using-bot-framework-emulator---v4--)
+  * [Deploy to Azure](#deploy-to-azure)
+    + [Using CLI Tools](#using-cli-tools)
+- [Further reading](#further-reading)
 
 # Concepts introduced in this sample
 
@@ -9,10 +20,6 @@ This sample shows how to use authentication in your bot using OAuth.
 This Sample uses bot authentication capabilities in Azure Bot Service, providing features to make it easier to develop a bot that authenticates users to various identity providers such as Azure AD (Azure Active Directory), GitHub, Uber, and so on.
 
 These updates also take steps towards an improved user experience by eliminating the magic code verification for some clients.
-
-- Services used in this sample
-  - [`restify`](https://www.npmjs.com/package/restify)
-  - [`dotenv`](https://www.npmjs.com/package/dotenv)
 
 # To try this sample
 ## Prerequisites
