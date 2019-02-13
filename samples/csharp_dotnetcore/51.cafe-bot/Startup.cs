@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -30,7 +30,10 @@ namespace Microsoft.BotBuilderSamples
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
 
-            Configuration = builder.Build();
+            if (env.IsDevelopment()) 
+                builder.AddUserSecrets<Startup>();
+
+                Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
