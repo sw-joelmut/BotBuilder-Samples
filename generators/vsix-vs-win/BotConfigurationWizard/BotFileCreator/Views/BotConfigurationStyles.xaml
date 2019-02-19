@@ -27,6 +27,10 @@
         <Setter Property="Margin" Value="5,10,0,20"/>
     </Style>
 
+    <Style x:Key="description" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
     <Style x:Key="botNameTextBox" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}" >
         <Setter Property="Height" Value="25"/>
         <Setter Property="Width" Value="250" />
@@ -36,10 +40,6 @@
         <Setter Property="TextWrapping" Value="Wrap"/>
         <Setter Property="MaxLength" Value="70"/>
         <Setter Property="FontWeight" Value="Thin"/>
-    </Style>
-
-    <Style x:Key="description" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="Margin" Value="5"/>
     </Style>
 
     <Style x:Key="leftMenu" TargetType="Menu">

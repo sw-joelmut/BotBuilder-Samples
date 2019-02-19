@@ -1,0 +1,55 @@
+﻿<Window x:Class="BotFileCreator.EndpointView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignWidth="360" d:DesignHeight="380"
+             MinWidth="360" MinHeight="380"
+             Width="360" Height="380"
+             WindowStyle="ToolWindow">
+    
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="EndpointStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Style="{DynamicResource grid}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="15"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2">
+            <TextBlock Style="{DynamicResource moduleTitle}" Text="Add an Endpoints for you bot" />
+            <TextBlock Style="{DynamicResource textForm}">
+                <Run>Name</Run><Run Foreground="MediumVioletRed">*</Run>
+            </TextBlock>
+            <TextBox Style="{DynamicResource nameTextBoxForm}" Text="{Binding Path=EndpointItem.Name}" />
+            <TextBlock Style="{DynamicResource textForm}">
+                <Run>Endpoint url</Run><Run Foreground="MediumVioletRed">*</Run>
+            </TextBlock>
+            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointItem.Endpoint, TargetNullValue='(ex: http://localhost:3978/api/message)'}" />
+            <TextBlock Style="{DynamicResource textForm}" Text="App Id"/>
+            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointItem.AppId}" />
+            <TextBlock Style="{DynamicResource textForm}" Text="App Password"/>
+            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointItem.AppPassword}" />
+     
+        </StackPanel>
+        <StackPanel Margin="0,10,0,0" Grid.Column="2" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource panelButtons}">
+            <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Submit" Command="{Binding SubmitCommand}"/>
+            <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -76,7 +76,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Style="{DynamicResource endpointButton}" Template="{DynamicResource TextButtonTemplate}" Content="Add Endpoint"/>
+            <Button Style="{DynamicResource endpointButton}" Template="{DynamicResource TextButtonTemplate}" Command="{Binding AddEndpointCommand}" Content="Add Endpoint"/>
         </StackPanel>
 
         <StackPanel Style="{DynamicResource botPanel}" Visibility="{Binding Path=BotServicesVisibility}">
@@ -97,7 +97,7 @@
 
         <Canvas Style="{DynamicResource downBar}">
             <StackPanel Style="{DynamicResource panelButtons}">
-                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Create" Command="{Binding CreateCommand}"/>
+                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Submit" Command="{Binding CreateCommand}"/>
                 <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}"/>
             </StackPanel>
         </Canvas>

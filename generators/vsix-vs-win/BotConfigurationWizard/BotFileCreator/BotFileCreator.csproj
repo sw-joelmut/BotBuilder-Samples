@@ -63,6 +63,7 @@
     <Compile Include="BaseDialogWindow.cs" />
     <Compile Include="Models\Data\EndpointItem.cs" />
     <Compile Include="Services\FileSystemService.cs" />
+    <Compile Include="ViewModels\EndpointViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Repository\Implementations\BotFileRepository.cs" />
     <Compile Include="Repository\Interface\IBotConfigurationRepository.cs" />
@@ -79,6 +80,9 @@
       <DependentUpon>GeneralSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\EndpointView.xaml.cs">
+      <DependentUpon>EndpointView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -231,6 +235,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BotConfigurationStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EndpointStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EndpointView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
