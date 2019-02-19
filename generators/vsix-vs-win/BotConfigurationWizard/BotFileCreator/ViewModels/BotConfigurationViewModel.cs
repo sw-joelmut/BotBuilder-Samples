@@ -33,6 +33,8 @@ namespace BotFileCreator
 
         private readonly ICommand _copyCommand;
 
+        private readonly ICommand _addEndpointCommand;
+
         private bool _encryptNoteIsVisible;
 
         private EndpointItem _endpointItem;
@@ -45,9 +47,11 @@ namespace BotFileCreator
 
         public BotConfigurationViewModel()
         {
+
             _fileSystemService = new FileSystemService();
             _endpointItem = new EndpointItem();
             _encryptNoteIsVisible = false;
+            _addEndpointCommand = new RelayCommand(param => this.AddEndpoint(), null);
             _copyCommand = new RelayCommand(param => this.CopySecretKey(), null);
             _isCheckedEncryptCheckBox = new RelayCommand(param => this.CheckEncryptCheckBox(), null);
             _createCommand = new RelayCommand(param => this.CreateBotFile(), null);
@@ -113,6 +117,8 @@ namespace BotFileCreator
         public EndpointItem EndpointItem { get => _endpointItem; set => SetProperty(ref _endpointItem, value); }
 
         public bool EncryptCheckBoxIsChecked { get; set; }
+
+        public ICommand AddEndpointCommand { get => _addEndpointCommand; }
 
         public ICommand CopyCommand { get => _copyCommand; }
 
@@ -253,6 +259,12 @@ namespace BotFileCreator
             {
                 Clipboard.SetText(SecretKey);
             }
+        }
+
+        private void AddEndpoint()
+        {
+            var endpointView = new EndpointView();
+            endpointView.ShowDialog();
         }
     }
 }
