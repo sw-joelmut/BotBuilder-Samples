@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-
 namespace BotFileCreator
 {
+    using System.Collections.Generic;
+
     public class BotSettings
     {
         public string Name { get; set; }

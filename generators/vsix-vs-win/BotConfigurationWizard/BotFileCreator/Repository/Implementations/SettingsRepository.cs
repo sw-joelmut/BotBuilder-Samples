@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
-using Microsoft.Bot.Configuration;
-using System.Linq;
-using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace BotFileCreator
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class SettingsRepository : IBotConfigurationRepository
     {
         private static SettingsRepository instance = null;
@@ -14,12 +16,6 @@ namespace BotFileCreator
         public SettingsRepository()
         {
             this._botSettings = new BotSettings();
-            this._botSettings.Services.Add(new EndpointService { Name = "Development", Endpoint = "http://localhost:3978/api/message" });
-            //this._botSettings.Services.Add(new EndpointService { Name = "Development", Endpoint = "http://localhost:3978/api/message" });
-            //this._botSettings.Services.Add(new EndpointService { Name = "Production", Endpoint = "http://localhost:3978/api/message" });
-            //this._botSettings.Services.Add(new EndpointService { Name = "Production", Endpoint = "http://localhost:3978/api/message" });
-            //this._botSettings.Services.Add(new EndpointService { Name = "Development", Endpoint = "http://localhost:3978/api/message" });
-            //this._botSettings.Services.Add(new EndpointService { Name = "Development", Endpoint = "http://localhost:3978/api/message" });
         }
 
         public static SettingsRepository GetInstance()

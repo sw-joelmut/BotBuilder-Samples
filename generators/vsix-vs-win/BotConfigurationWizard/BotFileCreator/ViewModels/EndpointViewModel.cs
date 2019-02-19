@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Windows.Input;
-
 namespace BotFileCreator
 {
+    using System;
+    using System.Windows.Input;
+
     public class EndpointViewModel : BaseViewModel
     {
         private IBotConfigurationRepository _repository;
