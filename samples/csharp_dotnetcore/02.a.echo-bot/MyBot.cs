@@ -45,7 +45,7 @@ namespace Microsoft.BotBuilderSamples
             if (turnContext.Activity.Type == ActivityTypes.Message)
             {
                 // Echo back to the user whatever they typed.
-                var responseMessage = $"'{turnContext.Activity.Text}' fam\n";
+                var responseMessage = $"message pipelines: '{turnContext.Activity.Text}'\n";
                 await turnContext.SendActivityAsync(responseMessage);
             }
             else
