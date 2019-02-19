@@ -3,7 +3,6 @@
 
 using System;
 using System.Windows.Input;
-using BotFileCreator.Repository;
 
 namespace BotFileCreator
 {
@@ -15,18 +14,19 @@ namespace BotFileCreator
 
         private readonly ICommand _submitCommand;
 
-        private EndpointItem _endpointItem;
+        private EndpointService _endpointItem;
 
         public EndpointViewModel()
         {
-            _endpointItem = new EndpointItem();
+            _repository = SettingsRepository.GetInstance();
+            _endpointItem = new EndpointService();
             _cancelCommand = new RelayCommand(param => this.CloseAction(), null);
             _submitCommand = new RelayCommand(param => this.Submit(), null);
         }
 
         public Action CloseAction { get; set; }
 
-        public EndpointItem EndpointItem { get => _endpointItem; set => SetProperty(ref _endpointItem, value); }
+        public EndpointService EndpointItem { get => _endpointItem; set => SetProperty(ref _endpointItem, value); }
 
         public ICommand CancelCommand { get => _cancelCommand; }
 
@@ -34,6 +34,8 @@ namespace BotFileCreator
 
         private void Submit()
         {
+            _repository.ConnectService(this.EndpointItem);
+            this.CloseAction();
         }
     }
 }
