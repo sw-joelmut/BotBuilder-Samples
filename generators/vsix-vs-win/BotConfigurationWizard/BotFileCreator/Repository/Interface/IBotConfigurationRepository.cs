@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace BotFileCreator.Repository
+namespace BotFileCreator
 {
-    using Microsoft.Bot.Configuration;
+    using System.Collections.Generic;
 
     public interface IBotConfigurationRepository
     {
@@ -24,7 +24,7 @@ namespace BotFileCreator.Repository
         /// ConnectService
         /// </summary>
         /// <param name="service">service</param>
-        void ConnectService(ConnectedService service);
+        void ConnectService(BotService service);
 
         /// <summary>
         /// DisconnectService
@@ -43,5 +43,7 @@ namespace BotFileCreator.Repository
         /// </summary>
         /// <param name="secret">secret</param>
         void Decrypt(string secret);
+
+        IEnumerable<BotService> GetEndpoints();
     }
 }

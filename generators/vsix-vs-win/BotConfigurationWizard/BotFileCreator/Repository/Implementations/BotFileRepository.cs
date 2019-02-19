@@ -3,6 +3,7 @@
 
 namespace BotFileCreator.Repository
 {
+    using System.Collections.Generic;
     using System.IO;
     using Microsoft.Bot.Configuration;
 
@@ -69,12 +70,12 @@ namespace BotFileCreator.Repository
         /// ConnectService
         /// </summary>
         /// <param name="service">service</param>
-        public void ConnectService(ConnectedService service)
+        public void ConnectService(BotService service)
         {
-            if (this.botConfiguration != null)
-            {
-                this.botConfiguration.ConnectService(service);
-            }
+            //if (this.botConfiguration != null)
+            //{
+            //    this.botConfiguration.ConnectService(service);
+            //}
         }
 
         /// <summary>
@@ -162,6 +163,16 @@ namespace BotFileCreator.Repository
             }
 
             return fullPath;
+        }
+
+        public IEnumerable<BotFileCreator.BotService> GetEndpoints()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void ConnectService(BotFileCreator.BotService service)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
