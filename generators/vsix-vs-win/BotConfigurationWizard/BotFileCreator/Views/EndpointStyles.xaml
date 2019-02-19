@@ -7,6 +7,12 @@
         <Setter Property="Background" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.ToolWindowBackgroundBrushKey}}"/>
     </Style>
 
+    <Style x:Key="formStackPanel" TargetType="StackPanel">
+        <Setter Property="Grid.Column" Value="1" />
+        <Setter Property="Grid.Row" Value="1" />
+        <Setter Property="Grid.ColumnSpan" Value="2" />
+    </Style>
+
     <Style TargetType="TextBlock">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.ToolWindowTextBrushKey}}"/>
     </Style>
@@ -19,16 +25,20 @@
         <Setter Property="FontWeight" Value="Thin"/>
     </Style>
 
-    <Style x:Key="description" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="Margin" Value="5"/>
-    </Style>
-
     <Style x:Key="moduleTitle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="Margin" Value="5,5,5,5"/>
         <Setter Property="FontWeight" Value="Light"/>
     </Style>
 
+    <Style x:Key="description" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <Style x:Key="contentRequired" TargetType="Run">
+        <Setter Property="Foreground" Value="MediumVioletRed" />
+    </Style>
+    
     <Style x:Key="textBoxForm" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
         <Setter Property="Height" Value="25"/>
         <Setter Property="Width" Value="300"/>
@@ -45,9 +55,7 @@
         <Setter Property="FontWeight" Value="Light"/>
     </Style>
 
-
-
-    <Style x:Key="downBarButton" TargetType="Button">
+    <Style x:Key="button" TargetType="Button">
         <Style.Setters>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.SystemButtonTextBrushKey}}"/>
             <Setter Property="Background" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.SystemButtonShadowBrushKey}}"/>
@@ -78,20 +86,12 @@
     </ControlTemplate>
 
     <Style x:Key="panelButtons" TargetType="StackPanel">
+        <Setter Property="Grid.Column" Value="2"/>
+        <Setter Property="Grid.Row" Value="2"/>
+        <Setter Property="Margin" Value="0,10,0,0"/>
         <Setter Property="Orientation" Value="Horizontal"/>
-        <Setter Property="Canvas.Right" Value="15"/>
-        <Setter Property="Canvas.Bottom" Value="15"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
     </Style>
-
-    <ControlTemplate x:Key="TextButtonTemplate" TargetType="Button">
-        <TextBlock x:Name="TextBlock">
-            <ContentPresenter Content="{TemplateBinding  Content}" ContentTemplate="{TemplateBinding  ContentTemplate}"/>
-        </TextBlock>
-        <ControlTemplate.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="TextBlock" Property="TextBlock.TextDecorations" Value="Underline"/>
-            </Trigger>
-        </ControlTemplate.Triggers>
-    </ControlTemplate>
 
 </ResourceDictionary>

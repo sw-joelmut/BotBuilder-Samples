@@ -97,7 +97,7 @@
 
         <Canvas Style="{DynamicResource downBar}">
             <StackPanel Style="{DynamicResource panelButtons}">
-                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Submit" Command="{Binding CreateCommand}"/>
+                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Create" Command="{Binding CreateCommand}"/>
                 <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}"/>
             </StackPanel>
         </Canvas>
