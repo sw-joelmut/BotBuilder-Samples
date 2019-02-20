@@ -7,10 +7,12 @@ namespace BotFileCreator
     /// </summary>
     public partial class EndpointView
     {
-        public EndpointView()
+        public EndpointView(EndpointService endpointService)
         {
             var endpointViewModel = new EndpointViewModel();
+            endpointViewModel.EndpointService = endpointService;
             endpointViewModel.CloseAction = new Action(() => this.Close());
+
             DataContext = endpointViewModel;
             InitializeComponent();
         }
