@@ -4,20 +4,19 @@
 namespace BotFileCreator
 {
     using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
+    using System.ComponentModel;
     using System.IO;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Data;
     using System.Windows.Input;
     using BotFileCreator.Repository;
-    using Microsoft.Bot.Configuration;
 
     public class BotConfigurationViewModel : BaseViewModel
     {
         private IBotConfigurationRepository _repository;
 
-        private ObservableCollection<BotService> _endpoints;
+        private ICollectionView _endpoints;
 
         private readonly FileSystemService _fileSystemService;
 
@@ -39,9 +38,11 @@ namespace BotFileCreator
 
         private readonly ICommand _addEndpointCommand;
 
-        private bool _encryptNoteIsVisible;
+        private readonly ICommand _editEndpointCommand;
 
-        private EndpointItem _endpointItem;
+        private readonly ICommand _deleteEndpointCommand;
+
+        private bool _encryptNoteIsVisible;
 
         private string _secretKey;
 
@@ -52,10 +53,11 @@ namespace BotFileCreator
         public BotConfigurationViewModel()
         {
             _repository = SettingsRepository.GetInstance();
-            _endpoints = new ObservableCollection<BotService>(_repository.GetEndpoints());
+            _endpoints = CollectionViewSource.GetDefaultView(_repository.GetEndpoints());
             _fileSystemService = new FileSystemService();
-            _endpointItem = new EndpointItem();
             _encryptNoteIsVisible = false;
+            _editEndpointCommand = new RelayCommand(param => this.EditEndpoint(), null);
+            _deleteEndpointCommand = new RelayCommand(param => this.DeleteEndpoint(), null);
             _addEndpointCommand = new RelayCommand(param => this.AddEndpoint(), null);
             _copyCommand = new RelayCommand(param => this.CopySecretKey(), null);
             _isCheckedEncryptCheckBox = new RelayCommand(param => this.CheckEncryptCheckBox(), null);
@@ -96,9 +98,9 @@ namespace BotFileCreator
 
         public bool EncryptCheckBoxIsChecked { get; set; }
 
-        public ObservableCollection<BotService> Endpoints { get => _endpoints; set => SetProperty(ref _endpoints, value); }
+        public ICollectionView Endpoints { get => _endpoints; set => SetProperty(ref _endpoints, value); }
 
-        public EndpointItem EndpointItem { get => _endpointItem; set => SetProperty(ref _endpointItem, value); }
+        public EndpointService EndpointItemSelect { get; set; }
 
         public Visibility EncryptNoteVisibility
         {
@@ -124,6 +126,10 @@ namespace BotFileCreator
         {
             get => _panelToShow == "BotEncrypt" ? Visibility.Visible : Visibility.Collapsed;
         }
+
+        public ICommand DeleteEndpointCommand { get => _deleteEndpointCommand; }
+
+        public ICommand EditEndpointCommand { get => _editEndpointCommand; }
 
         public ICommand AddEndpointCommand { get => _addEndpointCommand; }
 
@@ -161,11 +167,11 @@ namespace BotFileCreator
             _repository = new BotFileRepository(BotFileName, _fileSystemService.GetProjectDirectoryPath());
 
             // Adds the only endpoint (if it's not null) to the bot configuration
-            if (!string.IsNullOrWhiteSpace(EndpointItem.Endpoint))
-            {
-                //EndpointService endpoint = new EndpointService() { Name = this.EndpointItem.Name, Endpoint = this.EndpointItem.Endpoint, AppId = this.EndpointItem.AppId, AppPassword = this.EndpointItem.AppPassword, ChannelService = string.Empty };
-                //_repository.ConnectService(endpoint);
-            }
+            //if (!string.IsNullOrWhiteSpace(EndpointItem.Endpoint))
+            //{
+            //    //EndpointService endpoint = new EndpointService() { Name = this.EndpointItem.Name, Endpoint = this.EndpointItem.Endpoint, AppId = this.EndpointItem.AppId, AppPassword = this.EndpointItem.AppPassword, ChannelService = string.Empty };
+            //    //_repository.ConnectService(endpoint);
+            //}
 
             // If the "SecretKey" has value, the bot configuration is save with encryption
             if (!string.IsNullOrWhiteSpace(this.SecretKey))
@@ -270,10 +276,22 @@ namespace BotFileCreator
 
         private void AddEndpoint()
         {
-            var endpointView = new EndpointView();
+            var endpointView = new EndpointView(new EndpointService());
             endpointView.ShowDialog();
-            NotifyPropertyChanged("_endpoints");
-            Endpoints = new ObservableCollection<BotService>(_repository.GetEndpoints());
+            Endpoints.Refresh();
+        }
+
+        private void EditEndpoint()
+        {
+            var endpointView = new EndpointView(this.EndpointItemSelect);
+            endpointView.ShowDialog();
+            Endpoints.Refresh();
+        }
+
+        private void DeleteEndpoint()
+        {
+            this._repository.DisconnectService(EndpointItemSelect.Id);
+            Endpoints.Refresh();
         }
     }
 }
