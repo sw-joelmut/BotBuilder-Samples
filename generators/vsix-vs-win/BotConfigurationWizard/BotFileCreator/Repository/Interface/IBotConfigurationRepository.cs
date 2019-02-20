@@ -24,7 +24,10 @@ namespace BotFileCreator
         /// ConnectService
         /// </summary>
         /// <param name="service">service</param>
+        /// <param name="edit">when is true means edit a service</param>
         void ConnectService(BotService service);
+
+        void EditService(BotService service);
 
         /// <summary>
         /// DisconnectService

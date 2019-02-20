@@ -174,5 +174,10 @@ namespace BotFileCreator.Repository
         {
             throw new System.NotImplementedException();
         }
+
+        public void EditService(BotFileCreator.BotService service)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
