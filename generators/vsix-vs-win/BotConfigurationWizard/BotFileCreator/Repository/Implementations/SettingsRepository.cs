@@ -5,19 +5,54 @@ namespace BotFileCreator
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using Microsoft.Bot.Configuration;
 
+    /// <summary>
+    /// Repository Pattern class for managing <see cref="appSettings"/>.
+    /// </summary>
     public class SettingsRepository : IBotConfigurationRepository
     {
+        /// <summary>
+        /// <see cref="SettingsRepository"/> instance.
+        /// </summary>
         private static SettingsRepository instance = null;
 
-        private BotSettings _botSettings;
+        /// <summary>
+        /// <see cref="appSettings"/>.
+        /// </summary>
+        private AppSettings appSettings;
 
-        public SettingsRepository()
+        private SettingsRepository()
         {
-            this._botSettings = new BotSettings();
+            FileSystemService fss = FileSystemService.GetInstance();
+
+            // Path to the appsettings.json file under the selected project's directory
+            string path = fss.GetFileInProject("appsettings.json", SearchOption.TopDirectoryOnly);
+
+            // If no file are found, we define our appsettings.json file
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                path = Path.Combine(fss.GetProjectDirectoryPath(), "appsettings.json");
+            }
+
+            if (File.Exists(path))
+            {
+                appSettings = AppSettings.Load(path);
+            }
+            else
+            {
+                appSettings = new AppSettings(path);
+                appSettings.SetName(string.Empty);
+                appSettings.SetDescription(string.Empty);
+            }
         }
 
+        /// <summary>
+        /// Returns the Repository instance.
+        /// </summary>
+        /// <returns><see cref="SettingsRepository"/>.</returns>
         public static SettingsRepository GetInstance()
         {
             if (instance == null)
@@ -28,16 +63,24 @@ namespace BotFileCreator
             return instance;
         }
 
-        public BotService FindService(string id)
+        /// <summary>
+        /// Connect a <see cref="ConnectedService"/> to the bot.
+        /// </summary>
+        /// <param name="newService"><see cref="ConnectedService"/> to add.</param>
+        public void ConnectService(ConnectedService newService)
         {
-            if (string.IsNullOrEmpty(id))
+            if (newService == null)
             {
-                throw new ArgumentNullException(nameof(id));
+                throw new ArgumentNullException(nameof(newService));
             }
 
-            return this._botSettings.Services.FirstOrDefault(s => s.Id == id);
+            this.appSettings.ConnectService(newService);
         }
 
+        /// <summary>
+        /// Disconnect a <see cref="ConnectedService"/> by its ID.
+        /// </summary>
+        /// <param name="serviceId"><see cref="ConnectedService"/>'s ID.</param>
         public void DisconnectService(string serviceId)
         {
             if (string.IsNullOrEmpty(serviceId))
@@ -45,72 +88,124 @@ namespace BotFileCreator
                 throw new ArgumentNullException(nameof(serviceId));
             }
 
-            var service = this.FindService(serviceId);
-            if (service != null)
-            {
-                this._botSettings.Services.Remove(service);
-            }
+            this.appSettings.DisconnectService(serviceId);
         }
 
-        public void EditService(BotService newService)
+        /// <summary>
+        /// Gets a <see cref="ConnectedService"/> by its ID.
+        /// </summary>
+        /// <param name="id"><see cref="ConnectedService"/>'s ID.</param>
+        /// <returns><see cref="ConnectedService"/></returns>
+        public ConnectedService FindService(string id)
         {
-            if (newService == null)
+            if (string.IsNullOrEmpty(id))
             {
-                throw new ArgumentNullException(nameof(newService));
+                throw new ArgumentNullException(nameof(id));
             }
 
-            DisconnectService(newService.Id);
-            ConnectService(newService);
+            return this.appSettings.FindService(id);
         }
 
-        public void ConnectService(BotService newService)
+        /// <summary>
+        /// Edits a <see cref="ConnectedService"/> from the <see cref="appSettings"/> configuration.
+        /// </summary>
+        /// <param name="service"><see cref="ConnectedService"/> to edit.</param>
+        public void EditService(ConnectedService service)
         {
-            if (newService == null)
+            if (service == null)
             {
-                throw new ArgumentNullException(nameof(newService));
+                throw new ArgumentNullException(nameof(service));
             }
 
-            if (this._botSettings.Services.Where(s => s.Type == newService.Type && s.Id == newService.Id).Any())
-            {
-                throw new Exception($"service with {newService.Id} is already connected");
-            }
-            else
-            {
-                // Assign a unique random id between 0-255 (255 services seems like a LOT of services
-                var rnd = new Random();
-                do
-                {
-                    newService.Id = rnd.Next(byte.MaxValue).ToString();
-                }
-                while (this._botSettings.Services.Where(s => s.Id == newService.Id).Any());
-
-                this._botSettings.Services.Add(newService);
-            }
+            DisconnectService(service.Id);
+            ConnectService(service);
         }
 
-        public IEnumerable<BotService> GetEndpoints()
+        /// <summary>
+        /// Returns the <see cref="appSettings"/>'s enpoints list.
+        /// </summary>
+        /// <returns>List of <see cref="EndpointService"/>.</returns>
+        public IEnumerable<ConnectedService> GetEndpoints()
         {
-            return this._botSettings.Services.Where(service => service.Type == ServiceTypes.Endpoint);
+            return this.appSettings.GetServicesByType<EndpointService>();
         }
 
+        /// <summary>
+        /// Decrypt all values in the in memory config.
+        /// </summary>
+        /// <param name="secret">Secret to encrypt.</param>
         public void Decrypt(string secret)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Encrypt all values in the in memory config.
+        /// </summary>
+        /// <param name="secret">Secret to encrypt.</param>
         public void Encrypt(string secret)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Load the AppSettings class from a specific file.
+        /// </summary>
+        /// <param name="file">AppSettings file.</param>
+        /// <param name="secret">secret.</param>
         public void Load(string file, string secret = null)
         {
-            throw new System.NotImplementedException();
+            var appsettings = AppSettings.Load(file);
+
+            if (appsettings != null)
+            {
+                this.appSettings = appsettings;
+            }
         }
 
+        /// <summary>
+        /// Save the appsettings file.
+        /// </summary>
+        /// <param name="secret">secret.</param>
         public void Save(string secret = null)
         {
-            throw new System.NotImplementedException();
+            this.appSettings.Save();
+        }
+
+        /// <summary>
+        /// Gets the <see cref="BotSettings"/>'s name.
+        /// </summary>
+        /// <returns><see cref="BotSettings"/>'s name.</returns>
+        public string GetName()
+        {
+            return this.appSettings.GetName();
+        }
+
+        /// <summary>
+        /// Sets the <see cref="BotSettings"/>'s name.
+        /// </summary>
+        /// <param name="name"><see cref="BotSettings"/>'s name.</param>
+        public void SetName(string name)
+        {
+            this.appSettings.SetName(name);
+        }
+
+        /// <summary>
+        /// Gets the <see cref="BotSettings"/>'s description.
+        /// </summary>
+        /// <returns><see cref="BotSettings"/>'s description.</returns>
+        public string GetDescription()
+        {
+            return this.appSettings.GetDescription();
+        }
+
+        /// <summary>
+        /// Sets the <see cref="BotSettings"/>'s description.
+        /// </summary>
+        /// <param name="description"><see cref="BotSettings"/>'s description.</param>
+        public void SetDescription(string description)
+        {
+            this.appSettings.SetDescription(description);
         }
     }
 }

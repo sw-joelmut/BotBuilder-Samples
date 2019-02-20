@@ -4,6 +4,7 @@
 namespace BotFileCreator
 {
     using System.Collections.Generic;
+    using Microsoft.Bot.Configuration;
 
     public interface IBotConfigurationRepository
     {
@@ -24,10 +25,9 @@ namespace BotFileCreator
         /// ConnectService
         /// </summary>
         /// <param name="service">service</param>
-        /// <param name="edit">when is true means edit a service</param>
-        void ConnectService(BotService service);
+        void ConnectService(ConnectedService service);
 
-        void EditService(BotService service);
+        void EditService(ConnectedService service);
 
         /// <summary>
         /// DisconnectService
@@ -47,6 +47,22 @@ namespace BotFileCreator
         /// <param name="secret">secret</param>
         void Decrypt(string secret);
 
-        IEnumerable<BotService> GetEndpoints();
+        /// <summary>
+        /// Gets the Bot's endpoints.
+        /// </summary>
+        /// <returns>Bot's <see cref="EndpointService"/>.</returns>
+        IEnumerable<ConnectedService> GetEndpoints();
+
+        /// <summary>
+        /// Gets the Bot's name.
+        /// </summary>
+        /// <returns>Bot's name.</returns>
+        string GetName();
+
+        /// <summary>
+        /// Sets the Bot name
+        /// </summary>
+        /// <param name="name">Bot's name</param>
+        void SetName(string name);
     }
 }

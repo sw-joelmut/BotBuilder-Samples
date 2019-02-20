@@ -60,17 +60,15 @@
     <NoWarn>SA1652, SA1124</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BotSettings\AppSettings.cs" />
     <Compile Include="BotSettings\BotSettings.cs" />
     <Compile Include="BaseDialogWindow.cs" />
-    <Compile Include="BotSettings\Services\BotService.cs" />
-    <Compile Include="BotSettings\Services\EndpointService.cs" />
     <Compile Include="Models\Data\EndpointItem.cs" />
-    <Compile Include="BotSettings\ServiceTypes.cs" />
+    <Compile Include="Repository\Implementations\BotFileRepository.cs" />
     <Compile Include="Repository\Implementations\SettingsRepository.cs" />
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="ViewModels\EndpointViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
-    <Compile Include="Repository\Implementations\BotFileRepository.cs" />
     <Compile Include="Repository\Interface\IBotConfigurationRepository.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\BotConfigurationViewModel.cs" />
@@ -111,10 +109,6 @@
     </VSCTCompile>
     <Content Include="index.html" />
     <Content Include="Newtonsoft.Json.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="PropertyChanged.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

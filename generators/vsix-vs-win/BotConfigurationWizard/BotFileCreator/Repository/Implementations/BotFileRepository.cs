@@ -70,12 +70,12 @@ namespace BotFileCreator.Repository
         /// ConnectService
         /// </summary>
         /// <param name="service">service</param>
-        public void ConnectService(BotService service)
+        public void ConnectService(ConnectedService service)
         {
-            //if (this.botConfiguration != null)
-            //{
-            //    this.botConfiguration.ConnectService(service);
-            //}
+            if (this.botConfiguration != null)
+            {
+                this.botConfiguration.ConnectService(service);
+            }
         }
 
         /// <summary>
@@ -112,6 +112,15 @@ namespace BotFileCreator.Repository
             {
                 this.botConfiguration.Decrypt(secret);
             }
+        }
+
+        /// <summary>
+        /// Sets the Bot's name
+        /// </summary>
+        /// <param name="name">Bot's name</param>
+        public void SetName(string name)
+        {
+            this.fileName = name;
         }
 
         /// <summary>
@@ -165,19 +174,23 @@ namespace BotFileCreator.Repository
             return fullPath;
         }
 
-        public IEnumerable<BotFileCreator.BotService> GetEndpoints()
+        public IEnumerable<ConnectedService> GetEndpoints()
         {
             throw new System.NotImplementedException();
         }
 
-        public void ConnectService(BotFileCreator.BotService service)
+        public void EditService(ConnectedService service)
         {
             throw new System.NotImplementedException();
         }
 
-        public void EditService(BotFileCreator.BotService service)
+        /// <summary>
+        /// Gets the <see cref="BotConfiguration"/>'s name.
+        /// </summary>
+        /// <returns><see cref="BotConfiguration"/>'s name.</returns>
+        public string GetName()
         {
-            throw new System.NotImplementedException();
+            return this.fileName;
         }
     }
 }

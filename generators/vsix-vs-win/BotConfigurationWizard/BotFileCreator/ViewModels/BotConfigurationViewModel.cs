@@ -11,6 +11,7 @@ namespace BotFileCreator
     using System.Windows.Data;
     using System.Windows.Input;
     using BotFileCreator.Repository;
+    using Microsoft.Bot.Configuration;
 
     public class BotConfigurationViewModel : BaseViewModel
     {
@@ -53,8 +54,9 @@ namespace BotFileCreator
         public BotConfigurationViewModel()
         {
             _repository = SettingsRepository.GetInstance();
+            _botFileName = _repository.GetName();
             _endpoints = CollectionViewSource.GetDefaultView(_repository.GetEndpoints());
-            _fileSystemService = new FileSystemService();
+            _fileSystemService = FileSystemService.GetInstance();
             _encryptNoteIsVisible = false;
             _editEndpointCommand = new RelayCommand(param => this.EditEndpoint(), null);
             _deleteEndpointCommand = new RelayCommand(param => this.DeleteEndpoint(), null);
@@ -153,39 +155,8 @@ namespace BotFileCreator
 
         public void CreateBotFile()
         {
-            // Checks if the bot configuration is valid
-            Tuple<bool, string> configIsValid = BotFileConfigurationIsValid(BotFileName);
-
-            // If the bot's configuration is not valid, it will show an error
-            if (!configIsValid.Item1)
-            {
-                MessageBox.Show(configIsValid.Item2, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            // Repository for creating bot files
-            _repository = new BotFileRepository(BotFileName, _fileSystemService.GetProjectDirectoryPath());
-
-            // Adds the only endpoint (if it's not null) to the bot configuration
-            //if (!string.IsNullOrWhiteSpace(EndpointItem.Endpoint))
-            //{
-            //    //EndpointService endpoint = new EndpointService() { Name = this.EndpointItem.Name, Endpoint = this.EndpointItem.Endpoint, AppId = this.EndpointItem.AppId, AppPassword = this.EndpointItem.AppPassword, ChannelService = string.Empty };
-            //    //_repository.ConnectService(endpoint);
-            //}
-
-            // If the "SecretKey" has value, the bot configuration is save with encryption
-            if (!string.IsNullOrWhiteSpace(this.SecretKey))
-            {
-                _repository.Save(this.SecretKey);
-            }
-            else
-            {
-                // Save the bot configuration without encryption
-                _repository.Save();
-            }
-
-            // Adds the just generated bot file to the project
-            _fileSystemService.AddFileToProject(string.Concat(BotFileName, ".bot"));
+            this._repository.SetName(BotFileName);
+            this._repository.Save();
 
             // If the file was successfully created, the Wizard will be closed.
             MessageBox.Show("Bot file successfully created", "Bot file successfully created", MessageBoxButton.OK, MessageBoxImage.Exclamation);

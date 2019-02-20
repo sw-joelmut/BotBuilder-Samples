@@ -1,7 +1,11 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 namespace BotFileCreator
 {
+    using System;
+    using Microsoft.Bot.Configuration;
+
     /// <summary>
     /// Interaction logic for EndpointView.xaml
     /// </summary>

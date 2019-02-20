@@ -7,6 +7,7 @@ namespace BotFileCreator
     using System.Text.RegularExpressions;
     using System.Windows;
     using System.Windows.Input;
+    using Microsoft.Bot.Configuration;
 
     public class EndpointViewModel : BaseViewModel
     {
