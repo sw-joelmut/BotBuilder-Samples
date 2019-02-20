@@ -67,7 +67,7 @@
         <Setter Property="Margin" Value="2,0,0,50"/>
     </Style>
 
-    <Style x:Key="botPanel" TargetType="StackPanel">
+    <Style x:Key="modulePanel" TargetType="StackPanel">
         <Setter Property="Grid.Column" Value="3"/>
         <Setter Property="Grid.Row" Value="2"/>
         <Setter Property="Grid.ColumnSpan" Value="3"/>
@@ -237,4 +237,15 @@
         <Setter Property="Foreground" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.CommandBarMenuGroupHeaderLinkTextBrushKey}}"/>
     </Style>
 
+    <ItemsPanelTemplate x:Key="MenuItemPanelTemplate">
+        <StackPanel Margin="-20,0,0,0" Background="White"/>
+    </ItemsPanelTemplate>
+
+    <Style TargetType="{x:Type MenuItem}">
+        <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+    </Style>
+
+    <Style TargetType="{x:Type ContextMenu}">
+        <Setter Property="ItemsPanel" Value="{StaticResource MenuItemPanelTemplate}"/>
+    </Style>
 </ResourceDictionary>

@@ -36,15 +36,15 @@
             <TextBlock Style="{DynamicResource textForm}">
                 <Run>Name</Run><Run Style="{DynamicResource contentRequired}">*</Run>
             </TextBlock>
-            <TextBox Style="{DynamicResource nameTextBoxForm}" Text="{Binding Path=EndpointItem.Name}" />
+            <TextBox Style="{DynamicResource nameTextBoxForm}" Text="{Binding Path=EndpointService.Name}" />
             <TextBlock Style="{DynamicResource textForm}">
                 <Run>Endpoint url</Run><Run Style="{DynamicResource contentRequired}">*</Run>
             </TextBlock>
-            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointItem.Endpoint, TargetNullValue='(ex: http://localhost:3978/api/message)'}" />
+            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointService.Endpoint, TargetNullValue='(ex: http://localhost:3978/api/message)'}" />
             <TextBlock Style="{DynamicResource textForm}" Text="App Id"/>
-            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointItem.AppId}" />
+            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointService.AppId}" />
             <TextBlock Style="{DynamicResource textForm}" Text="App Password"/>
-            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointItem.AppPassword}" />
+            <TextBox Style="{DynamicResource textBoxForm}" Text="{Binding Path=EndpointService.AppPassword}" />
      
         </StackPanel>
         <StackPanel Style="{DynamicResource panelButtons}">

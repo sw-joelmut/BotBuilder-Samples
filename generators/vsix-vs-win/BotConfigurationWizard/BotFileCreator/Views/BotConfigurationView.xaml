@@ -58,33 +58,47 @@
 
         <Rectangle Style="{DynamicResource separator}"/>
 
-        <StackPanel Style="{DynamicResource botPanel}" Visibility="{Binding Path=BotNameVisibility}">
+        <StackPanel Style="{DynamicResource modulePanel}" Visibility="{Binding Path=BotNameVisibility}">
             <TextBlock Style="{DynamicResource moduleTitle}" Text="Bot Name" />
             <TextBlock Style="{DynamicResource description}" Text="Description" />
             <TextBox x:Name="BotFileNameTxt" Style="{DynamicResource botNameTextBox}" Text="{Binding Path=BotFileName}" />
         </StackPanel>
 
-        <StackPanel Style="{DynamicResource botPanel}" Visibility="{Binding Path=BotEndpointVisibility}">
+        <StackPanel Style="{DynamicResource modulePanel}" Visibility="{Binding Path=BotEndpointVisibility}">
             <TextBlock Style="{DynamicResource moduleTitle}" Text="Endpoints URL" />
             <TextBlock Style="{DynamicResource description}" Text="Description" />
-
-            <ListView Style="{DynamicResource listView}" ItemsSource="{Binding Endpoints}" ItemContainerStyle="{DynamicResource listViewItem}">
+            <ListView Style="{DynamicResource listView}" ItemsSource="{Binding Endpoints, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }" SelectedItem="{Binding EndpointItemSelect}" ItemContainerStyle="{DynamicResource listViewItem}">
                 <ListView.View>
                     <GridView ColumnHeaderContainerStyle="{DynamicResource headerContainerStyle}">
                         <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150" />
                         <GridViewColumn  Header="Endpoint" DisplayMemberBinding="{Binding Endpoint}" Width="200"/>
                     </GridView>
                 </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Edit" Command="{Binding EditEndpointCommand}"/>
+                        <MenuItem Header="Delete" Command="{Binding DeleteEndpointCommand}"/>
+                    </ContextMenu>
+                </ListView.ContextMenu>
             </ListView>
             <Button Style="{DynamicResource endpointButton}" Template="{DynamicResource TextButtonTemplate}" Command="{Binding AddEndpointCommand}" Content="Add Endpoint"/>
         </StackPanel>
 
-        <StackPanel Style="{DynamicResource botPanel}" Visibility="{Binding Path=BotServicesVisibility}">
-            <TextBlock Style="{DynamicResource moduleTitle}" Text="Services - Not supported by now" />
+        <StackPanel Style="{DynamicResource modulePanel}" Visibility="{Binding Path=BotServicesVisibility}">
+            <TextBlock Style="{DynamicResource moduleTitle}" Text="Azure Services" />
             <TextBlock Style="{DynamicResource description}" Text="Description" />
+            <ListView Style="{DynamicResource listView}" ItemsSource="{Binding Services}" ItemContainerStyle="{DynamicResource listViewItem}">
+                <ListView.View>
+                    <GridView ColumnHeaderContainerStyle="{DynamicResource headerContainerStyle}">
+                        <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150" />
+                        <GridViewColumn  Header="Resource Group" DisplayMemberBinding="{Binding Endpoint}" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button Style="{DynamicResource endpointButton}" Template="{DynamicResource TextButtonTemplate}" Command="{Binding AddEServiceCommand}" Content="Add Service"/>
         </StackPanel>
 
-        <StackPanel Style="{DynamicResource botPanel}" Visibility="{Binding Path=BotEncrypVisibility}">
+        <StackPanel Style="{DynamicResource modulePanel}" Visibility="{Binding Path=BotEncrypVisibility}">
             <TextBlock Style="{DynamicResource moduleTitle}" Text="Encrypt" />
             <TextBlock Style="{DynamicResource description}" Text="Encrypt keys stored in your bot configuration" />
             <CheckBox Style="{DynamicResource encryptCheckBox}" Command="{Binding IsCheckedEncryptCheckBox}" Content="Encrypt" />
