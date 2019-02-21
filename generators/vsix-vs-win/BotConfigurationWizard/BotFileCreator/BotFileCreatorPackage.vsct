@@ -55,7 +55,7 @@
       <Button guid="guidBotFileCreatorPackageCmdSet" id="BotFileCreatorCommandId" priority="0x0100" type="Button">
         <Parent guid="guidBotFileCreatorPackageCmdSet" id="BotFileCreatorMenuGroup" />
         <Strings>
-          <ButtonText>Create Bot File</ButtonText>
+          <ButtonText>Manage Bot Configuration</ButtonText>
         </Strings>
       </Button>
     </Buttons>
