@@ -43,8 +43,8 @@ namespace BotFileCreator
         /// <summary>
         /// Adds a file to the select project.
         /// </summary>
-        /// <param name="botFileName">File's name</param>
-        public void AddFileToProject(string botFileName)
+        /// <param name="file">File's name</param>
+        public void AddFileToProject(string file)
         {
             // Load a specific project. Also, avoids several problems for re-loading the same project more than once
             var project = Microsoft.Build.Evaluation.ProjectCollection.GlobalProjectCollection.LoadedProjects.FirstOrDefault(pr => pr.FullPath == _projectName);
@@ -56,9 +56,9 @@ namespace BotFileCreator
                 project.ReevaluateIfNecessary();
 
                 // Checks if the project has a file with the same name. If it doesn't, it will be added to the project
-                if (project.Items.FirstOrDefault(item => item.EvaluatedInclude == botFileName) == null)
+                if (project.Items.FirstOrDefault(item => item.EvaluatedInclude == file) == null)
                 {
-                    project.AddItem("Compile", botFileName);
+                    project.AddItem("Compile", file);
                     project.Save();
                 }
             }

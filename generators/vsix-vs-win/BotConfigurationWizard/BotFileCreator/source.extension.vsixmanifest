@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="BotFileCreator.aa95faae-dbc2-49bc-80d9-351048ed6961" Version="1.0" Language="en-US" Publisher="Gaspar Acevedo" />
-        <DisplayName>BotFileCreator</DisplayName>
-        <Description>Empty VSIX Project.</Description>
+        <Identity Id="BotFileCreator.aa95faae-dbc2-49bc-80d9-351048ed6961" Version="1.0" Language="en-US" Publisher="Manx-Team" />
+        <DisplayName>BotConfigurationManager</DisplayName>
+        <Description xml:space="preserve">Allows managing a Bot Configuration stored in an AppSettings.json file</Description>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0, 16.0)" />

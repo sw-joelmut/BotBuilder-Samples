@@ -26,7 +26,7 @@ namespace BotFileCreator
 
         private SettingsRepository()
         {
-            FileSystemService fss = FileSystemService.GetInstance();
+            var fss = FileSystemService.GetInstance();
 
             // Path to the appsettings.json file under the selected project's directory
             string path = fss.GetFileInProject("appsettings.json", SearchOption.TopDirectoryOnly);
@@ -43,7 +43,12 @@ namespace BotFileCreator
             }
             else
             {
+                // if the Appsettings file doesn't exist, we create a new file and add it to the project
                 appSettings = new AppSettings(path);
+                File.Create(path).Dispose();
+                fss.AddFileToProject(path);
+
+                // Also, as the appsettings configuration has just been created, we set its name and description to string.empty
                 appSettings.SetName(string.Empty);
                 appSettings.SetDescription(string.Empty);
             }
@@ -58,6 +63,11 @@ namespace BotFileCreator
             if (instance == null)
             {
                 instance = new SettingsRepository();
+            }
+            else
+            {
+                // If the instance exists, reload it
+                instance.Load(instance.appSettings.GetPath());
             }
 
             return instance;

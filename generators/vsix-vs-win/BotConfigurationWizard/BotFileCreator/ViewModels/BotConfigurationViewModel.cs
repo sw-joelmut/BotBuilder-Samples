@@ -5,8 +5,6 @@ namespace BotFileCreator
 {
     using System;
     using System.ComponentModel;
-    using System.IO;
-    using System.Linq;
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
@@ -155,6 +153,15 @@ namespace BotFileCreator
 
         public void CreateBotFile()
         {
+            var botConfigurationNameIsValid = BotConfigurationNameIsValid(BotFileName);
+
+            // Checks if the Bot Configuration name is valid
+            if (!botConfigurationNameIsValid.Item1)
+            {
+                MessageBox.Show(botConfigurationNameIsValid.Item2, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             this._repository.SetName(BotFileName);
             this._repository.Save();
 
@@ -168,61 +175,22 @@ namespace BotFileCreator
         /// </summary>
         /// <param name="botFileName">bot file's name</param>
         /// <returns>Tuple</returns>
-        private Tuple<bool, string> BotFileConfigurationIsValid(string botFileName)
+        private Tuple<bool, string> BotConfigurationNameIsValid(string botFileName)
         {
             // If the .bot file name is Null or WhiteSpace, returns an error.
             if (string.IsNullOrWhiteSpace(botFileName))
             {
-                return new Tuple<bool, string>(false, "Bot file name can't be null.");
+                return new Tuple<bool, string>(false, "Bot configuration name can't be null.");
             }
 
             // If the .bot file name contains any whitespace, the method will return an error.
             if (botFileName.Contains(" "))
             {
-                return new Tuple<bool, string>(false, "Bot file name can't have whitespaces.");
-            }
-
-            if (File.Exists(Path.Combine(_fileSystemService.GetProjectDirectoryPath(), string.Concat(botFileName, ".bot"))))
-            {
-                return new Tuple<bool, string>(false, $"The bot file {botFileName} already exists.");
+                return new Tuple<bool, string>(false, "Bot configuration name can't have whitespaces.");
             }
 
             // A tuple with True and Empty string will be returned if there are no errors.
             return new Tuple<bool, string>(true, string.Empty);
-        }
-
-        /// <summary>
-        /// Adds a specified file to another specified project
-        /// </summary>
-        /// <param name="projectName">The full path to .csproj file</param>
-        /// <param name="fileName">The file name to add to csproj</param>
-        private void AddFileToProject(string projectName, string fileName)
-        {
-            // Load a specific project. Also, avoids several problems for re-loading the same project more than once
-            var project = Microsoft.Build.Evaluation.ProjectCollection.GlobalProjectCollection.LoadedProjects.FirstOrDefault(pr => pr.FullPath == projectName);
-
-            if (project != null)
-            {
-                // Reevaluates the project to add any change
-                project.ReevaluateIfNecessary();
-
-                // Checks if the project has a file with the same name. If it doesn't, it will be added to the project
-                if (project.Items.FirstOrDefault(item => item.EvaluatedInclude == fileName) == null)
-                {
-                    project.AddItem("Compile", fileName);
-                    project.Save();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns the Working Project Directory
-        /// </summary>
-        /// <param name="projectPath">Project's full path</param>
-        /// <returns>Project's directory path</returns>
-        private string GetProjectDirectoryPath(string projectPath)
-        {
-            return projectPath.Substring(0, projectPath.LastIndexOf('\\'));
         }
 
         private void SetPanelToShow(string panelToShow)

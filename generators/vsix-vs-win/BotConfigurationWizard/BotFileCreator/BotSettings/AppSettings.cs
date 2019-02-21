@@ -26,11 +26,13 @@ namespace BotFileCreator
 
         public AppSettings()
         {
+            this.BotSettings = new BotSettings();
         }
 
         public AppSettings(string appSettingsPath)
         {
             this.appSettingsPath = appSettingsPath;
+            this.BotSettings = new BotSettings();
         }
 
         [JsonExtensionData(ReadData = true, WriteData = true)]
@@ -229,6 +231,15 @@ namespace BotFileCreator
         public string GetDescription()
         {
             return this.BotSettings.Description;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="AppSettings"/> file path.
+        /// </summary>
+        /// <returns><see cref="AppSettings"/> file path.</returns>
+        public string GetPath()
+        {
+            return this.appSettingsPath;
         }
 
         /// <summary>
