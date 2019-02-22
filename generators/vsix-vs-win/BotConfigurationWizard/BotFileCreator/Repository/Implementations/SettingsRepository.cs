@@ -12,7 +12,7 @@ namespace BotFileCreator
     /// <summary>
     /// Repository Pattern class for managing <see cref="appSettings"/>.
     /// </summary>
-    public class SettingsRepository : IBotConfigurationRepository
+    public class SettingsRepository : IBotConfigurationRepository, IDisposable
     {
         /// <summary>
         /// <see cref="SettingsRepository"/> instance.
@@ -64,11 +64,12 @@ namespace BotFileCreator
             {
                 instance = new SettingsRepository();
             }
-            else
-            {
-                // If the instance exists, reload it
-                instance.Load(instance.appSettings.GetPath());
-            }
+
+            // else
+            // {
+            //    // If the instance exists, reload it
+            //    instance.Load(instance.appSettings.GetPath());
+            // }
 
             return instance;
         }
@@ -216,6 +217,12 @@ namespace BotFileCreator
         public void SetDescription(string description)
         {
             this.appSettings.SetDescription(description);
+        }
+
+        public void Dispose()
+        {
+            this.appSettings = null;
+            instance = null;
         }
     }
 }

@@ -167,6 +167,8 @@ namespace BotFileCreator
 
             // If the file was successfully created, the Wizard will be closed.
             MessageBox.Show("Bot file successfully created", "Bot file successfully created", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+            ((SettingsRepository)_repository).Dispose();
             CloseAction();
         }
 
