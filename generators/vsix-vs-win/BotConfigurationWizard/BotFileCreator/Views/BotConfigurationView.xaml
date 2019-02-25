@@ -7,6 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:BaseDialogWindow="clr-namespace:BotFileCreator"
+             x:Name="_botConfigurationView"
              mc:Ignorable="d"
              d:DesignWidth="600" d:DesignHeight="540" 
              MinWidth="600" MinHeight="540"
@@ -112,7 +113,7 @@
         <Canvas Style="{DynamicResource downBar}">
             <StackPanel Style="{DynamicResource panelButtons}">
                 <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Create" Command="{Binding CreateCommand}"/>
-                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}"/>
+                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=_botConfigurationView}"/>
             </StackPanel>
         </Canvas>
     </Grid>

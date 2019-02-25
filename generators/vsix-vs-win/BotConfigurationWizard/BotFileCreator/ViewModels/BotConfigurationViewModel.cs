@@ -234,5 +234,10 @@ namespace BotFileCreator
             this._repository.DisconnectService(EndpointItemSelect.Id);
             Endpoints.Refresh();
         }
+
+        private void CloseWindow(Window window)
+        {
+            window.Close();
+        }
     }
 }

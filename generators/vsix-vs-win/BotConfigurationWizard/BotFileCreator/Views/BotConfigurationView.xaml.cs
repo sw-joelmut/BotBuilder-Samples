@@ -3,8 +3,6 @@
 
 namespace BotFileCreator
 {
-    using System;
-
     /// <summary>
     /// Interaction logic for BotFileCreationWizard.xaml
     /// </summary>
@@ -13,7 +11,6 @@ namespace BotFileCreator
         public BotFileCreationWizard()
         {
             var botConfiguration = new BotConfigurationViewModel();
-            botConfiguration.CloseAction = new Action(() => this.Close());
             DataContext = botConfiguration;
             InitializeComponent();
         }
