@@ -3,7 +3,6 @@
 
 namespace BotFileCreator
 {
-    using System;
     using Microsoft.Bot.Configuration;
 
     /// <summary>
@@ -13,11 +12,7 @@ namespace BotFileCreator
     {
         public EndpointView(EndpointService endpointService)
         {
-            var endpointViewModel = new EndpointViewModel();
-            endpointViewModel.EndpointService = endpointService;
-            endpointViewModel.CloseAction = new Action(() => this.Close());
-
-            DataContext = endpointViewModel;
+            DataContext = new EndpointViewModel() { EndpointService = endpointService };
             InitializeComponent();
         }
     }

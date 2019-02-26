@@ -23,8 +23,8 @@ namespace BotFileCreator
         {
             _repository = SettingsRepository.GetInstance();
             _endpointService = new EndpointService();
-            _cancelCommand = new RelayCommand(param => this.CloseAction(), null);
-            _submitCommand = new RelayCommand(param => this.Submit(), null);
+            _cancelCommand = new RelayCommand<Window>(this.CloseWindow, null);
+            _submitCommand = new RelayCommand<Window>(this.Submit, null);
         }
 
         public Action CloseAction { get; set; }
@@ -57,7 +57,7 @@ namespace BotFileCreator
             return new Tuple<bool, string>(true, string.Empty);
         }
 
-        private void Submit()
+        private void Submit(Window window)
         {
             // Checks if the endpoint service is valid
             Tuple<bool, string> endpointIsValid = EndpointServiceIsValid();
@@ -77,7 +77,12 @@ namespace BotFileCreator
                 _repository.EditService(this.EndpointService);
             }
 
-            this.CloseAction();
+            window.Close();
+        }
+
+        private void CloseWindow(Window window)
+        {
+            window.Close();
         }
     }
 }

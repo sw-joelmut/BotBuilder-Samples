@@ -112,7 +112,7 @@
 
         <Canvas Style="{DynamicResource downBar}">
             <StackPanel Style="{DynamicResource panelButtons}">
-                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Create" Command="{Binding CreateCommand}"/>
+                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Create" Command="{Binding CreateCommand}" CommandParameter="{Binding ElementName=_botConfigurationView}"/>
                 <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=_botConfigurationView}"/>
             </StackPanel>
         </Canvas>

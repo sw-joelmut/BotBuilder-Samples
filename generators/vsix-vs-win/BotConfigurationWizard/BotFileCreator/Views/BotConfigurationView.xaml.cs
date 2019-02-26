@@ -10,8 +10,7 @@ namespace BotFileCreator
     {
         public BotFileCreationWizard()
         {
-            var botConfiguration = new BotConfigurationViewModel();
-            DataContext = botConfiguration;
+            DataContext = new BotConfigurationViewModel();
             InitializeComponent();
         }
     }

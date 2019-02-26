@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             x:Name="_endpointView"
              mc:Ignorable="d"         
              d:DesignWidth="360" d:DesignHeight="380"
              Width="360" Height="380"                
@@ -48,8 +49,8 @@
      
         </StackPanel>
         <StackPanel Style="{DynamicResource panelButtons}">
-            <Button Style="{DynamicResource button}" Template="{DynamicResource ButtonsTemplate}" Content="Submit" Command="{Binding SubmitCommand}"/>
-            <Button Style="{DynamicResource button}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}"/>
+            <Button Style="{DynamicResource button}" Template="{DynamicResource ButtonsTemplate}" Content="Submit" Command="{Binding SubmitCommand}" CommandParameter="{Binding ElementName=_endpointView}"/>
+            <Button Style="{DynamicResource button}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=_endpointView}"/>
         </StackPanel>
     </Grid>
 </Window>

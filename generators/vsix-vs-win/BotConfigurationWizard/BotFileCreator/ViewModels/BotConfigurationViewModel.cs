@@ -56,17 +56,17 @@ namespace BotFileCreator
             _endpoints = CollectionViewSource.GetDefaultView(_repository.GetEndpoints());
             _fileSystemService = FileSystemService.GetInstance();
             _encryptNoteIsVisible = false;
-            _editEndpointCommand = new RelayCommand(param => this.EditEndpoint(), null);
-            _deleteEndpointCommand = new RelayCommand(param => this.DeleteEndpoint(), null);
-            _addEndpointCommand = new RelayCommand(param => this.AddEndpoint(), null);
-            _copyCommand = new RelayCommand(param => this.CopySecretKey(), null);
-            _isCheckedEncryptCheckBox = new RelayCommand(param => this.CheckEncryptCheckBox(), null);
-            _createCommand = new RelayCommand(param => this.CreateBotFile(), null);
-            _cancelCommand = new RelayCommand(param => this.CloseAction(), null);
-            _botNameCommand = new RelayCommand(param => this.SetPanelToShow("BotName"), null);
-            _botEndpointCommmand = new RelayCommand(param => this.SetPanelToShow("BotEndpoint"), null);
-            _botServicesCommand = new RelayCommand(param => this.SetPanelToShow("BotServices"), null);
-            _botEncryptCommand = new RelayCommand(param => this.SetPanelToShow("BotEncrypt"), null);
+            _editEndpointCommand = new RelayCommand<object>(param => this.EditEndpoint(), null);
+            _deleteEndpointCommand = new RelayCommand<object>(param => this.DeleteEndpoint(), null);
+            _addEndpointCommand = new RelayCommand<object>(param => this.AddEndpoint(), null);
+            _copyCommand = new RelayCommand<object>(param => this.CopySecretKey(), null);
+            _isCheckedEncryptCheckBox = new RelayCommand<object>(param => this.CheckEncryptCheckBox(), null);
+            _createCommand = new RelayCommand<Window>(this.CreateBotFile, null);
+            _cancelCommand = new RelayCommand<Window>(this.CloseWindow, null);
+            _botNameCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotName"), null);
+            _botEndpointCommmand = new RelayCommand<object>(param => this.SetPanelToShow("BotEndpoint"), null);
+            _botServicesCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotServices"), null);
+            _botEncryptCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotEncrypt"), null);
         }
 
         public bool EncryptNoteIsVisible
@@ -149,9 +149,7 @@ namespace BotFileCreator
 
         public ICommand IsCheckedEncryptCheckBox { get => _isCheckedEncryptCheckBox; }
 
-        public Action CloseAction { get; set; }
-
-        public void CreateBotFile()
+        public void CreateBotFile(Window window)
         {
             var botConfigurationNameIsValid = BotConfigurationNameIsValid(BotFileName);
 
@@ -169,7 +167,7 @@ namespace BotFileCreator
             MessageBox.Show("Bot file successfully created", "Bot file successfully created", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
             ((SettingsRepository)_repository).Dispose();
-            CloseAction();
+            window.Close();
         }
 
         /// <summary>
