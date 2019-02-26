@@ -16,9 +16,7 @@ namespace BotFileCreator
         private IBotConfigurationRepository _repository;
 
         private ICollectionView _endpoints;
-
-        private readonly FileSystemService _fileSystemService;
-
+        
         private readonly ICommand _cancelCommand;
 
         private readonly ICommand _createCommand;
@@ -54,7 +52,6 @@ namespace BotFileCreator
             _repository = SettingsRepository.GetInstance();
             _botFileName = _repository.GetName();
             _endpoints = CollectionViewSource.GetDefaultView(_repository.GetEndpoints());
-            _fileSystemService = FileSystemService.GetInstance();
             _encryptNoteIsVisible = false;
             _editEndpointCommand = new RelayCommand<object>(param => this.EditEndpoint(), null);
             _deleteEndpointCommand = new RelayCommand<object>(param => this.DeleteEndpoint(), null);

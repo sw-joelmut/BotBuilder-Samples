@@ -9,46 +9,18 @@ namespace BotFileCreator
     /// <summary>
     /// Provides several methods related to the Project's files.
     /// </summary>
-    public class FileSystemService
+    public static class FileSystemService
     {
-        /// <summary>
-        /// Singleton instance of <see cref="FileSystemService"/>.
-        /// </summary>
-        private static FileSystemService instance = null;
-
-        /// <summary>
-        /// Selected project's name.
-        /// </summary>
-        private string _projectName;
-
-        private FileSystemService()
-        {
-            this._projectName = GeneralSettings.Default.ProjectName;
-        }
-
-        /// <summary>
-        /// Gets the <see cref="FileSystemService"/>'s Singleton instance.
-        /// </summary>
-        /// <returns><see cref="FileSystemService"/>.</returns>
-        public static FileSystemService GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new FileSystemService();
-            }
-
-            return instance;
-        }
-
         /// <summary>
         /// Adds a file to the select project.
         /// </summary>
+        /// <param name="projectPath">Project's path</param>
         /// <param name="file">File's name</param>
-        public void AddFileToProject(string file)
+        public static void AddFileToProject(string projectPath, string file)
         {
             // Load a specific project. Also, avoids several problems for re-loading the same project more than once
-            var project = Microsoft.Build.Evaluation.ProjectCollection.GlobalProjectCollection.LoadedProjects.FirstOrDefault(pr => pr.FullPath == _projectName);
-            project = project == null ? new Microsoft.Build.Evaluation.Project(this._projectName) : project;
+            var project = Microsoft.Build.Evaluation.ProjectCollection.GlobalProjectCollection.LoadedProjects.FirstOrDefault(pr => pr.FullPath == projectPath);
+            project = project == null ? new Microsoft.Build.Evaluation.Project(projectPath) : project;
 
             if (project != null)
             {
@@ -68,22 +40,93 @@ namespace BotFileCreator
         /// Gets the selected project's directory path.
         /// </summary>
         /// <returns>Selected project's directory path.</returns>
-        public string GetProjectDirectoryPath()
+        public static string GetProjectDirectoryPath()
         {
-            return _projectName.Substring(0, _projectName.LastIndexOf('\\'));
+            var projectPath = FileSystemService.GetSelectedProjectPath();
+            return projectPath.Substring(0, projectPath.LastIndexOf('\\'));
         }
 
         /// <summary>
-        /// Gets a file in the current selected project's directory. If no file are found, returns an empty string.
+        /// Gets a file in a specific project's directory. If no file are found, returns an empty string.
         /// </summary>
-        /// <param name="searchPattern">Pattern to search in the current selected project's directory.</param>
+        /// <param name="filePath">Project's directory.</param>
+        /// <param name="searchPattern">Pattern to search in a specific project's directory.</param>
         /// <param name="searchOption"><see cref="SearchOption"/>.</param>
         /// <returns>File's path.</returns>
-        public string GetFileInProject(string searchPattern, SearchOption searchOption)
+        public static string GetFileInProject(string filePath, string searchPattern, SearchOption searchOption)
         {
-            var file = Directory.EnumerateFiles(this.GetProjectDirectoryPath(), searchPattern, searchOption).FirstOrDefault();
+            var file = Directory.EnumerateFiles(filePath, searchPattern, searchOption).FirstOrDefault();
 
             return file ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the Selected Project Path.
+        /// </summary>
+        /// <returns>Selected Project Path.</returns>
+        public static string GetSelectedProjectPath()
+        {
+            return GeneralSettings.Default.ProjectName;
+        }
+
+        /// <summary>
+        /// Gets a specific project property.
+        /// </summary>
+        /// <param name="projectPath">Project file path.</param>
+        /// <param name="property">Property name.</param>
+        /// <returns>Project Property Value.</returns>
+        public static string GetProjectProperty(string projectPath, string property)
+        {
+            var project = FileSystemService.LoadProject(projectPath);
+
+            if (project == null)
+            {
+                return null;
+            }
+
+            var prop = project.GetProperty(property);
+
+            if (prop == null)
+            {
+                return null;
+            }
+
+            return prop.UnevaluatedValue.ToString();
+        }
+
+        /// <summary>
+        /// Sets a <see cref="Microsoft.Build.Evaluation.Project"/> property if exists or creates it if its doesn't.
+        /// </summary>
+        /// <param name="projectPath">Project file path.</param>
+        /// <param name="property">Property name.</param>
+        /// <param name="unevaluatedValue">Property value.</param>
+        /// <returns>Project Property Value.</returns>
+        public static string SetProjectProperty(string projectPath, string property, string unevaluatedValue)
+        {
+            var project = FileSystemService.LoadProject(projectPath);
+
+            if (project == null)
+            {
+                return null;
+            }
+
+            var prop = project.SetProperty(property, unevaluatedValue);
+
+            project.Save();
+
+            return prop.UnevaluatedValue.ToString();
+        }
+
+        /// <summary>
+        /// Loads a <see cref="Microsoft.Build.Evaluation.Project"/>.
+        /// </summary>
+        /// <param name="projectPath">Project File path.</param>
+        /// <returns><see cref="Microsoft.Build.Evaluation.Project"/>.</returns>
+        private static Microsoft.Build.Evaluation.Project LoadProject(string projectPath)
+        {
+            // Load a specific project. Also, avoids several problems for re-loading the same project more than once
+            var project = Microsoft.Build.Evaluation.ProjectCollection.GlobalProjectCollection.LoadedProjects.FirstOrDefault(pr => pr.FullPath == projectPath);
+            return project == null ? new Microsoft.Build.Evaluation.Project(projectPath) : project;
         }
     }
 }
