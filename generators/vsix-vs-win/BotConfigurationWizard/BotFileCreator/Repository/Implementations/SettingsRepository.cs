@@ -24,8 +24,6 @@ namespace BotFileCreator
         /// </summary>
         private AppSettings appSettings;
 
-        IEnumerable<ConnectedService> IBotConfigurationRepository.Services { get => this.appSettings.GetServicesByType<ConnectedService>(); }
-
         private SettingsRepository()
         {
             var fss = FileSystemService.GetInstance();
@@ -55,6 +53,14 @@ namespace BotFileCreator
                 appSettings.SetDescription(string.Empty);
             }
         }
+
+        /// <summary>
+        /// Gets <see cref="ConnectedService"/>.
+        /// </summary>
+        /// <value>
+        /// <see cref="ConnectedService"/>.
+        /// </value>
+        IEnumerable<ConnectedService> IBotConfigurationRepository.Services { get => this.appSettings.GetServicesByType<ConnectedService>(); }
 
         /// <summary>
         /// Returns the Repository instance.

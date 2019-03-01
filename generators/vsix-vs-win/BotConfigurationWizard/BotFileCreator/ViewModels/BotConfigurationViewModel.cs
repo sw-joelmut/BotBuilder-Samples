@@ -41,7 +41,7 @@ namespace BotFileCreator
 
         private readonly ICommand _deleteEndpointCommand;
 
-        private readonly ICommand _openHttpLinkCommand;
+        private readonly ICommand _openSecretManagerDocLinkCommand;
 
         private bool _safeStoragetNoteIsVisible;
 
@@ -69,7 +69,7 @@ namespace BotFileCreator
             _botEndpointCommmand = new RelayCommand<object>(param => this.SetPanelToShow("BotEndpoint"), null);
             _botServicesCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotServices"), null);
             _botEncryptCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotEncrypt"), null);
-            _openHttpLinkCommand = new RelayCommand<object>(param => this.OnOpenHttpLink());
+            _openSecretManagerDocLinkCommand = new RelayCommand<object>(param => this.OnOpenSecretManagerDocLink());
         }
 
         public bool SafeStorageNoteIsVisible
@@ -152,7 +152,7 @@ namespace BotFileCreator
 
         public ICommand IsCheckedSafeStorageCheckBox { get => _isCheckedESafeStorageCheckBox; }
 
-        public ICommand OpenHttpLinkCommand { get => _openHttpLinkCommand; }
+        public ICommand OpenSecretManagerDocLinkCommand { get => _openSecretManagerDocLinkCommand; }
 
         private void SetPanelToShow(string panelToShow)
         {
@@ -272,11 +272,11 @@ namespace BotFileCreator
             }
         }
 
-        private void OnOpenHttpLink()
+        private void OnOpenSecretManagerDocLink()
         {
             try
             {
-                System.Diagnostics.Process.Start("https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2");
+                System.Diagnostics.Process.Start("https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2&tabs=linux#secret-manager");
             }
             catch (Exception)
             {

@@ -105,7 +105,7 @@
             <CheckBox Style="{DynamicResource safeStorageCheckBox}" Command="{Binding IsCheckedSafeStorageCheckBox}" Content="Safe Storage" />
             <TextBlock Style="{DynamicResource encryptNote}" Visibility="{Binding Path=EncryptNoteVisibility}">
                 <Run Text="The Secret Manager tool stores sensitive data during the development of a project without exposing them to source control. To know more about Secret Manager please check the documentation below.&#x0a;"/>
-                <Button Style="{DynamicResource DocumentationButton}" Template="{DynamicResource TextButtonTemplate}" Command="{Binding OpenHttpLinkCommand}" Content="Secret Manager Documentation"/>
+                <Button Style="{DynamicResource DocumentationButton}" Template="{DynamicResource TextButtonTemplate}" Command="{Binding OpenSecretManagerDocLinkCommand}" Content="Secret Manager Documentation"/>
             </TextBlock>
         </StackPanel>
 

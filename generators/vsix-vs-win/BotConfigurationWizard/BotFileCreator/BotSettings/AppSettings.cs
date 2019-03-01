@@ -248,13 +248,9 @@ namespace BotFileCreator
         /// <returns><see cref="Task"/>.</returns>
         private async Task WriteAppSettingsAsync()
         {
-            using (var file = File.Open(this.appSettingsPath, FileMode.OpenOrCreate))
-            {
-                using (var textWriter = new StreamWriter(file))
-                {
-                    await textWriter.WriteLineAsync(JsonConvert.SerializeObject(this, Formatting.Indented)).ConfigureAwait(false);
-                }
-            }
+            var jsonData = System.IO.File.ReadAllText(this.appSettingsPath);
+            jsonData = JsonConvert.SerializeObject(this, Formatting.Indented);
+            System.IO.File.WriteAllText(this.appSettingsPath, jsonData);
         }
     }
 }
