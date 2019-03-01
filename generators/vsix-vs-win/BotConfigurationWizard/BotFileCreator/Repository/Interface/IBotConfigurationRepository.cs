@@ -8,6 +8,8 @@ namespace BotFileCreator
 
     public interface IBotConfigurationRepository
     {
+        IEnumerable<ConnectedService> Services { get; }
+
         /// <summary>
         /// Load
         /// </summary>

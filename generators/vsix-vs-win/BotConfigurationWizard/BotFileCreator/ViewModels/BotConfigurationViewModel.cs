@@ -21,7 +21,7 @@ namespace BotFileCreator
 
         private readonly ICommand _cancelCommand;
 
-        private readonly ICommand _createCommand;
+        private readonly ICommand _submitCommand;
 
         private readonly ICommand _botNameCommand;
 
@@ -31,7 +31,7 @@ namespace BotFileCreator
 
         private readonly ICommand _botEncryptCommand;
 
-        private readonly ICommand _isCheckedEncryptCheckBox;
+        private readonly ICommand _isCheckedESafeStorageCheckBox;
 
         private readonly ICommand _copyCommand;
 
@@ -41,7 +41,9 @@ namespace BotFileCreator
 
         private readonly ICommand _deleteEndpointCommand;
 
-        private bool _encryptNoteIsVisible;
+        private readonly ICommand _openHttpLinkCommand;
+
+        private bool _safeStoragetNoteIsVisible;
 
         private string _secretKey;
 
@@ -55,26 +57,27 @@ namespace BotFileCreator
             _botFileName = _repository.GetName();
             _endpoints = CollectionViewSource.GetDefaultView(_repository.GetEndpoints());
             _fileSystemService = FileSystemService.GetInstance();
-            _encryptNoteIsVisible = false;
+            _safeStoragetNoteIsVisible = false;
+            _isCheckedESafeStorageCheckBox = new RelayCommand<object>(param => this.CheckSafeStorageCheckBox(), null);
+            _addEndpointCommand = new RelayCommand<object>(param => this.AddEndpoint(), null);
             _editEndpointCommand = new RelayCommand<object>(param => this.EditEndpoint(), null);
             _deleteEndpointCommand = new RelayCommand<object>(param => this.DeleteEndpoint(), null);
-            _addEndpointCommand = new RelayCommand<object>(param => this.AddEndpoint(), null);
             _copyCommand = new RelayCommand<object>(param => this.CopySecretKey(), null);
-            _isCheckedEncryptCheckBox = new RelayCommand<object>(param => this.CheckEncryptCheckBox(), null);
-            _createCommand = new RelayCommand<Window>(this.CreateBotFile, null);
+            _submitCommand = new RelayCommand<Window>(this.Submit, null);
             _cancelCommand = new RelayCommand<Window>(this.CloseWindow, null);
             _botNameCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotName"), null);
             _botEndpointCommmand = new RelayCommand<object>(param => this.SetPanelToShow("BotEndpoint"), null);
             _botServicesCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotServices"), null);
             _botEncryptCommand = new RelayCommand<object>(param => this.SetPanelToShow("BotEncrypt"), null);
+            _openHttpLinkCommand = new RelayCommand<object>(param => this.OnOpenHttpLink());
         }
 
-        public bool EncryptNoteIsVisible
+        public bool SafeStorageNoteIsVisible
         {
-            get => _encryptNoteIsVisible;
+            get => _safeStoragetNoteIsVisible;
             set
             {
-                _encryptNoteIsVisible = value;
+                _safeStoragetNoteIsVisible = value;
                 NotifyPropertyChanged("EncryptNoteVisibility");
             }
         }
@@ -96,7 +99,7 @@ namespace BotFileCreator
 
         public string BotFileName { get => _botFileName; set => SetProperty(ref _botFileName, value); }
 
-        public bool EncryptCheckBoxIsChecked { get; set; }
+        public bool SafeStorageCheckBoxIsChecked { get; set; }
 
         public ICollectionView Endpoints { get => _endpoints; set => SetProperty(ref _endpoints, value); }
 
@@ -104,7 +107,7 @@ namespace BotFileCreator
 
         public Visibility EncryptNoteVisibility
         {
-            get => EncryptNoteIsVisible ? Visibility.Visible : Visibility.Collapsed;
+            get => SafeStorageNoteIsVisible ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public Visibility BotNameVisibility
@@ -135,7 +138,7 @@ namespace BotFileCreator
 
         public ICommand CopyCommand { get => _copyCommand; }
 
-        public ICommand CreateCommand { get => _createCommand; }
+        public ICommand SubmitCommand { get => _submitCommand; }
 
         public ICommand CancelCommand { get => _cancelCommand; }
 
@@ -147,27 +150,29 @@ namespace BotFileCreator
 
         public ICommand BotEncryptCommand { get => _botEncryptCommand; }
 
-        public ICommand IsCheckedEncryptCheckBox { get => _isCheckedEncryptCheckBox; }
+        public ICommand IsCheckedSafeStorageCheckBox { get => _isCheckedESafeStorageCheckBox; }
 
-        public void CreateBotFile(Window window)
+        public ICommand OpenHttpLinkCommand { get => _openHttpLinkCommand; }
+
+        private void SetPanelToShow(string panelToShow)
         {
-            var botConfigurationNameIsValid = BotConfigurationNameIsValid(BotFileName);
+            this.PanelToShow = panelToShow;
+        }
 
-            // Checks if the Bot Configuration name is valid
-            if (!botConfigurationNameIsValid.Item1)
+        private void CheckSafeStorageCheckBox()
+        {
+            SafeStorageCheckBoxIsChecked = !SafeStorageCheckBoxIsChecked;
+            SafeStorageNoteIsVisible = !SafeStorageNoteIsVisible;
+
+            //this.SecretKey = SafeStorageCheckBoxIsChecked ? BotFileRepository.GenerateKey() : string.Empty;
+        }
+
+        private void CopySecretKey()
+        {
+            if (!string.IsNullOrWhiteSpace(SecretKey))
             {
-                MessageBox.Show(botConfigurationNameIsValid.Item2, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                Clipboard.SetText(SecretKey);
             }
-
-            this._repository.SetName(BotFileName);
-            this._repository.Save();
-
-            // If the file was successfully created, the Wizard will be closed.
-            MessageBox.Show("Bot file successfully created", "Bot file successfully created", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
-            ((SettingsRepository)_repository).Dispose();
-            window.Close();
         }
 
         /// <summary>
@@ -193,24 +198,32 @@ namespace BotFileCreator
             return new Tuple<bool, string>(true, string.Empty);
         }
 
-        private void SetPanelToShow(string panelToShow)
+        private void Submit(Window window)
         {
-            this.PanelToShow = panelToShow;
-        }
+            var botConfigurationNameIsValid = BotConfigurationNameIsValid(BotFileName);
 
-        private void CheckEncryptCheckBox()
-        {
-            EncryptCheckBoxIsChecked = !EncryptCheckBoxIsChecked;
-            EncryptNoteIsVisible = !EncryptNoteIsVisible;
-            this.SecretKey = EncryptCheckBoxIsChecked ? BotFileRepository.GenerateKey() : string.Empty;
-        }
-
-        private void CopySecretKey()
-        {
-            if (!string.IsNullOrWhiteSpace(SecretKey))
+            // Checks if the Bot Configuration name is valid
+            if (!botConfigurationNameIsValid.Item1)
             {
-                Clipboard.SetText(SecretKey);
+                MessageBox.Show(botConfigurationNameIsValid.Item2, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+
+            this._repository.SetName(BotFileName);
+
+            if (this.SafeStorageCheckBoxIsChecked == true)
+            {
+                SetUserSecrets();
+            }
+
+            this._repository.Save();
+
+
+            // If the file was successfully created, the Wizard will be closed.
+            MessageBox.Show("Bot file successfully created", "Bot file successfully created", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+            ((SettingsRepository)_repository).Dispose();
+            window.Close();
         }
 
         private void AddEndpoint()
@@ -236,6 +249,39 @@ namespace BotFileCreator
         private void CloseWindow(Window window)
         {
             window.Close();
+        }
+
+        private void SetUserSecrets()
+        {
+            foreach (var service in _repository.Services)
+            {
+                switch (service.Type)
+                {
+                    case ServiceTypes.Endpoint:
+                        ((EndpointService)service).SetUserSecrets();
+                        break;
+                    case ServiceTypes.Luis:
+                        ((LuisService)service).SetUserSecrets();
+                        break;
+                    case ServiceTypes.QnA:
+                        ((QnAMakerService)service).SetUserSecrets();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void OnOpenHttpLink()
+        {
+            try
+            {
+                System.Diagnostics.Process.Start("https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-2.2");
+            }
+            catch (Exception)
+            {
+                // TODO: Error.
+            }
         }
     }
 }

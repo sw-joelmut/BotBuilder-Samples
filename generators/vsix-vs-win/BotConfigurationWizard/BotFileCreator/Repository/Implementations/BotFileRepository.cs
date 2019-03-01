@@ -14,6 +14,8 @@ namespace BotFileCreator.Repository
         private string secret;
         private string fileName;
 
+        IEnumerable<ConnectedService> IBotConfigurationRepository.Services { get => throw new System.NotImplementedException(); }
+
         public BotFileRepository(string fileName, string path, string secret = default(string))
         {
             this.fileName = fileName;
@@ -60,9 +62,9 @@ namespace BotFileCreator.Repository
         {
             if (this.botConfiguration != null)
             {
-                #pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
+#pragma warning disable VSTHRD002 // Avoid problematic synchronous waits
                 this.botConfiguration.SaveAsAsync(this.GetFullPath(), secret).GetAwaiter().GetResult();
-                #pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
+#pragma warning restore VSTHRD002 // Avoid problematic synchronous waits
             }
         }
 

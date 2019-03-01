@@ -54,7 +54,7 @@
             <MenuItem Style="{DynamicResource menuItem}" Command="{Binding BotNameCommand}" Header="Bot Name"/>
             <MenuItem Style="{DynamicResource menuItem}" Command="{Binding BotEndpointCommand}" Header="Bot Endpoint"/>
             <MenuItem Style="{DynamicResource menuItem}" Command="{Binding BotServicesCommand}" Header="Bot Services"/>
-            <MenuItem Style="{DynamicResource menuItem}" Command="{Binding BotEncryptCommand}" Header="Bot Encrypt"/>
+            <MenuItem Style="{DynamicResource menuItem}" Command="{Binding BotEncryptCommand}" Header="Bot Safe Storage"/>
         </Menu>
 
         <Rectangle Style="{DynamicResource separator}"/>
@@ -100,19 +100,18 @@
         </StackPanel>
 
         <StackPanel Style="{DynamicResource modulePanel}" Visibility="{Binding Path=BotEncrypVisibility}">
-            <TextBlock Style="{DynamicResource moduleTitle}" Text="Encrypt" />
-            <TextBlock Style="{DynamicResource description}" Text="Encrypt keys stored in your bot configuration" />
-            <CheckBox Style="{DynamicResource encryptCheckBox}" Command="{Binding IsCheckedEncryptCheckBox}" Content="Encrypt" />
-            <StackPanel Style="{DynamicResource secretKeyPanel}">
-                <TextBox Style="{DynamicResource encryptTextBox}" Text="{Binding Path=SecretKey, TargetNullValue='Your keys are not encrypted'}"/>
-                <Button Style="{DynamicResource copyButton}" Template="{DynamicResource TextButtonTemplate}" Command="{Binding CopyCommand}" Content="Copy"/>
-            </StackPanel>
-            <TextBlock Style="{DynamicResource encryptNote}" Visibility="{Binding Path=EncryptNoteVisibility}" Text="NOTE: This option will generate a new encryption key.&#x0a;Please store this key securely."/>
+            <TextBlock Style="{DynamicResource moduleTitle}" Text="Safe Storage" />
+            <TextBlock Style="{DynamicResource description}" Text="Storage sensitive data using Secret Manager tool" />
+            <CheckBox Style="{DynamicResource safeStorageCheckBox}" Command="{Binding IsCheckedSafeStorageCheckBox}" Content="Safe Storage" />
+            <TextBlock Style="{DynamicResource encryptNote}" Visibility="{Binding Path=EncryptNoteVisibility}">
+                <Run Text="The Secret Manager tool stores sensitive data during the development of a project without exposing them to source control. To know more about Secret Manager please check the documentation below.&#x0a;"/>
+                <Button Style="{DynamicResource DocumentationButton}" Template="{DynamicResource TextButtonTemplate}" Command="{Binding OpenHttpLinkCommand}" Content="Secret Manager Documentation"/>
+            </TextBlock>
         </StackPanel>
 
         <Canvas Style="{DynamicResource downBar}">
             <StackPanel Style="{DynamicResource panelButtons}">
-                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Create" Command="{Binding CreateCommand}" CommandParameter="{Binding ElementName=_botConfigurationView}"/>
+                <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Submit" Command="{Binding SubmitCommand}" CommandParameter="{Binding ElementName=_botConfigurationView}"/>
                 <Button Style="{DynamicResource downBarButton}" Template="{DynamicResource ButtonsTemplate}" Content="Cancel" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=_botConfigurationView}"/>
             </StackPanel>
         </Canvas>

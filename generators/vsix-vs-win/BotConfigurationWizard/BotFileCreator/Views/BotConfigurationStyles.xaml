@@ -116,7 +116,12 @@
         <Setter Property="Foreground" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.CommandBarMenuGroupHeaderLinkTextBrushKey}}"/>
     </Style>
 
-    <Style x:Key="encryptCheckBox" TargetType="CheckBox">
+    <Style x:Key="DocumentationButton" TargetType="Button">
+        <Setter Property="Margin" Value="-3,5"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.CommandBarMenuGroupHeaderLinkTextBrushKey}}"/>
+    </Style>
+
+    <Style x:Key="safeStorageCheckBox" TargetType="CheckBox">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.ToolWindowTextBrushKey}}"/>
         <Setter Property="Margin" Value="5,10,10,10"/>
     </Style>
@@ -232,6 +237,17 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="hyperlinkTemplate" TargetType="Hyperlink" >
+        <TextBlock x:Name="TextBlock">
+          
+        </TextBlock>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="TextBlock" Property="TextBlock.TextDecorations" Value="Underline"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    
     <Style x:Key="endpointButton" TargetType="Button">
         <Setter Property="Margin" Value="10,5"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static vs_shell:EnvironmentColors.CommandBarMenuGroupHeaderLinkTextBrushKey}}"/>
