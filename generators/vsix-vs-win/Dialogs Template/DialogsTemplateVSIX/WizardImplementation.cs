@@ -19,9 +19,12 @@ namespace DialogsTemplateVSIX
     {
         private const string lineToFindForPackageReference = "<PackageReference";
 
-        private string projectPath;
         private string folder;
         private string dialogsName;
+        private string botFile = string.Empty;
+        private string botFileName = string.Empty;
+        private string[] fileNames;
+        private bool hasDialogsImplemented;
 
         private static string AssemblyDirectory
         {
@@ -81,7 +84,29 @@ namespace DialogsTemplateVSIX
             try
             {
                 folder = Path.GetDirectoryName(project().FullName);
+                fileNames = Directory.GetFiles(folder, "*.cs");
+                hasDialogsImplemented = false;
 
+                foreach (string file in fileNames)
+                {
+                    using (StreamReader sReader = new StreamReader(file))
+                    {
+                        string contents = sReader.ReadToEnd();
+                        if (contents.Contains(": ComponentDialog"))
+                        {
+                            dialogsName = (Path.GetFileName(file)).Split('.')[0];
+                            hasDialogsImplemented = true;
+                        }
+                        else
+                        {
+                            if (contents.Contains(": IBot"))
+                            {
+                                botFile = (Path.GetFileName(file)).Split('.')[0];
+                                botFileName = file;
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -109,39 +134,34 @@ namespace DialogsTemplateVSIX
         // This method is called after the project is created.  
         public void RunFinished()
         {
-            string[] fileNames = Directory.GetFiles(folder, "*.cs");
-
-            string botFile = "BotClass";
-
-            foreach (string file in fileNames)
+            if (!hasDialogsImplemented)
             {
-                using (StreamReader sReader = new StreamReader(file))
+                foreach (string file in fileNames)
                 {
-                    string contents = sReader.ReadToEnd();
-                    if (contents.Contains(": ComponentDialog"))
+                    using (StreamReader sReader = new StreamReader(file))
                     {
-                        dialogsName = (Path.GetFileName(file)).Split('.')[0];
-                    }
-                    else
-                    {
-                        if (contents.Contains(": IBot"))
+                        string contents = sReader.ReadToEnd();
+                        if (contents.Contains(": ComponentDialog"))
                         {
-                            botFile = (Path.GetFileName(file)).Split('.')[0];
+                            dialogsName = (Path.GetFileName(file)).Split('.')[0];
                         }
                     }
                 }
+
+                RunPowerShellInstance(scriptUpdateBotClass, botFile, dialogsName);
+                RunPowerShellInstance(scriptUpdateStartUpClass, botFile);
+
+                string[] pathEditFile = Directory.GetFiles(folder, "*.csproj");
+
+                if (!(File.ReadAllLines(pathEditFile[0])
+                    .Any(line => line.Contains("Microsoft.Bot.Builder.Dialogs"))))
+                {
+                    AddNuget(folder, pathEditFile[0]);
+                }
             }
-
-            RunPowerShellInstance(scriptUpdateBotClass, botFile, dialogsName);
-
-            RunPowerShellInstance(scriptUpdateStartUpClass, botFile);
-
-            string[] pathEditFile = Directory.GetFiles(folder, "*.csproj");
-
-            if (!(File.ReadAllLines(pathEditFile[0])
-                .Any(line => line.Contains("Microsoft.Bot.Builder.Dialogs"))))
+            else
             {
-                AddNuget(folder, pathEditFile[0]);
+                MessageBox.Show("This project already has Dialogs implemented", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
 
@@ -208,7 +228,14 @@ namespace DialogsTemplateVSIX
         // not for project templates.  
         public bool ShouldAddProjectItem(string filePath)
         {
-            return true;
+            if (hasDialogsImplemented)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }       
     }
 }
