@@ -194,5 +194,15 @@ namespace BotFileCreator.Repository
         {
             return this.fileName;
         }
+
+        public bool HasUserSecret()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetUserSecret(bool value)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

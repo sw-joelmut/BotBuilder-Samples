@@ -26,6 +26,7 @@ namespace BotFileCreator
 
         public AppSettings()
         {
+            HasUserSecret = SecretManagerUtilities.GetUserSecrets().Any();
             this.BotSettings = new BotSettings();
         }
 
@@ -34,6 +35,15 @@ namespace BotFileCreator
             this.appSettingsPath = appSettingsPath;
             this.BotSettings = new BotSettings();
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether A value indicating whether if there any value stored in user-secret the value will be true.
+        /// </summary>
+        /// <value>
+        /// A value indicating whether <value>A value indicating whether if there any value stored in user-secret the value will be true
+        /// </value>
+        [JsonIgnore]
+        public bool HasUserSecret { get; set; }
 
         [JsonExtensionData(ReadData = true, WriteData = true)]
         /// <summary>
@@ -67,6 +77,8 @@ namespace BotFileCreator
             {
                 appSettings.BotSettings = new BotSettings();
             }
+
+            appSettings.LoadUserSecretKeys();
 
             return appSettings;
         }
@@ -251,6 +263,34 @@ namespace BotFileCreator
             var jsonData = System.IO.File.ReadAllText(this.appSettingsPath);
             jsonData = JsonConvert.SerializeObject(this, Formatting.Indented);
             System.IO.File.WriteAllText(this.appSettingsPath, jsonData);
+        }
+
+        private void LoadUserSecretKeys()
+        {
+            var userSecrets = SecretManagerUtilities.GetUserSecrets();
+            if (userSecrets.Any())
+            {
+                foreach (var service in this.BotSettings.GetServicesByType<ConnectedService>())
+                {
+                    switch (service.Type)
+                    {
+                        case ServiceTypes.Endpoint:
+                            ((EndpointService)service).AppId = userSecrets.FirstOrDefault(serv => serv.Id == service.Id).Keys["AppId"];
+                            ((EndpointService)service).AppPassword = userSecrets.FirstOrDefault(serv => serv.Id == service.Id).Keys["AppPassword"];
+                            break;
+                        case ServiceTypes.Luis:
+                            ((LuisService)service).AuthoringKey = userSecrets.FirstOrDefault(serv => serv.Id == service.Id).Keys["AuthoringKey"];
+                            ((LuisService)service).SubscriptionKey = userSecrets.FirstOrDefault(serv => serv.Id == service.Id).Keys["SubscriptionKey"];
+                            break;
+                        case ServiceTypes.QnA:
+                            ((QnAMakerService)service).EndpointKey = userSecrets.FirstOrDefault(serv => serv.Id == service.Id).Keys["EndpointKey"];
+                            ((QnAMakerService)service).SubscriptionKey = userSecrets.FirstOrDefault(serv => serv.Id == service.Id).Keys["SubscriptionKey"];
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
     }
 }

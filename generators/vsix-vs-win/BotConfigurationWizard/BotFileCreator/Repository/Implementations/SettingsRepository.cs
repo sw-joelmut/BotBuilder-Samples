@@ -232,5 +232,15 @@ namespace BotFileCreator
             this.appSettings = null;
             instance = null;
         }
+
+        public bool HasUserSecret()
+        {
+           return this.appSettings.HasUserSecret;
+        }
+
+        public void SetUserSecret(bool value)
+        {
+            this.appSettings.HasUserSecret = value;
+        }
     }
 }

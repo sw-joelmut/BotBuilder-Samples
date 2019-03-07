@@ -69,6 +69,7 @@
     <Compile Include="Repository\Implementations\BotFileRepository.cs" />
     <Compile Include="Repository\Implementations\SettingsRepository.cs" />
     <Compile Include="SecretManagerUtilities\SecretManagerUtilities.cs" />
+    <Compile Include="SecretManagerUtilities\SecretValue.cs" />
     <Compile Include="Services\FileSystemService.cs" />
     <Compile Include="ViewModels\EndpointViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />

@@ -8,7 +8,6 @@ namespace BotFileCreator
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
-    using BotFileCreator.Repository;
     using Microsoft.Bot.Configuration;
 
     public class BotConfigurationViewModel : BaseViewModel
@@ -31,8 +30,6 @@ namespace BotFileCreator
 
         private readonly ICommand _botEncryptCommand;
 
-        private readonly ICommand _isCheckedESafeStorageCheckBox;
-
         private readonly ICommand _copyCommand;
 
         private readonly ICommand _addEndpointCommand;
@@ -43,7 +40,7 @@ namespace BotFileCreator
 
         private readonly ICommand _openSecretManagerDocLinkCommand;
 
-        private bool _safeStoragetNoteIsVisible;
+        private bool _safeStorageCheckBoxIsChecked;
 
         private string _secretKey;
 
@@ -57,8 +54,7 @@ namespace BotFileCreator
             _botFileName = _repository.GetName();
             _endpoints = CollectionViewSource.GetDefaultView(_repository.GetEndpoints());
             _fileSystemService = FileSystemService.GetInstance();
-            _safeStoragetNoteIsVisible = false;
-            _isCheckedESafeStorageCheckBox = new RelayCommand<object>(param => this.CheckSafeStorageCheckBox(), null);
+            _safeStorageCheckBoxIsChecked = _repository.HasUserSecret();
             _addEndpointCommand = new RelayCommand<object>(param => this.AddEndpoint(), null);
             _editEndpointCommand = new RelayCommand<object>(param => this.EditEndpoint(), null);
             _deleteEndpointCommand = new RelayCommand<object>(param => this.DeleteEndpoint(), null);
@@ -72,12 +68,12 @@ namespace BotFileCreator
             _openSecretManagerDocLinkCommand = new RelayCommand<object>(param => this.OnOpenSecretManagerDocLink());
         }
 
-        public bool SafeStorageNoteIsVisible
+        public bool SafeStorageCheckBoxIsChecked
         {
-            get => _safeStoragetNoteIsVisible;
+            get => _safeStorageCheckBoxIsChecked;
             set
             {
-                _safeStoragetNoteIsVisible = value;
+                _safeStorageCheckBoxIsChecked = value;
                 NotifyPropertyChanged("EncryptNoteVisibility");
             }
         }
@@ -99,15 +95,13 @@ namespace BotFileCreator
 
         public string BotFileName { get => _botFileName; set => SetProperty(ref _botFileName, value); }
 
-        public bool SafeStorageCheckBoxIsChecked { get; set; }
-
         public ICollectionView Endpoints { get => _endpoints; set => SetProperty(ref _endpoints, value); }
 
         public EndpointService EndpointItemSelect { get; set; }
 
         public Visibility EncryptNoteVisibility
         {
-            get => SafeStorageNoteIsVisible ? Visibility.Visible : Visibility.Collapsed;
+            get => SafeStorageCheckBoxIsChecked ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public Visibility BotNameVisibility
@@ -150,21 +144,11 @@ namespace BotFileCreator
 
         public ICommand BotEncryptCommand { get => _botEncryptCommand; }
 
-        public ICommand IsCheckedSafeStorageCheckBox { get => _isCheckedESafeStorageCheckBox; }
-
         public ICommand OpenSecretManagerDocLinkCommand { get => _openSecretManagerDocLinkCommand; }
 
         private void SetPanelToShow(string panelToShow)
         {
             this.PanelToShow = panelToShow;
-        }
-
-        private void CheckSafeStorageCheckBox()
-        {
-            SafeStorageCheckBoxIsChecked = !SafeStorageCheckBoxIsChecked;
-            SafeStorageNoteIsVisible = !SafeStorageNoteIsVisible;
-
-            //this.SecretKey = SafeStorageCheckBoxIsChecked ? BotFileRepository.GenerateKey() : string.Empty;
         }
 
         private void CopySecretKey()
@@ -213,11 +197,18 @@ namespace BotFileCreator
 
             if (this.SafeStorageCheckBoxIsChecked == true)
             {
+                this._repository.SetUserSecret(SafeStorageCheckBoxIsChecked);
                 SetUserSecrets();
+            }
+            else
+            {
+                if (_repository.HasUserSecret())
+                {
+                    SecretManagerUtilities.UserSecretClearCommand();
+                }
             }
 
             this._repository.Save();
-
 
             // If the file was successfully created, the Wizard will be closed.
             MessageBox.Show("Bot file successfully created", "Bot file successfully created", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -242,6 +233,11 @@ namespace BotFileCreator
 
         private void DeleteEndpoint()
         {
+            if (_repository.HasUserSecret())
+            {
+                EndpointItemSelect.RemoveUserSecret();
+            }
+
             this._repository.DisconnectService(EndpointItemSelect.Id);
             Endpoints.Refresh();
         }
@@ -258,13 +254,13 @@ namespace BotFileCreator
                 switch (service.Type)
                 {
                     case ServiceTypes.Endpoint:
-                        ((EndpointService)service).SetUserSecrets();
+                        ((EndpointService)service).SetUserSecret();
                         break;
                     case ServiceTypes.Luis:
-                        ((LuisService)service).SetUserSecrets();
+                        ((LuisService)service).SetUserSecret();
                         break;
                     case ServiceTypes.QnA:
-                        ((QnAMakerService)service).SetUserSecrets();
+                        ((QnAMakerService)service).SetUserSecret();
                         break;
                     default:
                         break;

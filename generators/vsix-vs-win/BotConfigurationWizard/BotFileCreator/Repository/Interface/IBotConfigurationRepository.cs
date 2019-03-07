@@ -66,5 +66,9 @@ namespace BotFileCreator
         /// </summary>
         /// <param name="name">Bot's name</param>
         void SetName(string name);
+
+        bool HasUserSecret();
+
+        void SetUserSecret(bool value);
     }
 }

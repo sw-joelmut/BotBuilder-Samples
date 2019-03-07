@@ -7,7 +7,7 @@ namespace BotFileCreator
 
     public static class ExtensionMethods
     {
-        public static void SetUserSecrets(this EndpointService service)
+        public static void SetUserSecret(this EndpointService service)
         {
             var keyId = service.Id + ":";
             if (!string.IsNullOrEmpty(service.AppId))
@@ -23,7 +23,7 @@ namespace BotFileCreator
             }
         }
 
-        public static void SetUserSecrets(this LuisService service)
+        public static void SetUserSecret(this LuisService service)
         {
             var keyId = service.Id + ":";
             if (!string.IsNullOrEmpty(service.AuthoringKey))
@@ -39,7 +39,7 @@ namespace BotFileCreator
             }
         }
 
-        public static void SetUserSecrets(this QnAMakerService service)
+        public static void SetUserSecret(this QnAMakerService service)
         {
             var keyId = service.Id + ":";
             if (!string.IsNullOrEmpty(service.EndpointKey))
@@ -52,6 +52,22 @@ namespace BotFileCreator
             {
                 SecretManagerUtilities.UserSecretSetCommand(keyId + nameof(service.SubscriptionKey), service.SubscriptionKey);
                 service.SubscriptionKey = string.Empty;
+            }
+        }
+
+        public static void RemoveUserSecret(this EndpointService service)
+        {
+            var keyId = service.Id + ":";
+            if (!string.IsNullOrEmpty(service.AppId))
+            {
+                SecretManagerUtilities.UserSecretRemoveCommand(keyId + nameof(service.AppId));
+                service.AppId = string.Empty;
+            }
+
+            if (!string.IsNullOrEmpty(service.AppPassword))
+            {
+                SecretManagerUtilities.UserSecretRemoveCommand(keyId + nameof(service.AppPassword));
+                service.AppPassword = string.Empty;
             }
         }
     }
