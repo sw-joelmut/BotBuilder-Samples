@@ -5,12 +5,15 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
+using Microsoft.Bot.Builder.Integration;
+using Microsoft.Bot.Builder.Integration.AspNet.Core;
 using Microsoft.Bot.Schema;
 
 namespace Microsoft.BotBuilderSamples
-{
+{/*
     /// <summary>
     /// Represents a bot that processes incoming activities.
     /// For each user interaction, an instance of this class is created and the OnTurnAsync method is called.
@@ -22,8 +25,10 @@ namespace Microsoft.BotBuilderSamples
     /// <see cref="IStatePropertyAccessor{T}"/> object are created with a singleton lifetime.
     /// </summary>
     /// <seealso cref="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-2.1"/>
-    public class SimplePromptBot : IBot
+    public class SimplePromptBot : Controller, IBot
     {
+        private IAdapterIntegration _adapter;
+        private IBot _bot;
         private const string WelcomeText = "Welcome to Simple Prompt Bot. This bot will introduce you to prompts. Type anything to get started.";
 
         private readonly SimplePromptBotAccessors _accessors;
@@ -37,11 +42,24 @@ namespace Microsoft.BotBuilderSamples
         /// Initializes a new instance of the <see cref="SimplePromptBot"/> class.
         /// </summary>
         /// <param name="accessors">The state accessors this instance will be needing at runtime.</param>
-        public SimplePromptBot(SimplePromptBotAccessors accessors)
+        public SimplePromptBot(SimplePromptBotAccessors accessors, IAdapterIntegration adapter, IBot bot)
         {
             _accessors = accessors ?? throw new ArgumentNullException(nameof(accessors));
             _dialogs = new DialogSet(accessors.ConversationDialogState);
             _dialogs.Add(new TextPrompt("name"));
+            _adapter = adapter;
+            _bot = bot;
+        }
+
+        public async Task<InvokeResponse> ProcessAsync(string authHeader, Activity activity)
+        {
+            var invokeResponse = await _adapter.ProcessActivityAsync(
+                authHeader,
+                activity,
+                OnTurnAsync,
+                default(CancellationToken));
+
+            return invokeResponse;
         }
 
         /// <summary>
@@ -127,5 +145,5 @@ namespace Microsoft.BotBuilderSamples
                 }
             }
         }
-    }
+    }*/
 }

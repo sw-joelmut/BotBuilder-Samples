@@ -57,7 +57,7 @@ namespace Microsoft.BotBuilderSamples
         /// <seealso cref="https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-4.0"/>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddBot<SimplePromptBot>(options =>
+            services.AddBot<BotBase>(options =>
             {
                 var secretKey = Configuration.GetSection("botFileSecret")?.Value;
                 var botFilePath = Configuration.GetSection("botFilePath")?.Value;
@@ -81,7 +81,7 @@ namespace Microsoft.BotBuilderSamples
                 options.CredentialProvider = new SimpleCredentialProvider(endpointService.AppId, endpointService.AppPassword);
 
                 // Creates a logger for the application to use.
-                ILogger logger = _loggerFactory.CreateLogger<SimplePromptBot>();
+                ILogger logger = _loggerFactory.CreateLogger<BotController>();
 
                 // Catches any errors that occur during a conversation turn and logs them.
                 options.OnTurnError = async (context, exception) =>
@@ -143,6 +143,11 @@ namespace Microsoft.BotBuilderSamples
 
                 return accessors;
             });
+
+            services.AddMvc();
+            services.AddSingleton<ICredentialProvider>(sp => new SimpleCredentialProvider());
+            services.AddSingleton<IBotFrameworkHttpAdapter>(sp => new BotFrameworkHttpAdapter(services.BuildServiceProvider().GetService<ICredentialProvider>()));
+            services.AddTransient<IBot>(sp => new MyActivityHandler());
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
