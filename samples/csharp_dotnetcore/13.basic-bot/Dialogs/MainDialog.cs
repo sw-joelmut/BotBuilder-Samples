@@ -16,12 +16,15 @@ namespace Microsoft.BotBuilderSamples
     {
         protected readonly IConfiguration _configuration;
         protected readonly ILogger _logger;
+        private readonly LuisService _luisService;
 
-        public MainDialog(IConfiguration configuration, ILogger<MainDialog> logger)
+
+        public MainDialog(LuisService luisService, IConfiguration configuration, ILogger<MainDialog> logger)
             : base(nameof(MainDialog))
         {
             _configuration = configuration;
             _logger = logger;
+            _luisService = luisService;
 
             AddDialog(new TextPrompt(nameof(TextPrompt)));
             AddDialog(new BookingDialog());
@@ -38,7 +41,7 @@ namespace Microsoft.BotBuilderSamples
 
         private async Task<DialogTurnResult> IntroStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            if (string.IsNullOrEmpty(_configuration["LuisAppId"]) || string.IsNullOrEmpty(_configuration["LuisAPIKey"]) || string.IsNullOrEmpty(_configuration["LuisAPIHostName"]))
+            if (_luisService.Services == null)
             {
                 await stepContext.Context.SendActivityAsync(
                     MessageFactory.Text("NOTE: LUIS is not configured. To enable all capabilities, add 'LuisAppId', 'LuisAPIKey' and 'LuisAPIHostName' to the appsettings.json file."), cancellationToken);
@@ -50,7 +53,7 @@ namespace Microsoft.BotBuilderSamples
         private async Task<DialogTurnResult> ActStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             // Call LUIS and gather any potential booking details.
-            var bookingDetails = await LuisHelper.ExecuteLuisQuery(_configuration, _logger, stepContext.Context, cancellationToken);
+            var bookingDetails = await LuisHelper.ExecuteLuisQuery(_luisService, _logger, stepContext.Context, cancellationToken);
 
             // In this sample we only have a single Intent we are concerned with. However, typically a scneario
             // will have multiple different Intents each corresponding to starting a different child Dialog.
