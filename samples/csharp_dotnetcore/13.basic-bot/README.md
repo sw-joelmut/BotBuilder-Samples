@@ -56,7 +56,7 @@ npm install -g chatdown msbot ludown luis-apis qnamaker botdispatch luisgen
 
 ## Visual Studio
 1. Navigate to the samples folder (`botbuilder-samples/samples/csharp_dotnetcore/13.basic-bot`) and open `CoreBot.csproj` in Visual Studio
-3. Run the project (press `F5` key)
+2. Run the project (press `F5` key)
 
 ## .NET Core CLI
 - Install the [.NET Core CLI tools](https://docs.microsoft.com/en-us/dotnet/core/tools/?tabs=netcore2x)
