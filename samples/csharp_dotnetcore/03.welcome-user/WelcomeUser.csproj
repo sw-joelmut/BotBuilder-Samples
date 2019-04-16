@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <CodeAnalysisRuleSet>samples.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>$(SolutionDir)CSharp-DotNetCore.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <ItemGroup>
