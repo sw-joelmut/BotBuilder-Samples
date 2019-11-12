@@ -16,6 +16,22 @@ const { EchoBot } = require('./bot');
 const ENV_FILE = path.join(__dirname, '.env');
 dotenv.config({ path: ENV_FILE });
 
+const { MemoryStorage, UserState, ConversationState, InspectionState, InspectionMiddleware } = require('botbuilder')
+const { MicrosoftAppCredentials } = require('botframework-connector')
+
+let memoryStorage = new MemoryStorage();
+let inspectionState = new InspectionState(memoryStorage);
+
+let userState = new UserState(memoryStorage);
+let conversationState = new ConversationState(memoryStorage)
+
+let credentials = undefined;
+if (process.env.MicrosoftAppId && process.env.MicrosoftAppPassword) {
+  credentials = new MicrosoftAppCredentials(process.env.MicrosoftAppId, process.env.MicrosoftAppPassword);
+}
+
+
+
 // Create HTTP server
 const server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, () => {
@@ -30,6 +46,9 @@ const adapter = new BotFrameworkAdapter({
     appId: process.env.MicrosoftAppId,
     appPassword: process.env.MicrosoftAppPassword
 });
+
+// Do not forget to provide your MicrosoftAppId & MicrosoftAppPassword in the InspectionMiddleware constructor parameters
+adapter.use(new InspectionMiddleware(inspectionState, userState, conversationState, credentials, process.env.MicrosoftAppId, process.env.MicrosoftAppPassword))
 
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
