@@ -67,15 +67,15 @@
         "description": "The globally unique name of the Web App. Defaults to the value passed in for \"botId\"."
       }
     },
-    "LuisAppId": {
+    "luisAppId": {
       "type": "string",
       "description": ""
     },
-    "LuisAPIKey": {
+    "luisAPIKey": {
       "type": "string",
       "description": ""
     },
-    "LuisAPIHostName": {
+    "luisAPIHostName": {
       "type": "string",
       "description": ""
     }
