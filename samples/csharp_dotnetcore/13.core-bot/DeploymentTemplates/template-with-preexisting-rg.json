@@ -69,15 +69,21 @@
     },
     "luisAppId": {
       "type": "string",
-      "description": ""
+      "metadata": {
+        "description": ""
+      }
     },
     "luisAPIKey": {
       "type": "string",
-      "description": ""
+      "metadata": {
+        "description": ""
+      }
     },
     "luisAPIHostName": {
       "type": "string",
-      "description": ""
+      "metadata": {
+        "description": ""
+      }
     }
   },
     "variables": {
