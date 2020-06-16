@@ -23,9 +23,9 @@
             <TextBlock Style="{DynamicResource description}" Text="Refers to the logical entity that provides entitlement to deploy and consume Azure resources"  />
 
             <TextBlock Style="{DynamicResource description}" Text="Suscription" />
-            <ComboBox Style="{DynamicResource comboBox}">
-                <ComboBoxItem IsSelected="true">test-subscription</ComboBoxItem>
-                <ComboBoxItem>other-test-subscription</ComboBoxItem>
+            <ComboBox Style="{DynamicResource comboBox}" Name="subscriptionsCombo">
+                <!--<ComboBoxItem IsSelected="true">test-subscription</ComboBoxItem>
+                <ComboBoxItem>other-test-subscription</ComboBoxItem>-->
             </ComboBox>
             
             <TextBlock Style="{DynamicResource description}" Text="The bot works with:" />

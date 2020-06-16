@@ -3,6 +3,7 @@
 
 using System.Windows;
 using System.Windows.Controls;
+using BotManagerVSIX.Models;
 
 namespace BotManagerVSIX
 {
@@ -14,6 +15,15 @@ namespace BotManagerVSIX
         public AzureSubscriptionView()
         {
             InitializeComponent();
+
+            var integration = new Integration();
+
+            var result = integration.GetAzureSubscriptions();
+
+            foreach (var subscription in result)
+            {
+                subscriptionsCombo.Items.Add(subscription.Name);
+            }
         }
 
         private void QnACheckBox_Changed (object sender, RoutedEventArgs e)

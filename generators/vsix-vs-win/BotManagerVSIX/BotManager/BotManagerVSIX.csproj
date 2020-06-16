@@ -47,6 +47,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Models\AzureResourceItem.cs" />
+    <Compile Include="Models\AzureSuscription.cs" />
+    <Compile Include="Models\Integration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BotManagerCommand.cs" />
     <Compile Include="Views\ChannelRegistrationView.xaml.cs">
