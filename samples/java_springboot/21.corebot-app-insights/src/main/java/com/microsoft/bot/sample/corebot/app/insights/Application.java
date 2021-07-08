@@ -81,10 +81,10 @@ public class Application extends BotDependencyConfiguration {
      * Returns a custom Adapter that provides error handling.
      *
      * @param configuration The Configuration object to use.
-     * @return An error handling BotFrameworkHttpAdapter.
+     * @return An error handling CloudAdapter.
      */
     @Override
-    public CloudAdapter getBotFrameworkHttpAdaptor(Configuration configuration) {
+    public CloudAdapter getCloudAdapter(Configuration configuration) {
         Storage storage = getStorage();
         ConversationState conversationState = getConversationState(storage);
         BotTelemetryClient botTelemetryClient = getBotTelemetryClient(configuration);
