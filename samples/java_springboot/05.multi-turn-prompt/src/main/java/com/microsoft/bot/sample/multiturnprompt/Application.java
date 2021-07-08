@@ -8,7 +8,7 @@ import com.microsoft.bot.builder.ConversationState;
 import com.microsoft.bot.builder.UserState;
 import com.microsoft.bot.dialogs.Dialog;
 import com.microsoft.bot.integration.CloudAdapter;
-import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
+import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
 import com.microsoft.bot.integration.spring.BotDependencyConfiguration;
