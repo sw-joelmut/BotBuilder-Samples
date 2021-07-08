@@ -4,7 +4,7 @@
 package com.microsoft.bot.sample.scaleout;
 
 import com.microsoft.bot.builder.Bot;
-import com.microsoft.bot.integration.AdapterWithErrorHandler;
+import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
 import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
@@ -76,6 +76,6 @@ public class Application extends BotDependencyConfiguration {
      */
     @Override
     public BotFrameworkHttpAdapter getBotFrameworkHttpAdaptor(Configuration configuration) {
-        return new AdapterWithErrorHandler(configuration);
+        return new CloudAdapterWithErrorHandler(configuration);
     }
 }

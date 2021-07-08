@@ -7,7 +7,7 @@ import com.microsoft.bot.builder.Bot;
 import com.microsoft.bot.builder.ConversationState;
 import com.microsoft.bot.builder.Storage;
 import com.microsoft.bot.builder.UserState;
-import com.microsoft.bot.integration.AdapterWithErrorHandler;
+import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
 import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
@@ -68,7 +68,7 @@ public class Application extends BotDependencyConfiguration {
         Storage storage = this.getStorage();
         ConversationState conversationState = this.getConversationState(storage);
 
-        BotFrameworkHttpAdapter adapter = new AdapterWithErrorHandler(configuration, conversationState);
+        BotFrameworkHttpAdapter adapter = new CloudAdapterWithErrorHandler(configuration, conversationState);
         TranslationMiddleware translationMiddleware = this.getTranslationMiddleware(configuration);
         adapter.use(translationMiddleware);
         return adapter;

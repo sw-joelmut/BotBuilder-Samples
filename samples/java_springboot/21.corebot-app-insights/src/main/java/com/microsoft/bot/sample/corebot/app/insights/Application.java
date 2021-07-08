@@ -12,6 +12,7 @@ import com.microsoft.bot.builder.NullBotTelemetryClient;
 import com.microsoft.bot.builder.Storage;
 import com.microsoft.bot.builder.TelemetryLoggerMiddleware;
 import com.microsoft.bot.builder.UserState;
+import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
 import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
@@ -91,7 +92,7 @@ public class Application extends BotDependencyConfiguration {
         TelemetryInitializerMiddleware telemetryInitializerMiddleware =
             new TelemetryInitializerMiddleware(telemetryLoggerMiddleware, false);
 
-        AdapterWithErrorHandler adapter = new AdapterWithErrorHandler(
+        CloudAdapterWithErrorHandler adapter = new CloudAdapterWithErrorHandler(
             configuration,
             telemetryInitializerMiddleware,
             botTelemetryClient,
