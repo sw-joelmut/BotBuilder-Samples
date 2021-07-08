@@ -8,7 +8,7 @@ import com.microsoft.bot.builder.ConversationState;
 import com.microsoft.bot.builder.Storage;
 import com.microsoft.bot.builder.UserState;
 import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
-import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
+import com.microsoft.bot.integration.CloudAdapter;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
 import com.microsoft.bot.integration.spring.BotDependencyConfiguration;
@@ -64,11 +64,11 @@ public class Application extends BotDependencyConfiguration {
      * @return An error handling BotFrameworkHttpAdapter.
      */
     @Override
-    public BotFrameworkHttpAdapter getBotFrameworkHttpAdaptor(Configuration configuration) {
+    public CloudAdapter getBotFrameworkHttpAdaptor(Configuration configuration) {
         Storage storage = this.getStorage();
         ConversationState conversationState = this.getConversationState(storage);
 
-        BotFrameworkHttpAdapter adapter = new CloudAdapterWithErrorHandler(configuration, conversationState);
+        CloudAdapter adapter = new CloudAdapterWithErrorHandler(configuration, conversationState);
         TranslationMiddleware translationMiddleware = this.getTranslationMiddleware(configuration);
         adapter.use(translationMiddleware);
         return adapter;

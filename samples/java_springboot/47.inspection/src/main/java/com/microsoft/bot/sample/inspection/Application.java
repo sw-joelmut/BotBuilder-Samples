@@ -8,9 +8,8 @@ import com.microsoft.bot.builder.ConversationState;
 import com.microsoft.bot.builder.Storage;
 import com.microsoft.bot.builder.UserState;
 import com.microsoft.bot.builder.inspection.InspectionState;
-import com.microsoft.bot.integration.AdapterWithErrorHandler;
 import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
-import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
+import com.microsoft.bot.integration.CloudAdapter;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
 import com.microsoft.bot.integration.spring.BotDependencyConfiguration;
@@ -83,7 +82,7 @@ public class Application extends BotDependencyConfiguration {
      */
     @Bean
     @Primary
-    public BotFrameworkHttpAdapter getInspectionBotFrameworkHttpAdapter(
+    public CloudAdapter getInspectionBotFrameworkHttpAdapter(
         Configuration configuration,
         InspectionState inspectionState,
         UserState userState,

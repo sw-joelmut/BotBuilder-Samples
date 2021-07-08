@@ -5,7 +5,7 @@ package com.microsoft.bot.sample.proactive;
 
 import com.microsoft.bot.builder.Bot;
 import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
-import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
+import com.microsoft.bot.integration.CloudAdapter;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
 import com.microsoft.bot.integration.spring.BotDependencyConfiguration;
@@ -71,7 +71,7 @@ public class Application extends BotDependencyConfiguration {
      * @return An error handling BotFrameworkHttpAdapter.
      */
     @Override
-    public BotFrameworkHttpAdapter getBotFrameworkHttpAdaptor(Configuration configuration) {
+    public CloudAdapter getBotFrameworkHttpAdaptor(Configuration configuration) {
         return new CloudAdapterWithErrorHandler(configuration);
     }
 }
