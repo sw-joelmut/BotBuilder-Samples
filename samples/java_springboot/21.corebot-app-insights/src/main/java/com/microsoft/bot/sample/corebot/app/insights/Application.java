@@ -94,8 +94,6 @@ public class Application extends BotDependencyConfiguration {
 
         CloudAdapterWithErrorHandler adapter = new CloudAdapterWithErrorHandler(
             configuration,
-            telemetryInitializerMiddleware,
-            botTelemetryClient,
             conversationState);
 
         return adapter;
