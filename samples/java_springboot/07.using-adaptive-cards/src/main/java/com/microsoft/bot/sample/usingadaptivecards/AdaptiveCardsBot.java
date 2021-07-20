@@ -86,9 +86,11 @@ public class AdaptiveCardsBot extends ActivityHandler {
     }
 
     private static Attachment createAdaptiveCardAttachment(String filePath) {
+        Attachment adaptiveCardAttachment = new Attachment();
+
         try (
-            InputStream inputStream = Thread.currentThread().
-                getContextClassLoader().getResourceAsStream(filePath)
+            InputStream inputStream = adaptiveCardAttachment.getClass()
+                .getClassLoader().getResourceAsStream(filePath)
         ) {
             String adaptiveCardJson = IOUtils
                 .toString(inputStream, StandardCharsets.UTF_8.toString());
