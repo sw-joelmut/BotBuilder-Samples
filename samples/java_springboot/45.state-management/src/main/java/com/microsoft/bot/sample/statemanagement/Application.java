@@ -8,6 +8,7 @@ import com.microsoft.bot.azure.CosmosDbPartitionedStorageOptions;
 import com.microsoft.bot.azure.blobs.BlobsStorage;
 import com.microsoft.bot.builder.Bot;
 import com.microsoft.bot.builder.ConversationState;
+import com.microsoft.bot.builder.Storage;
 import com.microsoft.bot.builder.UserState;
 import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
 import com.microsoft.bot.integration.CloudAdapter;
