@@ -255,11 +255,9 @@ public class AttachmentsBot extends ActivityHandler {
     }
 
     private CompletableFuture<byte[]> getFileData(String filename) {
-        Attachment adaptiveCardAttachment = new Attachment();
-
         try (
-            InputStream inputStream = adaptiveCardAttachment.getClass()
-                .getClassLoader().getResourceAsStream(filename)
+            InputStream inputStream = getClass().getClassLoader()
+                .getResourceAsStream(filename)
         ) {
             return CompletableFuture.completedFuture(IOUtils.toByteArray(inputStream));
         } catch (Throwable t) {
