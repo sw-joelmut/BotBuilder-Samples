@@ -433,15 +433,15 @@ public class TeamsMessagingExtensionsSearchAuthConfigBot extends TeamsActivityHa
     }
 
     private Attachment createAdaptiveCardAttachment() {
-        Attachment adaptiveCardAttachment = new Attachment();
+        Attachment attachment = null;
 
         try (
-            InputStream inputStream = adaptiveCardAttachment.getClass().getClassLoader()
+            InputStream inputStream = attachment.getClass().getClassLoader()
                 .getResourceAsStream("adaptiveCard.json")
         ) {
             String adaptiveCardJson = IOUtils.toString(inputStream, StandardCharsets.UTF_8.toString());
 
-            Attachment attachment = new Attachment();
+            attachment = new Attachment();
             attachment.setContentType("application/vnd.microsoft.card.adaptive");
             attachment.setContent(Serialization.jsonToTree(adaptiveCardJson));
             return attachment;
