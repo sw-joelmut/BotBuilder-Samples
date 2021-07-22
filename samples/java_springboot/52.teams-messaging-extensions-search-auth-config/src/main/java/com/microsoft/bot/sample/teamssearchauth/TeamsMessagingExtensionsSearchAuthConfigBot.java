@@ -365,7 +365,10 @@ public class TeamsMessagingExtensionsSearchAuthConfigBot extends TeamsActivityHa
         TurnContext turnContext,
         MessagingExtensionAction action
     ) {
-        /* This can be uncommented once the MessagingExtensionAction contains the associated state property
+        /*
+        * For context, MessagingExtensionAction lacks the state property in the Java SDK
+        * Given that the SHOWPROFILE command requires this property to exist, this snippet was commented on purpose and should be uncommented once the MessagingExtensionAction is updated
+        * In the meantime, using the Compose action will trigger a 501 HTTP Status Code response as this snippet will not be executed
         if (action.getCommandId().equalsIgnoreCase("SHOWPROFILE")) {
             String state = action.getState(); // Check the state value
             return getTokenResponse(turnContext, state).thenCompose(tokenResponse -> {
