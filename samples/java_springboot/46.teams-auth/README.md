@@ -24,7 +24,11 @@ This sample is a Spring Boot app and uses the Azure CLI and azure-webapp Maven p
 > Note these instructions are for running the sample on your local machine, the tunnelling solution is required because
 the Teams service needs to call into the bot.
 
-- Run ngrok a point to port 3978 by running `ngrok.exe http -host-header=rewrite 3978`
+- Run ngrok - point to port 3978
+
+    ```bash
+    ngrok http -host-header=rewrite 3978
+    ```
 - Create [Bot Framework registration resource](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-quickstart-registration) in Azure
     - Configure the messaging endpoint to the `https` URL you were given by ngrok and append a trailing `/api/messages`
     - Ensure that you've [enabled the Teams Channel](https://docs.microsoft.com/en-us/azure/bot-service/channel-connect-teams?view=azure-bot-service-4.0)
