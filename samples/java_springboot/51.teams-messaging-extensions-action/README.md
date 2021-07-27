@@ -47,7 +47,7 @@ the Teams service needs to call into the bot.
 
 1. Selecting the **Create Card** command from the Compose Box command list. The parameters dialog will be displayed and can be submitted to initiate the card creation within the Messaging Extension code.
 2. Selecting the **Share Message** command from the Message command list.
-3. Selecting the **FetchRoaster** command from the Message command list. *Even though this action is being shown on the contextual menu, it's not implemnted and is expected to fail.*
+3. Selecting the **FetchRoster** command from the Message command list. *Even though this action is being shown on the contextual menu, it's not implemented and is expected to fail.*
 
 ## Deploy the bot to Azure
 
