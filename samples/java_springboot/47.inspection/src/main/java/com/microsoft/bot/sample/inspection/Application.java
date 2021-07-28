@@ -8,10 +8,9 @@ import com.microsoft.bot.builder.ConversationState;
 import com.microsoft.bot.builder.Storage;
 import com.microsoft.bot.builder.UserState;
 import com.microsoft.bot.builder.inspection.InspectionState;
-import com.microsoft.bot.integration.CloudAdapterWithErrorHandler;
 import com.microsoft.bot.integration.CloudAdapter;
 import com.microsoft.bot.integration.Configuration;
-import com.microsoft.bot.integration.spring.BotController;
+import com.microsoft.bot.integration.spring.BotCloudAdapterController;
 import com.microsoft.bot.integration.spring.BotDependencyConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,7 +28,7 @@ import org.springframework.context.annotation.Primary;
 // org.springframework.web.bind.annotation.RestController.
 // The default controller is created by the Spring Boot container using
 // dependency injection. The default route is /api/messages.
-@Import({BotController.class})
+@Import({BotCloudAdapterController.class})
 
 /**
  * This class extends the BotDependencyConfiguration which provides the default
@@ -82,13 +81,13 @@ public class Application extends BotDependencyConfiguration {
      */
     @Bean
     @Primary
-    public CloudAdapter getInspectionBotFrameworkHttpAdapter(
+    public CloudAdapter getInspectionAdapter(
         Configuration configuration,
         InspectionState inspectionState,
         UserState userState,
         ConversationState conversationState
     ) {
-        return new CloudAdapterWithErrorHandler(
+        return new AdapterWithInspection(
             configuration,
             inspectionState,
             userState,
