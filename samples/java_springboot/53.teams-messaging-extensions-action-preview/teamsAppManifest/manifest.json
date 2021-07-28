@@ -27,7 +27,9 @@
         {
             "botId": "<<YOUR-MICROSOFT-APP-ID>>",
             "scopes": [
-                "team"
+                "team",
+                "personal",
+                "groupchat"
             ]
         }
     ],
