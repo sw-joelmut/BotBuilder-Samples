@@ -142,7 +142,7 @@ public class MultiLingualBot extends ActivityHandler {
      * @return the welcome adaptive card
      */
     private static Attachment createAdaptiveCardAttachment() {
-        Attachment attachment = null;
+        Attachment attachment = new Attachment();
 
         // combine path for cross platform support
         try (
@@ -151,7 +151,6 @@ public class MultiLingualBot extends ActivityHandler {
         ) {
             String adaptiveCardJson = IOUtils.toString(inputStream, StandardCharsets.UTF_8.toString());
 
-            attachment = new Attachment();
             attachment.setContentType("application/vnd.microsoft.card.adaptive");
             attachment.setContent(Serialization.jsonToTree(adaptiveCardJson));
             return attachment;
