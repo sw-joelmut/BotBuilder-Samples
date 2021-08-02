@@ -9,6 +9,7 @@ import com.microsoft.bot.builder.Storage;
 import com.microsoft.bot.builder.UserState;
 import com.microsoft.bot.builder.inspection.InspectionState;
 import com.microsoft.bot.integration.CloudAdapter;
+import com.microsoft.bot.integration.CloudAdapterWithInspection;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotCloudAdapterController;
 import com.microsoft.bot.integration.spring.BotDependencyConfiguration;
@@ -87,7 +88,7 @@ public class Application extends BotDependencyConfiguration {
         UserState userState,
         ConversationState conversationState
     ) {
-        return new AdapterWithInspection(
+        return new CloudAdapterWithInspection(
             configuration,
             inspectionState,
             userState,
