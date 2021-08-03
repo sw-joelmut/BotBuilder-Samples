@@ -115,7 +115,7 @@ public class Application extends BotDependencyConfiguration {
     }
 
     @Bean public ChannelServiceHandler getChannelServiceHandler(
-        BotAdapter botAdapter,
+        BotFrameworkHttpAdapter botAdapter,
         Bot bot,
         SkillConversationIdFactoryBase conversationIdFactory,
         CredentialProvider credentialProvider,
