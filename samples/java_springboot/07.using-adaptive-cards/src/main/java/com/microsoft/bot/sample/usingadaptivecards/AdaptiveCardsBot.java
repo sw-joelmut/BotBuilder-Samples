@@ -86,7 +86,7 @@ public class AdaptiveCardsBot extends ActivityHandler {
     }
 
     private static Attachment createAdaptiveCardAttachment(String filePath) {
-        Attachment attachment = null;
+        Attachment attachment = new Attachment();
 
         try (
             InputStream inputStream = attachment.getClass()
@@ -95,7 +95,6 @@ public class AdaptiveCardsBot extends ActivityHandler {
             String adaptiveCardJson = IOUtils
                 .toString(inputStream, StandardCharsets.UTF_8.toString());
 
-            attachment = new Attachment();
             attachment.setContentType("application/vnd.microsoft.card.adaptive");
             attachment.setContent(Serialization.jsonToTree(adaptiveCardJson));
 
