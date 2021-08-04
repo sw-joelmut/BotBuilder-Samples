@@ -25,7 +25,7 @@ import org.springframework.context.annotation.Import;
 //
 @SpringBootApplication
 
-// Use the default BotController to receive incoming Channel messages. A custom
+// Use the default BotCloudAdapterController to receive incoming Channel messages. A custom
 // controller could be used by eliminating this import and creating a new
 // org.springframework.web.bind.annotation.RestController.
 // The default controller is created by the Spring Boot container using
