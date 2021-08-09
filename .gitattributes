@@ -25,6 +25,7 @@
 *.rb text=auto
 *.java text=auto
 *.html text=auto
+*.json text=auto eol=lf
 *.htm text=auto
 *.css text=auto
 *.scss text=auto
