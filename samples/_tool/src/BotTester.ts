@@ -18,6 +18,15 @@ const resolvePath = (object, path, defaultValue) =>
 
 export { ConnectionStatus };
 
+// Source: https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.management.websites.models.provisioningstate?view=azure-dotnet
+export enum DeploymentStatus {
+  Succeeded = 0,
+  Failed = 1,
+  Canceled = 2,
+  InProgress = 3,
+  Deleting = 4,
+}
+
 interface Parameters {
   [x: string]: any;
 }
@@ -44,8 +53,13 @@ interface GroupCleanUpOptions {
   keep?: boolean;
 }
 
+interface BotCleanUpOptions {
+  name: string;
+}
+
 interface CleanUpOptions {
   group: GroupCleanUpOptions;
+  bot: BotCleanUpOptions;
 }
 
 interface BotOptions {
@@ -68,39 +82,137 @@ const objectToFlag = <T extends object>(obj: T) =>
     .map(([key, val]) => (!!val ? `--${key}="${val}"` : `--${key}`))
     .join(" ");
 
+interface BotTesterDeployment {
+  status: DeploymentStatus;
+  bot: Bot;
+}
 export class BotTester {
-  public async deploy(options: DeployOptions): Promise<Bot> {
-    if (options.group.exists) {
-      await this.deployWithGroup(options);
-      await this.waitDeployWithGroup(options);
-    } else {
-      await this.deployWithoutGroup(options);
-      await this.waitDeployWithoutGroup(options);
+  public async deploy(options: DeployOptions): Promise<BotTesterDeployment> {
+    // try catch, asi no continua ejecutando
+    try {
+      let result: any = {};
+      if (options.group.exists) {
+        result = await this.deployWithGroup(options);
+        await this.waitDeployWithGroup(options);
+      } else {
+        result = await this.deployWithoutGroup(options);
+        await this.waitDeployWithoutGroup(options);
+      }
+      const zipPath = await this.zipBot(options);
+      // await this.configureBotDeploy(options);
+      // await this.checkConfigureBotDeployStatus(options);
+      await this.deployBot(options, zipPath);
+      await this.tagResourceGroup(options);
+
+      await this.removeZip(zipPath);
+      this.removeDeployment(options);
+
+      return {
+        status: DeploymentStatus[
+          result?.properties?.provisioningState || DeploymentStatus.Failed
+        ] as any as DeploymentStatus,
+        bot: new Bot({ name: options.bot.name, group: options.group.name }),
+      };
+    } catch (error) {
+      throw error;
     }
-    const zipPath = await this.zipBot(options);
-    // await this.configureBotDeploy(options);
-    // await this.checkConfigureBotDeployStatus(options);
-    await this.deployBot(options, zipPath);
+  }
 
-    await this.removeZip(zipPath);
-    this.removeDeployment(options);
+  public async createResourceGroup(
+    name: string,
+    location: string = "westus"
+  ): Promise<string> {
+    const flags = objectToFlag({
+      name,
+      location,
+      "only-show-errors": null,
+    });
 
-    return new Bot({ name: options.bot.name, group: options.group.name });
+    return cmd(`az group create ${flags}`);
   }
 
   public async cleanup(options: CleanUpOptions): Promise<void> {
-    const resources = await this.resources(options.group.name);
+    // let flags = objectToFlag({
+    //   name: options.bot.name,
+    //   "resource-group": options.group.name,
+    //   "only-show-errors": null,
+    // });
 
-    for (const resource of resources) {
-      const flags = objectToFlag({
-        name: resource.name,
-        "resource-group": options.group.name,
-        "keep-empty-plan": null,
-        "only-show-errors": null,
-      });
+    // await cmd(`az bot delete ${flags}`);
 
-      await cmd(`az webapp delete ${flags}`);
-    }
+    // flags = objectToFlag({
+    //   name: options.bot.name,
+    //   "resource-group": options.group.name,
+    //   "keep-empty-plan": null,
+    //   "only-show-errors": null,
+    // });
+
+    // await cmd(`az webapp delete ${flags}`);
+
+    // flags = objectToFlag({
+    //   name: options.bot.name,
+    //   "resource-group": options.group.name,
+    //   yes: null,
+    //   "only-show-errors": null,
+    // });
+
+    // await cmd(`az appservice plan delete ${flags}`);
+
+    // const resources = await this.resources(options.group.name);
+    // const { plans, apps, bots, rest } = resources
+    //   .filter((e) => options.bot?.name === e.name || true)
+    //   .reduce(
+    //     (acc, val) => {
+    //       const key =
+    //         {
+    //           "Microsoft.Web/serverFarms": "plans",
+    //           "Microsoft.Web/sites": "apps",
+    //           "Microsoft.BotService/botServices": "bots",
+    //         }[val?.type] || "rest";
+
+    //       acc[key].push(val);
+    //       return acc;
+    //     },
+    //     { plans: [], apps: [], bots: [], rest: [] }
+    //   );
+
+    // if (apps.length) {
+    //   const flags = objectToFlag({
+    //     ids: apps.map((e) => e.id).join(" "),
+    //     "only-show-errors": null,
+    //   });
+
+    //   await cmd(`az webapp delete ${flags}`);
+    // }
+
+    // for (const resource of bots) {
+    //   const flags = objectToFlag({
+    //     name: resource.name,
+    //     "resource-group": resource.resourceGroup,
+    //     "only-show-errors": null,
+    //   });
+
+    //   await cmd(`az bot delete ${flags}`);
+    // }
+
+    // if (rest.length) {
+    //   const flags = objectToFlag({
+    //     ids: rest.map((e) => e.id).join(" "),
+    //     "only-show-errors": null,
+    //   });
+
+    //   await cmd(`az resource delete ${flags}`);
+    // }
+
+    // if (plans.length) {
+    //   const flags = objectToFlag({
+    //     ids: plans.map((e) => e.id).join(" "),
+    //     "only-show-errors": null,
+    //     yes: null,
+    //   });
+
+    //   await cmd(`az appservice plan delete ${flags}`);
+    // }
 
     if (!options.group.keep) {
       const flags = objectToFlag({
@@ -119,7 +231,7 @@ export class BotTester {
       "only-show-errors": null,
     });
 
-    const result = await cmd(`az webapp list ${flags}`);
+    const result = await cmd(`az resource list ${flags}`);
     const json = JSON.parse(result);
 
     return json;
@@ -158,7 +270,11 @@ export class BotTester {
       "only-show-errors": null,
     });
 
-    return cmd(`az deployment group create ${flags}`);
+    const result = await cmd(`az deployment group create ${flags}`);
+
+    if (result) {
+      return JSON.parse(result);
+    }
   }
 
   private async deployWithoutGroup(options: DeployOptions): Promise<string> {
@@ -170,7 +286,21 @@ export class BotTester {
       "only-show-errors": null,
     });
 
-    return cmd(`az deployment sub create ${flags}`);
+    const result = await cmd(`az deployment sub create ${flags}`);
+
+    if (result) {
+      return JSON.parse(result);
+    }
+  }
+
+  private async tagResourceGroup(options: DeployOptions): Promise<string> {
+    const flags = objectToFlag({
+      "resource-group": options.group.name,
+      set: "tags.project='manx'",
+      "only-show-errors": null,
+    });
+
+    return cmd(`az group update ${flags}`);
   }
 
   private async zipBot(options: DeployOptions): Promise<string> {
@@ -187,7 +317,7 @@ export class BotTester {
       }
     }
 
-    const zipName = `${options.group.name}-${options.bot.name}.zip`;
+    const zipName = `${options.bot.name}.zip`;
     const zipPath = path.join(__dirname, "zips", zipName);
     zip.writeZip(zipPath);
 
@@ -265,7 +395,7 @@ export class BotTester {
   private async deployBot(
     options: DeployOptions,
     zipPath: string
-  ): Promise<string> {
+  ): Promise<any> {
     // Add retry
     const flags = objectToFlag({
       name: options.bot.name,
@@ -278,7 +408,7 @@ export class BotTester {
   }
 }
 
-class Bot {
+export class Bot {
   private directline: DirectLine;
 
   constructor(private options: BotOptions) {}
@@ -291,19 +421,28 @@ class Bot {
 
   public async status(): Promise<ConnectionStatus> {
     return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        reject(
+          new Error(`The bot '${this.options.name}' took too long to respond!`)
+        );
+      }, 60000);
+
       const sub = this.directline
         .postActivity({
           from: { id: "bottester" },
           type: "message",
         })
-        .flatMap(() => this.directline.connectionStatus$.asObservable())
+        .flatMap(() => this.directline.activity$)
         .subscribe(
           (status) => {
+            console.log(status);
             sub.unsubscribe();
-            resolve(status);
+            clearTimeout(timeout);
+            resolve(status as any);
           },
           (error) => {
             sub.unsubscribe();
+            clearTimeout(timeout);
             reject(error);
           }
         );
@@ -472,6 +611,7 @@ export class BotParameterProvider {
       return result;
     };
 
-    return internalProcess(options.parameters, options.parameters);
+    const params = JSON.parse(JSON.stringify(options.parameters));
+    return internalProcess(params, params);
   }
 }
