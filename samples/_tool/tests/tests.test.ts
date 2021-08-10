@@ -260,29 +260,28 @@ for (const template of templates) {
                 const { bot, ...deployment } = await bottester.deploy(options);
                 // const bot = new Bot({ name: options.bot.name, group: options.group.name });
                 logger.info({ step: "Bot Health-Check" });
-                // await bot.connect();
-                // const status = await bot.status();
-                // await bot.disconnect();
+                await bot.connect();
+                const status = await bot.status();
+                await bot.disconnect();
 
-                // assert.strictEqual(
-                //   deployment.status,
-                //   DeploymentStatus.Succeeded
-                // );
-                // assert.strictEqual(status, ConnectionStatus.Online);
+                assert.strictEqual(
+                  deployment.status,
+                  DeploymentStatus.Succeeded
+                );
+                assert.ok(status);
 
-                // logger.info({
-                //   step: "Assert",
-                //   key: "deployment",
-                //   actual: deployment.status,
-                //   expected: DeploymentStatus.Succeeded,
-                // });
-                // logger.info({
-                //   step: "Assert",
-                //   key: "conversation-status",
-                //   actual: status,
-                //   expected: ConnectionStatus.Online,
-                // });
-                // throw new Error('asd')
+                logger.info({
+                  step: "Assert",
+                  key: "deployment",
+                  actual: deployment.status,
+                  expected: DeploymentStatus.Succeeded,
+                });
+                logger.info({
+                  step: "Assert",
+                  key: "conversation-status",
+                  actual: status,
+                  expected: true,
+                });
               } catch (error) {
                 logger.error({ step: "Error", stack: error });
                 throw error;

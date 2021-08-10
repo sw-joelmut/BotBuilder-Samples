@@ -111,6 +111,7 @@ export class BotTester {
         status: DeploymentStatus[
           result?.properties?.provisioningState || DeploymentStatus.Failed
         ] as any as DeploymentStatus,
+        // status: DeploymentStatus.Succeeded,
         bot: new Bot({ name: options.bot.name, group: options.group.name }),
       };
     } catch (error) {
@@ -419,7 +420,7 @@ export class Bot {
     });
   }
 
-  public async status(): Promise<ConnectionStatus> {
+  public async status(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         reject(
@@ -432,13 +433,12 @@ export class Bot {
           from: { id: "bottester" },
           type: "message",
         })
-        .flatMap(() => this.directline.activity$)
+        .flatMap((e) => this.directline.activity$.filter((s) => s.id != e))
         .subscribe(
           (status) => {
-            console.log(status);
             sub.unsubscribe();
             clearTimeout(timeout);
-            resolve(status as any);
+            resolve(true);
           },
           (error) => {
             sub.unsubscribe();
