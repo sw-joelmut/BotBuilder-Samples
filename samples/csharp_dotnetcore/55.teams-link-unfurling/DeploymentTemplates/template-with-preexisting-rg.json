@@ -148,7 +148,7 @@
                 "isIsolated": false
             },
             "dependsOn": [
-                "[concat(variables('resourceGroupId'), '/providers/Microsoft.Web/sites/', variables('webAppName'))]"
+                "[resourceId('Microsoft.Web/sites/', variables('webAppName'))]"
             ]
         },
         {
