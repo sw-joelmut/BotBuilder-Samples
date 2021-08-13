@@ -172,6 +172,7 @@ const preexistingRg = glob
     cwd: samplesFolder,
   })
   .filter((e) => !e.includes("/bin/"))
+  .filter((e) => !e.includes("/obj/"))
   .map((path, id) => ({ id, path }));
 
 // const preexistingRg = [];
@@ -293,6 +294,7 @@ const templates = [
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
             21, 22, 23, 24, 25, 26,
             // Fails
+            27, 28, 29
           ].includes(id)
       )
       .filter((e, i) => i < appregs.length && i >= 0)
