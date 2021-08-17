@@ -74,86 +74,86 @@ const appregs = [
     id: "b5ee05e4-d95e-42a6-8f80-48808f6c7a20",
     secret: "jvpWoiJJzGt3Fj",
   },
-  {
-    id: "09b67a16-f470-4acd-81c9-f0c1b8272a65",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "5627fc20-5051-4af8-af70-ec30513a3413",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "7a95b259-0dde-4431-b4a4-0ed80c5ee06e",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "fe3ac4d0-4d35-44a7-8c39-ba34eb393165",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "d2fdd23b-27f1-4135-8efe-1f77f8f20a52",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "a1935622-bcca-4742-967d-9c048a5b8d5c",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "97eea80e-6710-4282-8d5f-f2dc4e070d12",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "b5b6eead-28f9-466b-8c88-7053e4b7929d",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "07690179-7da8-4666-b8c5-691af608795d",
-    secret: "umHVC9B_2aG_M9tNml-93xpud-U8Dp.Djy",
-  },
-  {
-    id: "a37c4f15-2fc2-4e16-aafd-e6521238bfcc",
-    secret: "maiIoTWy~nO-_A4588gM7A9DR7Bo4Q~Agr",
-  },
-  {
-    id: "8d14de78-5fc6-4db1-9428-b4fdc079a055",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "974a67f3-8d37-42b2-8304-dc012a576d12",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "7cb2f30c-362b-453a-a497-ca2e83e6ea1a",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "628ca2a3-74d9-4606-be2c-37372f8c6d1a",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "ac2f0c66-c181-42a8-8426-7626d47a504f",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "ecb829a7-59d8-476d-9f63-cd98919800ae",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "8172c184-a2d8-4565-8222-c4897ef61475",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "475ccea9-e464-479f-b4fd-3cf1b2f4307d",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "1bc162db-db79-418d-ae45-5abb78508789",
-    secret: "jvpWoiJJzGt3Fj",
-  },
-  {
-    id: "4aec072e-5dc0-4764-95da-71cd38c0fdce",
-    secret: "jvpWoiJJzGt3Fj",
-  },
+  // {
+  //   id: "09b67a16-f470-4acd-81c9-f0c1b8272a65",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "5627fc20-5051-4af8-af70-ec30513a3413",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "7a95b259-0dde-4431-b4a4-0ed80c5ee06e",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "fe3ac4d0-4d35-44a7-8c39-ba34eb393165",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "d2fdd23b-27f1-4135-8efe-1f77f8f20a52",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "a1935622-bcca-4742-967d-9c048a5b8d5c",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "97eea80e-6710-4282-8d5f-f2dc4e070d12",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "b5b6eead-28f9-466b-8c88-7053e4b7929d",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "07690179-7da8-4666-b8c5-691af608795d",
+  //   secret: "umHVC9B_2aG_M9tNml-93xpud-U8Dp.Djy",
+  // },
+  // {
+  //   id: "a37c4f15-2fc2-4e16-aafd-e6521238bfcc",
+  //   secret: "maiIoTWy~nO-_A4588gM7A9DR7Bo4Q~Agr",
+  // },
+  // {
+  //   id: "8d14de78-5fc6-4db1-9428-b4fdc079a055",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "974a67f3-8d37-42b2-8304-dc012a576d12",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "7cb2f30c-362b-453a-a497-ca2e83e6ea1a",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "628ca2a3-74d9-4606-be2c-37372f8c6d1a",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "ac2f0c66-c181-42a8-8426-7626d47a504f",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "ecb829a7-59d8-476d-9f63-cd98919800ae",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "8172c184-a2d8-4565-8222-c4897ef61475",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "475ccea9-e464-479f-b4fd-3cf1b2f4307d",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "1bc162db-db79-418d-ae45-5abb78508789",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "4aec072e-5dc0-4764-95da-71cd38c0fdce",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
 ];
 
 // const newRg = glob
@@ -162,6 +162,7 @@ const appregs = [
 //     cwd: samplesFolder,
 //   })
 //   .filter((e) => !e.includes("/bin/"))
+//   .filter((e) => !e.includes("/obj/"))
 //   .map((path, id) => ({ id, path }));
 
 const newRg = [];
@@ -174,6 +175,30 @@ const preexistingRg = glob
   .filter((e) => !e.includes("/bin/"))
   .filter((e) => !e.includes("/obj/"))
   .map((path, id) => ({ id, path }));
+
+// console.log(
+//   preexistingRg.map((e) => {
+//     const folder = e.path.replace(
+//       /\/DeploymentTemplates\/template-with-preexisting-rg\.json/gi,
+//       ""
+//     );
+//     const [main, ...rest] = folder.split("/");
+//     const mainFolder = main.replace(/[_]/g, "-");
+//     const sample = rest.join("/").split(".")?.[0].split("/").pop();
+//     const name = `${mainFolder}-${sample}`.slice(0, 38);
+
+//     let lang = "rest";
+
+//     if (main.startsWith("java_")) {
+//       lang = "java";
+//     }
+
+//     return {
+//       name: `${e.id}-${name}`,
+//       folder,
+//     };
+//   })
+// );
 
 // const preexistingRg = [];
 
@@ -240,7 +265,7 @@ const templates = [
       //     ].includes(id)
       // )
       // .filter(({ id }) => [37].includes(id));
-      .filter((e, i) => i < appregs.length && i >= 0)
+      // .filter((e, i) => i < appregs.length && i >= 0)
       .map((e) => {
         const folder = e.path.replace(
           /\/DeploymentTemplates\/template-with-new-rg\.json/gi,
@@ -292,9 +317,10 @@ const templates = [
           ![
             // 2021-08-13
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-            21, 22, 23, 24, 25, 26,
+            21, 22, 23, 24, 25, 26, 19, 20, 37, 38, 39, 40, 41, 42, 46, 45, 46,
+            47, 48, 49, 50, 51, 52, 53, 43, 54, 55, 56, 57, 59, 60,
             // Fails
-            27, 28, 29
+            27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 44,
           ].includes(id)
       )
       .filter((e, i) => i < appregs.length && i >= 0)
@@ -309,10 +335,17 @@ const templates = [
         const sample = rest.join("/").split(".")?.[0].split("/").pop();
         const name = `${mainFolder}-${sample}`.slice(0, 38);
 
+        let lang = "rest";
+
+        if (main.startsWith("java_")) {
+          lang = "java";
+        }
+
         return {
           name: `${e.id}-${name}`,
           baseFolder: samplesFolder,
           folder,
+          lang,
         };
       }),
   },
@@ -404,10 +437,6 @@ for (const template of templates) {
               }
 
               try {
-                // await bottester.cleanup({
-                //   group: { name: parameters.botId.value as string },
-                // });
-
                 if (!!template.group?.name) {
                   logger.info({
                     step: "Create Resource Group",
@@ -489,3 +518,19 @@ for (const template of templates) {
     }
   });
 }
+
+// Delete RGs
+// for (const template of templates) {
+//   parallel(
+//     `template: ${template.name}, path: ${template.path}, tests: ${template.bots.length}`,
+//     () => {
+//       for (const bot of template.bots) {
+//         it(`bot: ${bot.name}, folder: ${bot.folder}`, async () => {
+//           await bottester.cleanup({
+//             group: { name: template.name + "-" + bot.name },
+//           });
+//         });
+//       }
+//     }
+//   );
+// }
