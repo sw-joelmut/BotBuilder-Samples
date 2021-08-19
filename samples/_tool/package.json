@@ -9,8 +9,8 @@
     "dev:debug": "nodemon --config nodemon.json --inspect-brk tests/tests.test.ts",
     "test:samples": "mocha --timeout 1800000 -r ts-node/register 'tests/tests.test.ts'",
     "test:composer": "mocha --timeout 1800000 -r ts-node/register 'tests/composer-samples.test.ts'",
-    "test:experimental": "mocha --timeout 1800000 -r ts-node/register 'tests/experimental.test.ts'",
-    "test:debug": "mocha --inspect-brk --timeout 1800000 -r ts-node/register 'tests/**/*.test.ts'"
+    "test:experimental": "mocha --timeout 900000 -r ts-node/register 'tests/experimental.test.ts'",
+    "test:debug": "mocha --inspect-brk --timeout 900000 -r ts-node/register 'tests/**/*.test.ts'"
   },
   "devDependencies": {
     "@types/adm-zip": "^0.4.34",

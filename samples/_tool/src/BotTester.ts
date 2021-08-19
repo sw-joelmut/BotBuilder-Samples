@@ -74,7 +74,10 @@ const cmd = (
 ): Promise<string> =>
   new Promise((resolve, reject) =>
     exec(command, properties, (err, stdout, stderr) => {
-      if (stderr.startsWith("WARNING:")) {
+      if (
+        (stderr.includes("[WARNING]") || stderr.includes("WARNING:")) &&
+        !stderr.includes("[ERROR]")
+      ) {
         resolve(stdout);
       } else {
         stderr ? reject(stderr) : err ? reject(err) : resolve(stdout);
@@ -448,7 +451,6 @@ export class Bot {
       let timeout;
       let sub;
       let i = 5;
-
 
       // await new Promise<void>((res) => setTimeout(() => res(), 30000));
 

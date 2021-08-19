@@ -156,25 +156,25 @@ const appregs = [
   // },
 ];
 
-// const newRg = glob
-//   .sync(`**/DeploymentTemplates/template-with-new-rg.json`, {
-//     nocase: true,
-//     cwd: samplesFolder,
-//   })
-//   .filter((e) => !e.includes("/bin/"))
-//   .filter((e) => !e.includes("/obj/"))
-//   .map((path, id) => ({ id, path }));
-
-const newRg = [];
-
-const preexistingRg = glob
-  .sync(`**/DeploymentTemplates/template-with-preexisting-rg.json`, {
+const newRg = glob
+  .sync(`**/DeploymentTemplates/template-with-new-rg.json`, {
     nocase: true,
     cwd: samplesFolder,
   })
   .filter((e) => !e.includes("/bin/"))
   .filter((e) => !e.includes("/obj/"))
   .map((path, id) => ({ id, path }));
+
+const preexistingRg = [];
+
+// const preexistingRg = glob
+//   .sync(`**/DeploymentTemplates/template-with-preexisting-rg.json`, {
+//     nocase: true,
+//     cwd: samplesFolder,
+//   })
+//   .filter((e) => !e.includes("/bin/"))
+//   .filter((e) => !e.includes("/obj/"))
+//   .map((path, id) => ({ id, path }));
 
 // console.log(
 //   preexistingRg.map((e) => {
@@ -207,7 +207,8 @@ const preexistingRg = glob
 
 const templates = [
   {
-    name: "new-rg",
+    name: "nrgmut",
+    folder: "new-rg",
     path: "/DeploymentTemplates/template-with-new-rg.json",
     parameters: {
       groupLocation: { value: "westus" },
@@ -239,33 +240,21 @@ const templates = [
       // .filter(
       //   ({ id }) =>
       //     ![
-      //       1, 3, 2, 5, 6, 4, 9, 7, 8, 14, 10, 16, 12, 26, 23, 21, 75, 79, 76,
-      //       78, 84, 83, 80, 82, 81, 109, 107, 106, 108, 105, 111, 114, 110, 113,
-      //       122, 146, 147, 0, 11, 13, 15, 17, 18, 22, 24, 25, 27, 28, 29, 30,
-      //       // 2021-08-12
       //       19, 20, 37, 38, 39, 40, 41, 42, 45, 46, 47, 48, 49, 50, 51, 52, 53,
-      //       54, 55, 56, 57, 58, 59, 60, 61, 62, 64, 65, 66, 67, 68, 69, 70, 72,
+      //       54, 55, 56, 57, 58, 59, 60, 61, 62, 64, 65, 66, 67, 68, 69, 70, 82,
       //       77, 85, 86, 87, 89, 90, 91, 92, 93, 94, 96, 97, 98, 100, 101, 102,
-      //       103, 104, 112, 115, 117, 119, 120, 123, 126, 116, 128, 130, 131,
-      //       132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 144, 145,
-      //       // Requires Qna
-      //       43,
-      //       // Requires Luis
-      //       31, 88,
-      //       // Requires Slack
-      //       143,
-      //       // Works Locally, but no in Azure
-      //       32, 33, 34, 35, 36,
-      //       // mvn clean package fail
-      //       44, 63, 73,
-      //       // Redeploy
-      //       71, 74,
+      //       103, 104, 112, 115, 116, 117, 119, 120, 123, 126, 128, 130, 131,
+      //       132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 144, 145, 0,
+      //       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 21,
+      //       22, 23, 24, 25, 26, 27, 28, 29, 30, 71, 72, 76, 78, 79, 80, 81, 83,
+      //       84, 105, 75, 106, 107, 108, 109, 110, 111, 113, 114,
       //       // Fails
-      //       95, 99, 118, 124, 125, 127, 121, 129, 148, 149, 150, 151,152,153,154,155,156,157,158,159,160,161,162
+      //       31, 32, 33, 34, 35, 36, 43, 44, 63, 73, 74, 88, 95, 99, 118, 124,
+      //       125, 127, 129, 143, 148, 149, 150, 151, 121,
       //     ].includes(id)
       // )
-      // .filter(({ id }) => [37].includes(id));
-      // .filter((e, i) => i < appregs.length && i >= 0)
+      .filter(({ id }) => [33].includes(id))
+      .filter((e, i) => i < appregs.length && i >= 0)
       .map((e) => {
         const folder = e.path.replace(
           /\/DeploymentTemplates\/template-with-new-rg\.json/gi,
@@ -291,7 +280,8 @@ const templates = [
       }),
   },
   {
-    name: "pre-rg",
+    name: "prgmut",
+    folder: "pre-rg",
     path: "/DeploymentTemplates/template-with-preexisting-rg.json",
     group: { name: "pre-rg-jmut" },
     parameters: {
@@ -318,9 +308,15 @@ const templates = [
             // 2021-08-13
             0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
             21, 22, 23, 24, 25, 26, 19, 20, 37, 38, 39, 40, 41, 42, 46, 45, 46,
-            47, 48, 49, 50, 51, 52, 53, 43, 54, 55, 56, 57, 59, 60,
+            47, 48, 49, 50, 51, 52, 53, 43, 54, 55, 56, 57, 58, 59, 60, 61, 62,
+            64, 65, 66, 67, 68, 69, 70, 71, 72, 75, 76, 77, 78, 79, 80, 81, 82,
+            83, 84, 85, 87, 89, 90, 86, 91, 92, 93, 94, 96, 97, 98, 99, 100,
+            101, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114,
+            115, 116, 117, 118, 102, 119, 120, 122, 123, 126, 128, 128, 130,
+            131, 132, 133, 135, 127, 137, 138, 139, 140, 141, 142, 144, 145,
             // Fails
-            27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 44,
+            27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 44, 63, 73, 74, 95, 88, 121,
+            124, 125, 129, 134, 136, 143,
           ].includes(id)
       )
       .filter((e, i) => i < appregs.length && i >= 0)
@@ -364,7 +360,7 @@ function chunkArray(myArray, chunk_size) {
 for (const template of templates) {
   const now = new Date().toISOString().replace(/[:\.]/g, "-");
   const logsPath = path.resolve(
-    path.join(__dirname, `/logs/${template.name}/${now}.log`)
+    path.join(__dirname, `/logs/${template.folder}/${now}.log`)
   );
   const fileLogger = pino(pino.destination(logsPath));
   describe(`template: ${template.name}, path: ${template.path}, tests: ${template.bots.length}`, () => {
