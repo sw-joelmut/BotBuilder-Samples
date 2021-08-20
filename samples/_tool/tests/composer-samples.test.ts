@@ -9,6 +9,8 @@ import {
   Bot,
   DeploymentStatus,
 } from "../src/BotTester";
+import { categorize, CategorizeCategory } from "../src/Categorize";
+import { AppRegistrationQueue } from "../src/AppRegistrationQueue";
 import assert from "assert";
 import parallel from "mocha.parallel";
 import glob from "glob";
@@ -26,48 +28,6 @@ const appregs = [
 const samplesFolder = path.resolve(
   `C:/repos/BotBuilder-Samples/composer-samples`
 );
-
-enum CategorizeCategory {
-  NEW_RG = "new-rg",
-  PREEXISTING_RG = "preexisting-rg",
-}
-
-interface CategorizeOptions {
-  templateFolders: string[];
-}
-interface CategorizeFolderOptions {
-  id: any;
-  path: string;
-  category: CategorizeCategory;
-}
-
-const categorize =
-  (options: CategorizeOptions) => (folderOptions: CategorizeFolderOptions) => {
-    const { folder, template } = options.templateFolders.reduce(
-      (acc, val) => {
-        const regex = new RegExp(`${val}.*`, "gi");
-        acc.folder = acc.folder.replace(regex, "");
-        acc.template = folderOptions.path.replace(`${acc.folder}/`, "");
-        return acc;
-      },
-      { folder: folderOptions.path, template: "" }
-    );
-
-    const [main, ...rest] = folder.split("/");
-    const mainFolder = main.replace(/[_]/g, "-");
-    // Get bot number or next folder name after the main folder.
-    const sample = rest.join("/").split(".")?.[0].split("/").pop();
-    // Limit to 42 characters, due to Azure naming limitation
-    const name = `${folderOptions.id}-${mainFolder}-${sample}`.slice(0, 42);
-
-    return {
-      id: folderOptions.id,
-      name,
-      template,
-      folder,
-      category: folderOptions.category,
-    };
-  };
 
 const convert = categorize({
   templateFolders: ["/scripts/DeploymentTemplates"],
@@ -144,42 +104,6 @@ templatesConfig.set(CategorizeCategory.PREEXISTING_RG, {
   },
 });
 
-class AppRegistrationQueue {
-  public taken = [];
-  public idle = [];
-  private listeners = [];
-
-  constructor(public apps: any[] = []) {
-    this.idle = Array.from(apps);
-  }
-
-  public async take(): Promise<any> {
-    return new Promise<any>((resolve) => {
-      if (this.idle.length === 0) {
-        this.listeners.push(resolve);
-      } else {
-        this._take(resolve);
-      }
-    });
-  }
-
-  public free(app: any): void {
-    this.taken = this.taken.filter((e) => !app?.id.includes(e?.id));
-    this.idle.push(app);
-    console.log(12);
-    if (this.idle.length) {
-      const [resolve, ...rest] = this.listeners;
-      this.listeners = rest;
-      this._take(resolve);
-    }
-  }
-
-  private _take(resolver) {
-    const app = this.idle.splice(0, 1)?.[0];
-    this.taken.push(app);
-    resolver?.(app);
-  }
-}
 
 const apps = new AppRegistrationQueue(appregs);
 

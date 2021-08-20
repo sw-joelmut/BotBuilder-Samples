@@ -156,8 +156,19 @@ const appregs = [
   // },
 ];
 
-// const newRg = glob
-//   .sync(`**/DeploymentTemplates/template-with-new-rg.json`, {
+const newRg = glob
+  .sync(`**/DeploymentTemplates/template-with-new-rg.json`, {
+    nocase: true,
+    cwd: samplesFolder,
+  })
+  .filter((e) => !e.includes("/bin/"))
+  .filter((e) => !e.includes("/obj/"))
+  .map((path, id) => ({ id, path }));
+
+// const newRg = [];
+
+// const preexistingRg = glob
+//   .sync(`**/DeploymentTemplates/template-with-preexisting-rg.json`, {
 //     nocase: true,
 //     cwd: samplesFolder,
 //   })
@@ -165,16 +176,7 @@ const appregs = [
 //   .filter((e) => !e.includes("/obj/"))
 //   .map((path, id) => ({ id, path }));
 
-const newRg = [];
-
-const preexistingRg = glob
-  .sync(`**/DeploymentTemplates/template-with-preexisting-rg.json`, {
-    nocase: true,
-    cwd: samplesFolder,
-  })
-  .filter((e) => !e.includes("/bin/"))
-  .filter((e) => !e.includes("/obj/"))
-  .map((path, id) => ({ id, path }));
+const preexistingRg = [];
 
 // console.log(
 //   preexistingRg.map((e) => {
@@ -253,7 +255,7 @@ const templates = [
       //       125, 127, 129, 143, 148, 149, 150, 151, 121,
       //     ].includes(id)
       // )
-      .filter(({ id }) => [74].includes(id))
+      .filter(({ id }) => [134].includes(id))
       .filter((e, i) => i < appregs.length && i >= 0)
       .map((e) => {
         const folder = e.path.replace(
@@ -319,7 +321,7 @@ const templates = [
       //       124, 125, 129, 134, 136, 143,
       //     ].includes(id)
       // )
-      .filter(({ id }) => [74].includes(id))
+      .filter(({ id }) => [134, 136].includes(id))
       .filter((e, i) => i < appregs.length && i >= 0)
       // .filter((e, i) => i < 1 && i >= 0)
       .map((e) => {
