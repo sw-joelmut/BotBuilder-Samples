@@ -76,7 +76,7 @@ const cmd = (
     exec(command, properties, (err, stdout, stderr) => {
       if (
         (stderr.includes("[WARNING]") || stderr.includes("WARNING:")) &&
-        !stderr.includes("[ERROR]")
+        (!stderr.includes("[ERROR]") || !stderr.includes("ERROR:"))
       ) {
         resolve(stdout);
       } else {
