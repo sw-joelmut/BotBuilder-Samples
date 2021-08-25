@@ -1,4 +1,3 @@
-
 export class AppRegistrationQueue {
   public taken = [];
   public idle = [];
@@ -21,17 +20,16 @@ export class AppRegistrationQueue {
   public free(app: any): void {
     this.taken = this.taken.filter((e) => !app?.id.includes(e?.id));
     this.idle.push(app);
-    console.log(12);
-    if (this.idle.length) {
-      const [resolve, ...rest] = this.listeners;
-      this.listeners = rest;
-      this._take(resolve);
-    }
+    const [resolve, ...rest] = this.listeners;
+    this.listeners = rest;
+    this._take(resolve);
   }
 
   private _take(resolver) {
-    const app = this.idle.splice(0, 1)?.[0];
-    this.taken.push(app);
-    resolver?.(app);
+    if(resolver){
+      const app = this.idle.splice(0, 1)?.[0];
+      this.taken.push(app);
+      resolver(app);
+    }
   }
 }

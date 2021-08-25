@@ -2,6 +2,7 @@
 export enum CategorizeCategory {
   NEW_RG = "new-rg",
   PREEXISTING_RG = "preexisting-rg",
+  FUNCTION_PREEXISTING_RG = "function-preexisting-rg"
 }
 
 interface CategorizeOptions {

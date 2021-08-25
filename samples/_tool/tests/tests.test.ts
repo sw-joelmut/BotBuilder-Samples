@@ -167,16 +167,16 @@ const newRg = glob
 
 // const newRg = [];
 
-// const preexistingRg = glob
-//   .sync(`**/DeploymentTemplates/template-with-preexisting-rg.json`, {
-//     nocase: true,
-//     cwd: samplesFolder,
-//   })
-//   .filter((e) => !e.includes("/bin/"))
-//   .filter((e) => !e.includes("/obj/"))
-//   .map((path, id) => ({ id, path }));
+const preexistingRg = glob
+  .sync(`**/DeploymentTemplates/template-with-preexisting-rg.json`, {
+    nocase: true,
+    cwd: samplesFolder,
+  })
+  .filter((e) => !e.includes("/bin/"))
+  .filter((e) => !e.includes("/obj/"))
+  .map((path, id) => ({ id, path }));
 
-const preexistingRg = [];
+// const preexistingRg = [];
 
 // console.log(
 //   preexistingRg.map((e) => {
@@ -209,7 +209,7 @@ const preexistingRg = [];
 
 const templates = [
   {
-    name: "nrgmut",
+    name: "new-rg",
     folder: "new-rg",
     path: "/DeploymentTemplates/template-with-new-rg.json",
     parameters: {
@@ -255,8 +255,8 @@ const templates = [
       //       125, 127, 129, 143, 148, 149, 150, 151, 121,
       //     ].includes(id)
       // )
-      .filter(({ id }) => [134].includes(id))
-      .filter((e, i) => i < appregs.length && i >= 0)
+      // .filter(({ id }) => [139].includes(id))
+      // .filter((e, i) => i < appregs.length && i >= 0)
       .map((e) => {
         const folder = e.path.replace(
           /\/DeploymentTemplates\/template-with-new-rg\.json/gi,
@@ -282,7 +282,7 @@ const templates = [
       }),
   },
   {
-    name: "prgmut",
+    name: "pre-rg",
     folder: "pre-rg",
     path: "/DeploymentTemplates/template-with-preexisting-rg.json",
     group: { name: "pre-rg-jmut" },
@@ -321,8 +321,8 @@ const templates = [
       //       124, 125, 129, 134, 136, 143,
       //     ].includes(id)
       // )
-      .filter(({ id }) => [134, 136].includes(id))
-      .filter((e, i) => i < appregs.length && i >= 0)
+      // .filter(({ id }) => [134, 136].includes(id))
+      // .filter((e, i) => i < appregs.length && i >= 0)
       // .filter((e, i) => i < 1 && i >= 0)
       .map((e) => {
         const folder = e.path.replace(
@@ -360,176 +360,177 @@ function chunkArray(myArray, chunk_size) {
   return results;
 }
 
-for (const template of templates) {
-  const now = new Date().toISOString().replace(/[:\.]/g, "-");
-  const logsPath = path.resolve(
-    path.join(__dirname, `/logs/${template.folder}/${now}.log`)
-  );
-  const fileLogger = pino(pino.destination(logsPath));
-  describe(`template: ${template.name}, path: ${template.path}, tests: ${template.bots.length}`, () => {
-    const chunks = chunkArray(template.bots, appregs.length);
+// for (const template of templates) {
+//   const now = new Date().toISOString().replace(/[:\.]/g, "-");
+//   const logsPath = path.resolve(
+//     path.join(__dirname, `/logs/${template.folder}/${now}.log`)
+//   );
+//   const fileLogger = pino(pino.destination(logsPath));
+//   describe(`template: ${template.name}, path: ${template.path}, tests: ${template.bots.length}`, () => {
+//     const chunks = chunkArray(template.bots, appregs.length);
 
-    for (let i = 0; i < chunks.length; i++) {
-      const bots = chunks[i];
+//     for (let i = 0; i < chunks.length; i++) {
+//       const bots = chunks[i];
 
-      parallel(
-        `batch: ${i + 1}/${chunks.length}, tests: ${bots?.length}`,
-        () => {
-          const apps = [...appregs].reverse();
-          for (const bot of bots) {
-            const app = apps.pop();
-            it(`bot: ${bot.name}, folder: ${bot.folder}`, async () => {
-              const logger = fileLogger.child({
-                tests: template.bots.length,
-                batch: {
-                  number: i + 1,
-                  total: chunks.length,
-                  tests: bots.length,
-                },
-                bot: { name: bot.name, folder: bot.folder },
-              });
-              const params = JSON.parse(JSON.stringify(template.parameters));
-              params.appId.value = app.id;
-              params.appSecret.value = app.secret;
-              // await new Promise((res) => setTimeout(() => res(1), 5000));
-              // assert.ok(true);
-              const parameters = await botParameterProvider.process({
-                parameters: params,
-                scope: {
-                  bot,
-                  template,
-                },
-              });
-              const options = {
-                botFolder: `${bot.baseFolder}/${bot.folder}`,
-                template: template.path,
-                parameters,
-                bot: {
-                  name: parameters.botId.value as string,
-                },
-                group: {
-                  name:
-                    (parameters.botId.value as string) ||
-                    (parameters.groupName.value as string),
-                  exists: !!template.group?.name,
-                },
-              };
+//       parallel(
+//         `batch: ${i + 1}/${chunks.length}, tests: ${bots?.length}`,
+//         () => {
+//           const apps = [...appregs].reverse();
+//           for (const bot of bots) {
+//             const app = apps.pop();
+//             it(`bot: ${bot.name}, folder: ${bot.folder}`, async () => {
+//               const logger = fileLogger.child({
+//                 tests: template.bots.length,
+//                 batch: {
+//                   number: i + 1,
+//                   total: chunks.length,
+//                   tests: bots.length,
+//                 },
+//                 bot: { name: bot.name, folder: bot.folder },
+//               });
+//               const params = JSON.parse(JSON.stringify(template.parameters));
+//               params.appId.value = app.id;
+//               params.appSecret.value = app.secret;
+//               // await new Promise((res) => setTimeout(() => res(1), 5000));
+//               // assert.ok(true);
+//               const parameters = await botParameterProvider.process({
+//                 parameters: params,
+//                 scope: {
+//                   bot,
+//                   template,
+//                 },
+//               });
+//               const options = {
+//                 botFolder: `${bot.baseFolder}/${bot.folder}`,
+//                 template: template.path,
+//                 parameters,
+//                 bot: {
+//                   name: parameters.botId.value as string,
+//                 },
+//                 group: {
+//                   name:
+//                     (parameters.botId.value as string) ||
+//                     (parameters.groupName.value as string),
+//                   exists: !!template.group?.name,
+//                 },
+//               };
 
-              const java: any = {};
+//               const java: any = {};
 
-              if (bot.lang == "java") {
-                java.path = path.join(
-                  bot.baseFolder,
-                  bot.folder,
-                  "/src/main/resources/application.properties"
-                );
-                java.content = await fs.readFile(java.path, "utf8");
+//               if (bot.lang == "java") {
+//                 java.path = path.join(
+//                   bot.baseFolder,
+//                   bot.folder,
+//                   "/src/main/resources/application.properties"
+//                 );
+//                 java.content = await fs.readFile(java.path, "utf8");
 
-                const content = java.content
-                  .replace(/MicrosoftAppId=.*/gm, `MicrosoftAppId=${app.id}`)
-                  .replace(
-                    /MicrosoftAppPassword=.*/gm,
-                    `MicrosoftAppPassword=${app.secret}`
-                  );
+//                 const content = java.content
+//                   .replace(/MicrosoftAppId=.*/gm, `MicrosoftAppId=${app.id}`)
+//                   .replace(
+//                     /MicrosoftAppPassword=.*/gm,
+//                     `MicrosoftAppPassword=${app.secret}`
+//                   );
 
-                await fs.writeFile(java.path, content);
-              }
+//                 await fs.writeFile(java.path, content);
+//               }
 
-              try {
-                if (!!template.group?.name) {
-                  logger.info({
-                    step: "Create Resource Group",
-                    name: parameters.botId.value,
-                  });
-                  await bottester.createResourceGroup(
-                    parameters.botId.value as string
-                  );
-                }
+//               try {
+//                 if (!!template.group?.name) {
+//                   logger.info({
+//                     step: "Create Resource Group",
+//                     name: parameters.botId.value,
+//                   });
+//                   await bottester.createResourceGroup(
+//                     parameters.botId.value as string
+//                   );
+//                 }
 
-                // await new Promise((res) => setTimeout(() => res(1), 1000));
-                logger.info({ step: "Deploy" });
-                const { bot, ...deployment } = await bottester.deploy(options);
-                // const bot = new Bot({ name: options.bot.name, group: options.group.name });
-                logger.info({ step: "Bot Health-Check" });
-                await bot.connect();
-                const status = await bot.status();
-                await bot.disconnect();
+//                 // await new Promise((res) => setTimeout(() => res(1), 1000));
+//                 logger.info({ step: "Deploy" });
+//                 const { bot, ...deployment } = await bottester.deploy(options);
+//                 // const bot = new Bot({ name: options.bot.name, group: options.group.name });
+//                 logger.info({ step: "Bot Health-Check" });
+//                 await bot.connect();
+//                 const status = await bot.status();
+//                 await bot.disconnect();
 
-                assert.strictEqual(
-                  deployment.status,
-                  DeploymentStatus.Succeeded
-                );
-                assert.ok(status);
+//                 assert.strictEqual(
+//                   deployment.status,
+//                   DeploymentStatus.Succeeded
+//                 );
+//                 assert.ok(status);
 
-                logger.info({
-                  step: "Assert",
-                  key: "deployment",
-                  actual: deployment.status,
-                  expected: DeploymentStatus.Succeeded,
-                });
-                logger.info({
-                  step: "Assert",
-                  key: "conversation-status",
-                  actual: status,
-                  expected: true,
-                });
-              } catch (error) {
-                const { message, stack, ...rest } = error;
-                if (typeof error === "string") {
-                  logger.error({ step: "Error", error });
-                } else {
-                  logger.error({
-                    step: "Error",
-                    error: { message, stack, rest },
-                  });
-                }
-                throw error;
-              } finally {
-                logger.info({ step: "CleanUp" });
-                if (bot.lang == "java") {
-                  await fs.writeFile(java.path, java.content);
-                }
-                try {
-                  // await bottester.cleanup({
-                  //   group: {
-                  //     name: options.group.name,
-                  //   },
-                  //   bot: { name: options.bot.name },
-                  // });
-                  // await appreg.remove(parameters.appId.value as string);
-                } catch (error) {
-                  const { message, stack, ...rest } = error;
-                  if (typeof error === "string") {
-                    logger.error({ step: "CleanUp-Fail", error });
-                  } else {
-                    logger.error({
-                      step: "CleanUp-Fail",
-                      error: { message, stack, rest },
-                    });
-                  }
-                  throw error;
-                }
-              }
-            });
-          }
-        }
-      );
-    }
-  });
-}
+//                 logger.info({
+//                   step: "Assert",
+//                   key: "deployment",
+//                   actual: deployment.status,
+//                   expected: DeploymentStatus.Succeeded,
+//                 });
+//                 logger.info({
+//                   step: "Assert",
+//                   key: "conversation-status",
+//                   actual: status,
+//                   expected: true,
+//                 });
+//               } catch (error) {
+//                 const { message, stack, ...rest } = error;
+//                 if (typeof error === "string") {
+//                   logger.error({ step: "Error", error });
+//                 } else {
+//                   logger.error({
+//                     step: "Error",
+//                     error: { message, stack, rest },
+//                   });
+//                 }
+//                 throw error;
+//               } finally {
+//                 logger.info({ step: "CleanUp" });
+//                 if (bot.lang == "java") {
+//                   await fs.writeFile(java.path, java.content);
+//                 }
+//                 try {
+//                   // await bottester.cleanup({
+//                   //   group: {
+//                   //     name: options.group.name,
+//                   //   },
+//                   //   bot: { name: options.bot.name },
+//                   // });
+//                   // await appreg.remove(parameters.appId.value as string);
+//                 } catch (error) {
+//                   const { message, stack, ...rest } = error;
+//                   if (typeof error === "string") {
+//                     logger.error({ step: "CleanUp-Fail", error });
+//                   } else {
+//                     logger.error({
+//                       step: "CleanUp-Fail",
+//                       error: { message, stack, rest },
+//                     });
+//                   }
+//                   throw error;
+//                 }
+//               }
+//             });
+//           }
+//         }
+//       );
+//     }
+//   });
+// }
 
 // Delete RGs
-// for (const template of templates) {
-//   parallel(
-//     `template: ${template.name}, path: ${template.path}, tests: ${template.bots.length}`,
-//     () => {
-//       for (const bot of template.bots) {
-//         it(`bot: ${bot.name}, folder: ${bot.folder}`, async () => {
-//           await bottester.cleanup({
-//             group: { name: template.name + "-" + bot.name },
-//           });
-//         });
-//       }
-//     }
-//   );
-// }
+for (const template of templates) {
+  parallel(
+    `template: ${template.name}, path: ${template.path}, tests: ${template.bots.length}`,
+    () => {
+      for (const bot of template.bots) {
+        it(`bot: ${bot.name}, folder: ${bot.folder}`, async () => {
+          await bottester.cleanup({
+            group: { name: template.name + "-" + bot.name },
+          });
+        });
+      }
+    }
+  );
+}
+
