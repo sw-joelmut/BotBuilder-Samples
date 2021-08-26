@@ -6,6 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "outDir": "dist/src",
+    "lib": ["ES2019"]
   },
   "include": ["src"]
 }
