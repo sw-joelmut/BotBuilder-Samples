@@ -95,120 +95,6 @@ const baseParameters = {
   appSecret: { value: "{{ app.secret }}" },
 };
 
-const groupBy =
-  <T>(arr: T[]) =>
-  (key: string) => {
-    return arr.reduce((acc, val) => {
-      (acc[val[key]] = acc[val[key]] || []).push(val);
-      return acc;
-    }, {});
-  };
-
-const bots: { [x: string]: any[] } = groupBy([
-  ...searchTemplate({
-    template: "template-with-new-rg.json",
-    directory: samplesFolder,
-  })
-    .map((path, id) =>
-      convert({ category: CategorizeCategory.NEW_RG, id: `nrgmut-${id}`, path })
-    )
-    .filter(
-      (e) =>
-        ![
-          // New RG
-          "nrgmut-0",
-          "nrgmut-1",
-          "nrgmut-2",
-          "nrgmut-3",
-          "nrgmut-4",
-          "nrgmut-5",
-          "nrgmut-6",
-          // "nrgmut-7",
-          "nrgmut-8",
-          // "nrgmut-9",
-          "nrgmut-10",
-          "nrgmut-11",
-          "nrgmut-12",
-          "nrgmut-13",
-          "nrgmut-14",
-          "nrgmut-15",
-          "nrgmut-16",
-          "nrgmut-17",
-          "nrgmut-18",
-          "nrgmut-19",
-          // "nrgmut-20",
-          // "nrgmut-21",
-          // "nrgmut-22",
-          // "nrgmut-23",
-          "nrgmut-24",
-        ].includes(e.id)
-    ),
-  ...searchTemplate({
-    template: "template-with-preexisting-rg.json",
-    directory: samplesFolder,
-  })
-    .map((path, id) =>
-      convert({
-        category: CategorizeCategory.PREEXISTING_RG,
-        id: `prgmut-${id}`,
-        path,
-      })
-    )
-    .filter(
-      (e) =>
-        ![
-          // Pre RG
-          "prgmut-0",
-          "prgmut-1",
-          "prgmut-2",
-          "prgmut-3",
-          "prgmut-4",
-          "prgmut-5",
-          "prgmut-6",
-          // "prgmut-7",
-          "prgmut-8",
-          // "prgmut-9",
-          "prgmut-10",
-          "prgmut-11",
-          "prgmut-12",
-          "prgmut-13",
-          "prgmut-14",
-          "prgmut-15",
-          "prgmut-16",
-          "prgmut-17",
-          "prgmut-18",
-          "prgmut-19",
-          // "prgmut-20",
-          "prgmut-21",
-          // "prgmut-22",
-          "prgmut-23",
-          "prgmut-24",
-        ].includes(e.id)
-    ),
-  // ...searchTemplate({
-  //   template: "function-template-with-preexisting-rg.json",
-  //   directory: samplesFolder,
-  // })
-  //   .map((path, id) =>
-  //     convert({
-  //       category: CategorizeCategory.PREEXISTING_RG,
-  //       id: `fprgmut-${id}`,
-  //       path,
-  //     })
-  //   )
-  //   .filter(
-  //     (e, i) =>
-  //       ![
-  //         "fprgmut-0",
-  //         "fprgmut-1",
-  //         "fprgmut-2",
-  //         "fprgmut-3",
-  //         "fprgmut-4",
-  //       ].includes(e.id)
-  //   ),
-  // // .filter((e, i) => i === 0),
-])("folder");
-
 const templatesConfig = new Map();
 
 templatesConfig.set(CategorizeCategory.NEW_RG, {
@@ -248,173 +134,134 @@ templatesConfig.set(CategorizeCategory.PREEXISTING_RG, {
     })
   ),
 });
-templatesConfig.set(CategorizeCategory.FUNCTION_PREEXISTING_RG, {
-  name: "function-template-with-preexisting-rg",
-  parameters: {
-    ...baseParameters,
-    useCosmosDb: { value: false },
-    useAppInsights: { value: true },
-    shouldCreateAuthoringResource: { value: false },
-    shouldCreateLuisResource: { value: false },
-    useStorage: { value: false },
-    appServicePlanLocation: { value: "westus" },
-  },
-  bots: searchTemplate({
-    template: "function-template-with-preexisting-rg.json",
-    directory: samplesFolder,
-  }).map((path, id) =>
-    convert({
-      category: CategorizeCategory.PREEXISTING_RG,
-      id: `fprgmut-${id}`,
-      path,
-    })
-  ),
-});
 
 const apps = new AppRegistrationQueue(appregs);
 
-const filteredBots = Object.entries(bots).filter(
-  (_, i) => i < apps.idle.length / 2 && i >= 0
-);
-
 const bottester = new BotTester();
-const appreg = new AppRegistration();
 const botParameterProvider = new BotParameterProvider();
 
-botParameterProvider.register("app", ({ collection }) => {
-  // return appreg.create({ name: collection.botId.value, secret: nanoid() });
-  // return { name: "a", secret: "1" };
-});
+botParameterProvider.register("app", ({ scope }) => scope.app);
 
-botParameterProvider.register("bot", ({ scope }) => ({
-  name: scope.bot.name,
-}));
+botParameterProvider.register("bot", ({ scope }) => scope.bot);
 
 const date = new Date().toLocaleDateString().replace(/[\/]/g, "-");
 const logsPath = path.resolve(
   path.join(__dirname, `/logs/composer-samples/${date}.log`)
 );
 
-describe("composer-samples tests", () => {
-  for (const [_, template] of [...templatesConfig]) {
-    parallel(
-      `template: ${template.name}, tests: ${template.bots.length}`,
-      () => {
-        const fileLogger = pino(pino.destination(logsPath));
-        for (const bot of template.bots.filter((e) =>
-          // e.id.startsWith('fprg')
-          ["prgmut-10", "prgmut-24"].includes(e.id)
-        )) {
-          it(`bot: ${bot.name}, folder: ${bot.folder}, template: ${bot.template}`, async () => {
-            const logger = fileLogger.child({
-              tests: template.bots.length,
-              bot,
-            });
+const botsToTest = ["nrgmut-2", "nrgmut-3"];
 
-            const app = await apps.take();
 
-            // const params = JSON.parse(JSON.stringify(template.parameters));
-            const params = {
-              ...template.parameters,
-              appId: { value: app.id },
-              appSecret: { value: app.secret },
-            };
-            params.appId.value = app.id;
-            params.appSecret.value = app.secret;
-            // const parameters = await botParameterProvider.process({
-            //   parameters: params,
-            //   scope: {
-            //     bot,
-            //   },
-            // });
-            const options = {
-              botFolder: `${samplesFolder}/${bot.folder}`,
-              template: bot.template,
-              parameters,
-              bot: {
-                name: parameters.botId.value as string,
-              },
-              group: {
-                name: parameters.botId.value as string,
-                exists: bot.category === CategorizeCategory.PREEXISTING_RG,
-              },
-            };
+const bots = [...templatesConfig].flatMap(([k, e]) => e.bots);
 
-            console.log(options);
+const filteredBots = bots
+  .filter((e) => (botsToTest.length ? botsToTest.includes(e.id) : true))
+  .filter((e, i) => i < apps.apps.length && i >= 0);
 
-            // if (bot.category === CategorizeCategory.PREEXISTING_RG) {
-            //   logger.info({
-            //     step: "Create Resource Group",
-            //     name: parameters.botId.value,
-            //   });
-            //   await bottester.createResourceGroup(
-            //     parameters.botId.value as string
-            //   );
-            // }
+const listOnly = false;
 
-            // try {
-            //   logger.info({ step: "Deploy" });
-            //   const { bot, ...deployment } = await bottester.deploy(options);
-            //   logger.info({ step: "Bot Health-Check" });
-            //   await bot.connect();
-            //   const status = await bot.status();
-            //   await bot.disconnect();
+parallel(`samples tests, tests: ${filteredBots.length}`, () => {
+  // await fs.writeFile(logsPath, "\n");
+  const fileLogger = pino(pino.destination(logsPath));
 
-            //   assert.strictEqual(deployment.status, DeploymentStatus.Succeeded);
-            //   assert.ok(status);
+  for (const bot of filteredBots) {
+    it(`bot: ${bot.name}, folder: ${bot.folder}, template: ${bot.template}`, async () => {
+      if (listOnly) return;
+      const logger = fileLogger.child({
+        tests: bots.length,
+        bot,
+      });
 
-            //   logger.info({
-            //     step: "Assert",
-            //     key: "deployment",
-            //     actual: deployment.status,
-            //     expected: DeploymentStatus.Succeeded,
-            //   });
-            //   logger.info({
-            //     step: "Assert",
-            //     key: "conversation-status",
-            //     actual: status,
-            //     expected: true,
-            //   });
-            // } catch (error) {
-            //   const { message, stack, ...rest } = error;
-            //   if (typeof error === "string") {
-            //     logger.error({ step: "Error", error });
-            //   } else {
-            //     logger.error({
-            //       step: "Error",
-            //       error: { message, stack, rest },
-            //     });
-            //   }
-            //   throw error;
-            // } finally {
-            //   logger.info({ step: "CleanUp" });
-            //   try {
-            //     // await bottester.cleanup({
-            //     //   group: {
-            //     //     name: options.group.name,
-            //     //   },
-            //     //   bot: { name: options.bot.name },
-            //     // });
-            //     // await appreg.remove(parameters.appId.value as string);
-            //   } catch (error) {
-            //     const { message, stack, ...rest } = error;
-            //     if (typeof error === "string") {
-            //       logger.error({ step: "CleanUp-Fail", error });
-            //     } else {
-            //       logger.error({
-            //         step: "CleanUp-Fail",
-            //         error: { message, stack, rest },
-            //       });
-            //     }
-            //     throw error;
-            //   }
-            // }
+      const app = await apps.take();
 
-            apps.free(app);
+      const parameters = await botParameterProvider.process({
+        parameters: templatesConfig.get(bot.category).parameters,
+        scope: {
+          bot,
+          app,
+        },
+      });
+      const options = {
+        botFolder: `${samplesFolder}/${bot.folder}`,
+        template: bot.template,
+        parameters,
+        bot: {
+          name: parameters.botId.value as string,
+        },
+        group: {
+          name: parameters.botId.value as string,
+          exists: bot.category === CategorizeCategory.PREEXISTING_RG,
+        },
+      };
+
+      if (bot.category === CategorizeCategory.PREEXISTING_RG) {
+        logger.info({
+          step: "Create Resource Group",
+          name: parameters.botId.value,
+        });
+        await bottester.createResourceGroup(parameters.botId.value as string);
+      }
+
+      try {
+        logger.info({ step: "Deploy" });
+        const { bot, ...deployment } = await bottester.deploy(options);
+        logger.info({ step: "Bot Health-Check" });
+        await bot.connect();
+        const status = await bot.status();
+        await bot.disconnect();
+
+        assert.strictEqual(deployment.status, DeploymentStatus.Succeeded);
+        assert.ok(status);
+
+        logger.info({
+          step: "Assert",
+          key: "deployment",
+          actual: deployment.status,
+          expected: DeploymentStatus.Succeeded,
+        });
+        logger.info({
+          step: "Assert",
+          key: "conversation-status",
+          actual: status,
+          expected: true,
+        });
+      } catch (error) {
+        const { message, stack, ...rest } = error;
+        if (typeof error === "string") {
+          logger.error({ step: "Error", error });
+        } else {
+          logger.error({
+            step: "Error",
+            error: { message, stack, rest },
           });
         }
+        throw error;
+      } finally {
+        logger.info({ step: "CleanUp" });
+        try {
+          // await bottester.cleanup({
+          //   group: {
+          //     name: options.group.name,
+          //   },
+          //   bot: { name: options.bot.name },
+          // });
+          // await appreg.remove(parameters.appId.value as string);
+        } catch (error) {
+          const { message, stack, ...rest } = error;
+          if (typeof error === "string") {
+            logger.error({ step: "CleanUp-Fail", error });
+          } else {
+            logger.error({
+              step: "CleanUp-Fail",
+              error: { message, stack, rest },
+            });
+          }
+          throw error;
+        }
       }
-    );
+
+      apps.free(app);
+    });
   }
 });
 

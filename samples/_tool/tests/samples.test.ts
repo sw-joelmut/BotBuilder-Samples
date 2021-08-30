@@ -19,44 +19,84 @@ import _fs from "fs";
 const fs = _fs.promises;
 
 const appregs = [
+  // {
+  //   id: "5dfe4cba-1794-402e-a707-eb6a9dd02add",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "26a51ce2-c20d-4cbd-a5aa-e96d7a283077",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "7715fbe4-eef2-4e1e-865f-0aa5698507bd",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "c3886c63-e5cf-4dc5-8cce-9b618897939b",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "d9f6a7cf-5d2b-46fe-89eb-101aaf006604",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "c1c61589-7887-4943-8e74-72d2fd2578aa",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "7c2d9c8e-fba0-4f01-a50a-cb3f8781a900",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "f2905080-7611-44c1-8711-68338c3bc18f",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "da6172f8-2854-46c4-a02c-56ccc652a714",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
+  // {
+  //   id: "b5ee05e4-d95e-42a6-8f80-48808f6c7a20",
+  //   secret: "jvpWoiJJzGt3Fj",
+  // },
   {
-    id: "5dfe4cba-1794-402e-a707-eb6a9dd02add",
+    id: "8d14de78-5fc6-4db1-9428-b4fdc079a055",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "26a51ce2-c20d-4cbd-a5aa-e96d7a283077",
+    id: "974a67f3-8d37-42b2-8304-dc012a576d12",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "7715fbe4-eef2-4e1e-865f-0aa5698507bd",
+    id: "7cb2f30c-362b-453a-a497-ca2e83e6ea1a",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "c3886c63-e5cf-4dc5-8cce-9b618897939b",
+    id: "628ca2a3-74d9-4606-be2c-37372f8c6d1a",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "d9f6a7cf-5d2b-46fe-89eb-101aaf006604",
+    id: "ac2f0c66-c181-42a8-8426-7626d47a504f",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "c1c61589-7887-4943-8e74-72d2fd2578aa",
+    id: "ecb829a7-59d8-476d-9f63-cd98919800ae",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "7c2d9c8e-fba0-4f01-a50a-cb3f8781a900",
+    id: "8172c184-a2d8-4565-8222-c4897ef61475",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "f2905080-7611-44c1-8711-68338c3bc18f",
+    id: "475ccea9-e464-479f-b4fd-3cf1b2f4307d",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "da6172f8-2854-46c4-a02c-56ccc652a714",
+    id: "1bc162db-db79-418d-ae45-5abb78508789",
     secret: "jvpWoiJJzGt3Fj",
   },
   {
-    id: "b5ee05e4-d95e-42a6-8f80-48808f6c7a20",
+    id: "4aec072e-5dc0-4764-95da-71cd38c0fdce",
     secret: "jvpWoiJJzGt3Fj",
   },
 ];
@@ -142,53 +182,34 @@ const logsPath = path.resolve(
   path.join(__dirname, `/logs/samples/${date}.log`)
 );
 
-
 const botsToTest = [
-  // "nrgmut-0",
-  // "nrgmut-8",
-  // "nrgmut-10",
-  // "nrgmut-20",
-  // "nrgmut-21",
-  // "nrgmut-22",
-  // "nrgmut-23",
-  // "nrgmut-24",
-  // "nrgmut-28",
-  // "nrgmut-29",
-  //asd
-  "nrgmut-30",
-  "nrgmut-31",
-  "nrgmut-32",
-  "nrgmut-34",
-  //asd
-  // "prgmut-0",
-  // "prgmut-8",
-  // "prgmut-10",
-  // "prgmut-20",
-  // "prgmut-21",
-  // "prgmut-22",
-  // "prgmut-23",
-  // "prgmut-24",
-  // "prgmut-28",
-  // "prgmut-29",
-  //asd
-  "prgmut-30",
-  "prgmut-31",
-  "prgmut-32",
-  "prgmut-34",
+  "nrgmut-37",
+  "nrgmut-56",
+  "nrgmut-77",
+  "nrgmut-78",
+  "nrgmut-152",
+  "prgmut-37",
+  "prgmut-56",
+  "prgmut-77",
+  "prgmut-78",
+  "prgmut-152",
 ];
+
+const listOnly = false;
 
 const bots = [...templatesConfig].flatMap(([k, e]) => e.bots);
 
 const filteredBots = bots
   .filter((e) => (botsToTest.length ? botsToTest.includes(e.id) : true))
-  .filter((e, i) => i < apps.apps.length && i >= 0);
+  .filter((e, i) => listOnly || (i < apps.apps.length && i >= 0));
 
-parallel(`samples tests, tests: ${filteredBots.length}`, async () => {
-  await fs.writeFile(logsPath, "\n");
+parallel(`samples tests, tests: ${filteredBots.length}`, () => {
+  // await fs.writeFile(logsPath, "\n");
   const fileLogger = pino(pino.destination(logsPath));
 
   for (const bot of filteredBots) {
     it(`bot: ${bot.name}, folder: ${bot.folder}, template: ${bot.template}`, async () => {
+      if (listOnly) return true;
       const logger = fileLogger.child({
         tests: bots.length,
         bot,
