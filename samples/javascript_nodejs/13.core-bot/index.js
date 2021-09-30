@@ -14,14 +14,15 @@ const restify = require('restify');
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
-const { 
+const {
     createBotFrameworkAuthenticationFromConfiguration,
     CloudAdapter,
     ConfigurationServiceClientCredentialFactory,
     ConversationState,
     InputHints,
     MemoryStorage,
-    UserState } = require('botbuilder');
+    UserState
+} = require('botbuilder');
 
 const { FlightBookingRecognizer } = require('./dialogs/flightBookingRecognizer');
 
@@ -35,9 +36,7 @@ const BOOKING_DIALOG = 'bookingDialog';
 
 const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
     MicrosoftAppId: process.env.MicrosoftAppId,
-    MicrosoftAppPassword: process.env.MicrosoftAppPassword,
-    MicrosoftAppType: process.env.MicrosoftAppType,
-    MicrosoftAppTenantId: process.env.MicrosoftAppTenantId
+    MicrosoftAppPassword: process.env.MicrosoftAppPassword
 });
 
 const botFrameworkAuthentication = createBotFrameworkAuthenticationFromConfiguration(null, credentialsFactory);
@@ -48,7 +47,7 @@ const adapter = new CloudAdapter(botFrameworkAuthentication);
 const onTurnErrorHandler = async (context, error) => {
     // This check writes out errors to console log .vs. app insights.
     // NOTE: In production environment, you should consider logging this to Azure
-    //       application insights. See https://aka.ms/bottelemetry for telemetry 
+    //       application insights. See https://aka.ms/bottelemetry for telemetry
     //       configuration instructions.
     console.error(`\n [onTurnError] unhandled error: ${ error }`);
 
@@ -95,6 +94,8 @@ const bot = new DialogAndWelcomeBot(conversationState, userState, dialog);
 
 // Create HTTP server
 const server = restify.createServer();
+server.use(restify.plugins.bodyParser());
+
 server.listen(process.env.port || process.env.PORT || 3978, function() {
     console.log(`\n${ server.name } listening to ${ server.url }`);
     console.log('\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator');
@@ -102,15 +103,13 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
 });
 
 // Listen for incoming activities and route them to your bot main dialog.
-server.post('/api/messages', (req, res) => {
+server.post('/api/messages', async (req, res) => {
     // Route received a request to adapter for processing
-    adapter.process(req, res, async (turnContext) => {
+    await adapter.process(req, res, async (turnContext) => {
         // route to bot activity handler.
         await bot.run(turnContext);
     });
 });
-
-server.use(restify.plugins.bodyParser());
 
 // Listen for Upgrade requests for Streaming.
 server.on('upgrade', async (req, socket, head) => {
@@ -120,5 +119,5 @@ server.on('upgrade', async (req, socket, head) => {
     // Set onTurnError for the CloudAdapter created for each connection.
     streamingAdapter.onTurnError = onTurnErrorHandler;
 
-    streamingAdapter.process(req, socket, head, (context) => bot.run(context));
+    await streamingAdapter.process(req, socket, head, (context) => bot.run(context));
 });
