@@ -16,7 +16,15 @@ const { TranslatorMiddleware } = require('./translation/translatorMiddleware');
 
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
-const { BotFrameworkAdapter, MemoryStorage, UserState, ActivityTypes, TurnContext } = require('botbuilder');
+const {
+    createBotFrameworkAuthenticationFromConfiguration,
+    CloudAdapter,
+    ConfigurationServiceClientCredentialFactory,
+    MemoryStorage,
+    UserState,
+    ActivityTypes,
+    TurnContext
+} = require('botbuilder');
 
 // This bot's main dialog.
 const { MultilingualBot } = require('./bots/multilingualBot');
@@ -24,11 +32,15 @@ const { MultilingualBot } = require('./bots/multilingualBot');
 // Used to create the BotStatePropertyAccessor for storing the user's language preference.
 const LANGUAGE_PREFERENCE = 'language_preference';
 
-// Create adapter. See https://aka.ms/about-bot-adapter to learn more about adapters.
-const adapter = new BotFrameworkAdapter({
-    appId: process.env.MicrosoftAppId,
-    appPassword: process.env.MicrosoftAppPassword
+const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
+    MicrosoftAppId: process.env.MicrosoftAppId,
+    MicrosoftAppPassword: process.env.MicrosoftAppPassword
 });
+
+const botFrameworkAuthentication = createBotFrameworkAuthenticationFromConfiguration(null, credentialsFactory);
+
+// See https://aka.ms/about-bot-adapter to learn more about adapters.
+const adapter = new CloudAdapter(botFrameworkAuthentication);
 
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
@@ -72,6 +84,8 @@ const bot = new MultilingualBot(userState, languagePreferenceProperty);
 
 // Create HTTP server.
 const server = restify.createServer();
+server.use(restify.plugins.bodyParser());
+
 server.listen(process.env.port || process.env.PORT || 3978, function() {
     console.log(`\n${ server.name } listening to ${ server.url }.`);
     console.log('\nGet Bot Framework Emulator: https://aka.ms/botframework-emulator');
@@ -79,10 +93,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
 });
 
 // Listen for incoming activities and route them to your bot main dialog.
-server.post('/api/messages', (req, res) => {
-    // Route received a request to adapter for processing.
-    adapter.processActivity(req, res, async (context) => {
-        // Route to bot activity handler.
-        await bot.run(context);
-    });
+server.post('/api/messages', async (req, res) => {
+    // Route received a request to adapter for processing
+    await adapter.process(req, res, (turnContext) => bot.run(turnContext));
 });
