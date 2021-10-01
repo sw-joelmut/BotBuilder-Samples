@@ -107,10 +107,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
 // Listen for incoming activities and route them to your bot main dialog.
 server.post('/api/messages', async (req, res) => {
     // Route received a request to adapter for processing
-    await adapter.process(req, res, async (turnContext) => {
-        // route to bot activity handler.
-        await bot.run(turnContext);
-    });
+    await adapter.process(req, res, (turnContext) => bot.run(turnContext));
 });
 
 // Listen for Upgrade requests for Streaming.
