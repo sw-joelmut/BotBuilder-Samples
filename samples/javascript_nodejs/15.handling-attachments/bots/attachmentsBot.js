@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 const { ActivityHandler, ActionTypes, ActivityTypes, CardFactory } = require('botbuilder');
+const { AuthenticationConstants, ClaimsIdentity } = require('botframework-connector');
 const path = require('path');
 const axios = require('axios');
 const fs = require('fs');
@@ -196,7 +197,10 @@ class AttachmentsBot extends ActivityHandler {
      */
     async getUploadedAttachment(turnContext) {
         const imageData = fs.readFileSync(path.join(__dirname, '../resources/architecture-resize.png'));
-        const connector = turnContext.adapter.createConnectorClient(turnContext.activity.serviceUrl);
+        const appId = turnContext.adapter.botFrameworkAuthentication.inner.credentialsFactory.appId;
+        const claimsIdentity = new ClaimsIdentity([{ type: AuthenticationConstants.AppIdClaim, value: appId }]);
+        const connectorFactory = turnContext.adapter.botFrameworkAuthentication.createConnectorFactory(claimsIdentity);
+        const connector = await connectorFactory.create(turnContext.activity.serviceUrl);
         const conversationId = turnContext.activity.conversation.id;
         const response = await connector.conversations.uploadAttachment(conversationId, {
             name: 'architecture-resize.png',
