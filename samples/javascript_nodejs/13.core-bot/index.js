@@ -41,6 +41,8 @@ const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
 
 const botFrameworkAuthentication = createBotFrameworkAuthenticationFromConfiguration(null, credentialsFactory);
 
+// Create adapter.
+// See https://aka.ms/about-bot-adapter to learn more about adapters.
 const adapter = new CloudAdapter(botFrameworkAuthentication);
 
 // Catch-all for errors.
