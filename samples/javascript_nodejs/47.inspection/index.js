@@ -87,5 +87,5 @@ const bot = new IntersectionBot(conversationState, userState);
 // Listen for incoming requests.
 server.post('/api/messages', async (req, res) => {
     // Route received a request to adapter for processing
-    await adapter.process(req, res, (turnContext) => bot.run(turnContext));
+    await adapter.process(req, res, (context) => bot.run(context));
 });

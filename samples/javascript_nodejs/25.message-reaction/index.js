@@ -15,9 +15,9 @@ const restify = require('restify');
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const {
-    createBotFrameworkAuthenticationFromConfiguration,
     CloudAdapter,
     ConfigurationServiceClientCredentialFactory,
+    createBotFrameworkAuthenticationFromConfiguration,
     MemoryStorage
 } = require('botbuilder');
 
@@ -73,5 +73,5 @@ server.listen(process.env.port || process.env.PORT || 3978, function() {
 // Listen for incoming requests.
 server.post('/api/messages', async (req, res) => {
     // Route received a request to adapter for processing
-    await adapter.process(req, res, (turnContext) => bot.run(turnContext));
+    await adapter.process(req, res, (context) => bot.run(context));
 });

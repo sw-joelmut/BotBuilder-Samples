@@ -7,7 +7,6 @@ const {
     TeamsActivityHandler,
     teamsGetChannelId
 } = require('botbuilder');
-const { AuthenticationConstants, ClaimsIdentity } = require('botframework-connector');
 
 class TeamsStartNewThreadInChannel extends TeamsActivityHandler {
     constructor() {
@@ -38,9 +37,7 @@ class TeamsStartNewThreadInChannel extends TeamsActivityHandler {
             activity: message
         };
 
-        const appId = context.adapter.botFrameworkAuthentication.inner.credentialsFactory.appId;
-        const claimsIdentity = new ClaimsIdentity([{ type: AuthenticationConstants.AppIdClaim, value: appId }]);
-        const connectorFactory = context.adapter.botFrameworkAuthentication.createConnectorFactory(claimsIdentity);
+        const connectorFactory = context.turnState.get(context.adapter.ConnectorFactoryKey);
         const connectorClient = await connectorFactory.create(context.activity.serviceUrl);
 
         const conversationResourceResponse = await connectorClient.conversations.createConversation(conversationParameters);

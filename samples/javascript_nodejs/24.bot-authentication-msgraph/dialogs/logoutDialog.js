@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 const { ActivityTypes } = require('botbuilder');
-const { ComponentDialog, OAuthPrompt } = require('botbuilder-dialogs');
+const { ComponentDialog } = require('botbuilder-dialogs');
 
 class LogoutDialog extends ComponentDialog {
     constructor(id, connectionName) {
@@ -33,18 +33,12 @@ class LogoutDialog extends ComponentDialog {
             const text = innerDc.context.activity.text ? innerDc.context.activity.text.toLowerCase() : '';
             if (text === 'logout') {
                 // The bot adapter encapsulates the authentication processes.
-                const signOutMessage = 'I have signed you out.';
-                const oauthPrompt = new OAuthPrompt(
-                    'SignOut',
-                    {
-                        connectionName: this.connectionName,
-                        text: signOutMessage,
-                        title: 'Sign Out'
-                    });
+                const userTokenClient = innerDc.context.turnState.get(innerDc.context.adapter.UserTokenClientKey);
 
-                oauthPrompt.signOutUser(innerDc.context);
+                const { activity } = innerDc.context;
+                await userTokenClient.signOutUser(activity.from.id, this.connectionName, activity.channelId);
 
-                await innerDc.context.sendActivity(signOutMessage);
+                await innerDc.context.sendActivity('You have been signed out.');
                 return await innerDc.cancelAllDialogs();
             }
         }
