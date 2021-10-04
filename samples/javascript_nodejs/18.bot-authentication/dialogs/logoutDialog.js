@@ -32,10 +32,6 @@ class LogoutDialog extends ComponentDialog {
         if (innerDc.context.activity.type === ActivityTypes.Message) {
             const text = innerDc.context.activity.text.toLowerCase();
             if (text === 'logout') {
-                // The bot adapter encapsulates the authentication processes.
-                // const botAdapter = innerDc.context.adapter;
-                // await botAdapter.signOutUser(innerDc.context, this.connectionName);
-
                 const signOutMessage = 'I have signed you out.';
                 const oauthPrompt = new OAuthPrompt(
                     'SignOut',
@@ -48,7 +44,6 @@ class LogoutDialog extends ComponentDialog {
                 oauthPrompt.signOutUser(innerDc.context);
 
                 await innerDc.context.sendActivity(signOutMessage);
-                // await innerDc.context.sendActivity('You have been signed out.');
                 return await innerDc.cancelAllDialogs();
             }
         }
