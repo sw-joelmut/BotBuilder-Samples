@@ -20,21 +20,27 @@ require('dotenv').config({ path: ENV_FILE });
 const { RootBot } = require('./rootBot');
 const { SkillsConfiguration } = require('./skillsConfiguration');
 const { SkillConversationIdFactory } = require('./skillConversationIdFactory');
-const { allowedSkillsClaimsValidator } = require('./authentication/allowedSkillsClaimsValidator');
+
+const allowedCallers = Object.values(skillsConfig.skills).map(skill => skill.appId);
+
+const authConfig = new AuthenticationConfiguration([], allowedCallersClaimsValidator(allowedCallers));
+
+const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
+    MicrosoftAppId: process.env.MicrosoftAppId,
+    MicrosoftAppPassword: process.env.MicrosoftAppPassword
+});
+
+const botFrameworkAuthentication = createBotFrameworkAuthenticationFromConfiguration(null, credentialsFactory, authConfig);
 
 // Create adapter.
-// See https://aka.ms/about-bot-adapter to learn more about adapters.
-const adapter = new BotFrameworkAdapter({
-    appId: process.env.MicrosoftAppId,
-    appPassword: process.env.MicrosoftAppPassword,
-    authConfig: new AuthenticationConfiguration([], allowedSkillsClaimsValidator)
-});
+// See https://aka.ms/about-bot-adapter to learn more about how bots work.
+const adapter = new CloudAdapter(botFrameworkAuthentication);
 
 // Catch-all for errors.
 adapter.onTurnError = async (context, error) => {
     // This check writes out errors to the console log, instead of to app insights.
     // NOTE: In production environment, you should consider logging this to Azure
-    //       application insights. See https://aka.ms/bottelemetry for telemetry 
+    //       application insights. See https://aka.ms/bottelemetry for telemetry
     //       configuration instructions.
     console.error(`\n [onTurnError] unhandled error: ${ error }`);
 
@@ -83,6 +89,7 @@ async function endSkillConversation(context) {
 
             await conversationState.saveChanges(context, true);
             await skillClient.postToSkill(botId, activeSkill, skillsConfig.skillHostEndpoint, endOfConversation);
+            await skillClient.postActivity(botId, activeSkill.appId, activeSkill.skillEndpoint, skillsConfig.skillHostEndpoint, endOfConversation.conversation.id, endOfConversation);
         }
     } catch (err) {
         console.error(`\n [onTurnError] Exception caught on attempting to send EndOfConversation : ${ err }`);
