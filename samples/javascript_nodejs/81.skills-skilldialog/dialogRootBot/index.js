@@ -143,7 +143,7 @@ const memoryStorage = new MemoryStorage();
 const conversationState = new ConversationState(memoryStorage);
 
 // Create the conversationIdFactory.
-const conversationIdFactory = new SkillConversationIdFactory();
+const conversationIdFactory = new SkillConversationIdFactory(memoryStorage);
 
 // Create the credential provider;
 // const credentialProvider = new SimpleCredentialProvider(process.env.MicrosoftAppId, process.env.MicrosoftAppPassword);
