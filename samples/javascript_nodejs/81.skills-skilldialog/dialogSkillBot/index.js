@@ -31,8 +31,7 @@ const { ActivityRouterDialog } = require('./dialogs/activityRouterDialog');
 const { FlightBookingRecognizer } = require('./dialogs/flightBookingRecognizer');
 
 // Define our authentication configuration.
-const allowedCallers =
-  (process.env.AllowedCallers || '').split(',').filter((val) => val) || [];
+const allowedCallers = (process.env.AllowedCallers || '').split(',').filter((val) => val) || [];
 
 const authConfig = new AuthenticationConfiguration([], allowedCallersClaimsValidator(allowedCallers));
 

@@ -36,8 +36,7 @@ server.listen(process.env.port || process.env.PORT || 39783, () => {
 // Expose the manifest
 server.get('/manifest/*', restify.plugins.serveStatic({ directory: './manifest', appendRequestPath: false }));
 
-const allowedCallers =
-  (process.env.AllowedCallers || '').split(',').filter((val) => val) || [];
+const allowedCallers = (process.env.AllowedCallers || '').split(',').filter((val) => val) || [];
 
 const authConfig = new AuthenticationConfiguration([], allowedCallersClaimsValidator(allowedCallers));
 

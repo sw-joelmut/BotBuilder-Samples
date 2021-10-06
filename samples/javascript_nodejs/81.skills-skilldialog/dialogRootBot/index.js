@@ -13,16 +13,14 @@ const {
     ActivityTypes,
     ChannelServiceRoutes,
     CloudAdapter,
+    CloudSkillHandler,
     ConfigurationServiceClientCredentialFactory,
     ConversationState,
     createBotFrameworkAuthenticationFromConfiguration,
     InputHints,
     MemoryStorage,
     SkillConversationIdFactory,
-    // SkillHandler,
-    // SkillHttpClient,
-    TurnContext,
-    CloudSkillHandler
+    TurnContext
 } = require('botbuilder');
 const { allowedCallersClaimsValidator, AuthenticationConfiguration } = require('botframework-connector');
 
@@ -111,7 +109,6 @@ async function endSkillConversation(context) {
                 endOfConversation, TurnContext.getConversationReference(context.activity), true);
 
             await conversationState.saveChanges(context, true);
-            // await skillClient.postToSkill(botId, activeSkill, skillsConfig.skillHostEndpoint, endOfConversation);
             await skillClient.postActivity(botId, activeSkill.appId, activeSkill.skillEndpoint, skillsConfig.skillHostEndpoint, endOfConversation.conversation.id, endOfConversation);
         }
     } catch (err) {
@@ -143,10 +140,7 @@ const memoryStorage = new MemoryStorage();
 const conversationState = new ConversationState(memoryStorage);
 
 // Create the conversationIdFactory.
-const conversationIdFactory = new SkillConversationIdFactory(memoryStorage);
-
-// Create the credential provider;
-// const credentialProvider = new SimpleCredentialProvider(process.env.MicrosoftAppId, process.env.MicrosoftAppPassword);
+const conversationIdFactory = new SkillConversationIdFactory(new MemoryStorage());
 
 // Create the skill client.
 // const skillClient = new SkillHttpClient(credentialProvider, conversationIdFactory);
@@ -175,8 +169,7 @@ server.post('/api/messages', async (req, res) => {
 });
 
 // Create and initialize the skill classes.
-// const handler = new SkillHandler(adapter, bot, conversationIdFactory, credentialProvider, authConfig);
-const handler = new CloudSkillHandler(adapter, bot, conversationIdFactory, botFrameworkAuthentication);
+const handler = new CloudSkillHandler(adapter, (context) => bot.run(context), conversationIdFactory, botFrameworkAuthentication);
 const skillEndpoint = new ChannelServiceRoutes(handler);
 skillEndpoint.register(server, '/api/skills');
 
