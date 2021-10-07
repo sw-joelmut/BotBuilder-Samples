@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "groupLocation": {
@@ -21,9 +21,42 @@
             }
         },
         "appSecret": {
+          "type": "string",
+          "metadata": {
+            "description": "Active Directory App Password, set as MicrosoftAppPassword in the Web App's Application Settings."
+          }
+        },
+        "tenantId": {
             "type": "string",
+            "defaultValue": "[subscription().tenantId]",
             "metadata": {
-                "description": "Active Directory App Password, set as MicrosoftAppPassword in the Web App's Application Settings."
+                "description": ""
+            }
+        },
+        "appType": {
+            "type": "string",
+            "defaultValue": "MultiTenant",
+            "allowedValues": [
+              "MultiTenant",
+              "SingleTenant",
+              "UserAssignedMSI"
+            ],
+            "metadata": {
+                "description": ""
+            }
+        },
+        "userAssignedIdentityName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": ""
+            }
+        },
+        "userAssignedIdentityResourceGroupName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": ""
             }
         },
         "botId": {
@@ -77,7 +110,43 @@
         "webAppName": "[if(empty(parameters('newWebAppName')), parameters('botId'), parameters('newWebAppName'))]",
         "siteHost": "[concat(variables('webAppName'), '.azurewebsites.net')]",
         "botEndpoint": "[concat('https://', variables('siteHost'), '/api/messages')]",
-        "resourceGroupId": "[concat(subscription().id, '/resourceGroups/', parameters('groupName'))]"
+        "resourceGroupId": "[concat(subscription().id, '/resourceGroups/', parameters('groupName'))]",
+        "msiResourceId": "[concat(subscription().id, '/resourceGroups/', parameters('userAssignedIdentityResourceGroupName'), '/providers/', 'Microsoft.ManagedIdentity/userAssignedIdentities/', parameters('userAssignedIdentityName'))]",
+        "appTypeDef": {
+          "MultiTenant": {
+            "tenantId": "",
+            "msiResourceId": "",
+            "identity": { "type": "None" }
+          },
+          "SingleTenant": {
+            "tenantId": "[parameters('tenantId')]",
+            "msiResourceId": "",
+            "identity": { "type": "None" }
+          },
+          "UserAssignedMSI": {
+            "tenantId": "[parameters('tenantId')]",
+            "msiResourceId": "[variables('msiResourceId')]",
+            "identity": {
+                "type": "UserAssigned",
+                "userAssignedIdentities": {
+                    "[variables('msiResourceId')]": {}
+                }
+            }
+          }
+        },
+        "appType": {
+          "tenantId": "[variables('appTypeDef')[parameters('appType')].tenantId]",
+          "msiResourceId": "[variables('appTypeDef')[parameters('appType')].msiResourceId]",
+          "identity": "[variables('appTypeDef')[parameters('appType')].identity]"
+        }
+        // "userAssignedIdentity": {
+        //     "type": "UserAssigned",
+        //     "userAssignedIdentities": {
+        //         "[variables('userAssignedIdentityResourceId')]": {}
+        //     }
+        // },
+        // "identity": "[if(equals(parameters('appType'), 'UserAssignedMSI'), variables('userAssignedIdentity'), createObject('type', 'None'))]",
+        // "tenantId": "[if(contains(createArray('SingleTenant', 'UserAssignedMSI'), parameters('appType')), parameters('tenantId'), '')]"
     },
     "resources": [
         {
@@ -98,7 +167,7 @@
             "properties": {
                 "mode": "Incremental",
                 "template": {
-                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
                     "parameters": {},
                     "variables": {},
@@ -124,6 +193,7 @@
                                 "[concat(variables('resourceGroupId'), '/providers/Microsoft.Web/serverfarms/', variables('appServicePlanName'))]"
                             ],
                             "name": "[variables('webAppName')]",
+                            "identity": "[variables('appType').identity]",
                             "properties": {
                                 "name": "[variables('webAppName')]",
                                 "serverFarmId": "[variables('appServicePlanName')]",
@@ -167,6 +237,9 @@
                                 "iconUrl": "https://docs.botframework.com/static/devportal/client/images/bot-framework-default.png",
                                 "endpoint": "[variables('botEndpoint')]",
                                 "msaAppId": "[parameters('appId')]",
+                                "msaAppTenantId": "[variables('appType').tenantId]",
+                                "msaAppMSIResourceId": "[variables('appType').msiResourceId]",
+                                "msaAppType": "[parameters('appType')]",
                                 "luisAppIds": [],
                                 "schemaTransformationVersion": "1.3",
                                 "isCmekEnabled": false,
