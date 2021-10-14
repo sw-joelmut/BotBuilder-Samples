@@ -262,7 +262,7 @@ jobs:
   - task: AzureCLI@2
     displayName: 'Preexisting RG: create Azure resources. Runs in even builds.'
     inputs:
-      azureSubscription: 'FUSE Temporary'
+      azureSubscription: '$(AzureSubscription)'
       scriptType: ps
       scriptLocation: inlineScript
       inlineScript: |
@@ -282,7 +282,7 @@ jobs:
   - task: AzureCLI@2
     displayName: 'New RG: create Azure resources. Runs in odd builds.'
     inputs:
-      azureSubscription: 'FUSE Temporary'
+      azureSubscription: '$(AzureSubscription)'
       scriptType: ps
       scriptLocation: inlineScript
       inlineScript: |
@@ -300,7 +300,7 @@ jobs:
   - task: AzureCLI@2
     displayName: 'Deploy bot, create DirectLine channel '
     inputs:
-      azureSubscription: 'FUSE Temporary'
+      azureSubscription: '$(AzureSubscription)'
       scriptType: ps
       scriptLocation: inlineScript
       inlineScript: |
@@ -361,7 +361,7 @@ jobs:
   - task: AzureCLI@2
     displayName: Delete bot, app service, app service plan, group
     inputs:
-      azureSubscription: 'FUSE Temporary'
+      azureSubscription: '$(AzureSubscription)'
       scriptType: ps
       scriptLocation: inlineScript
       inlineScript: |
