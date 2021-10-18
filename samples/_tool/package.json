@@ -1,0 +1,39 @@
+{
+  "name": "_tool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon --config nodemon.json tests/tests.test.ts",
+    "dev:debug": "nodemon --config nodemon.json --inspect-brk tests/tests.test.ts",
+    "test:samples": "mocha --timeout 1800000 -r ts-node/register 'tests/tests.test.ts'",
+    "test:composer": "mocha --timeout 1800000 -r ts-node/register 'tests/composer-samples.test.ts'",
+    "test:experimental": "mocha --timeout 900000 -r ts-node/register 'tests/experimental.test.ts'",
+    "test:debug": "mocha --inspect-brk --timeout 900000 -r ts-node/register 'tests/**/*.test.ts'",
+    "test:migration": "mocha --timeout 900000 -r ts-node/register 'tests/migration.tests.ts'",
+    "test:dotnet": "mocha --timeout 1800000 -r ts-node/register 'tests/dotnet_samples.test.ts'"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.4.34",
+    "@types/glob": "^7.1.4",
+    "@types/mocha": "^9.0.0",
+    "@types/node": "^16.4.10",
+    "@types/pino": "^6.3.11",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.5",
+    "botbuilder": "^4.14.1",
+    "botframework-directlinejs": "^0.15.0",
+    "glob": "^7.1.7",
+    "mocha": "^9.0.3",
+    "mocha.parallel": "^0.15.6",
+    "nanoid": "^3.1.23",
+    "pino": "^6.13.0",
+    "ws": "^8.0.0",
+    "xhr2": "^0.2.1"
+  }
+}
