@@ -21,7 +21,6 @@ export class AppRegistrationQueue {
   public free(app: any): void {
     this.taken = this.taken.filter((e) => !app?.id.includes(e?.id));
     this.idle.push(app);
-    console.log(12);
     if (this.idle.length) {
       const [resolve, ...rest] = this.listeners;
       this.listeners = rest;

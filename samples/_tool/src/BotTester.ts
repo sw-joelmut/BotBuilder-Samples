@@ -1,3 +1,8 @@
+// NODE VERSION 14.16.1
+
+
+
+
 import { exec, ExecOptions } from "child_process";
 import glob from "glob";
 import _fs from "fs";
@@ -13,6 +18,7 @@ global.XMLHttpRequest = require("xhr2");
 global.WebSocket = require("ws");
 
 const fs = _fs.promises;
+
 
 const resolvePath = (object, path, defaultValue) =>
   path.split(".").reduce((o, p) => (o ? o[p] : defaultValue), object);
