@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreBotWithTestsMSI", "CoreBotWithTestsMSI\CoreBotWithTestsMSI.csproj", "{F8FFA9CE-7579-476A-9838-C8FE0925DB51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreBotWithTestsMSI.Tests", "CoreBotWithTestsMSI.Tests\CoreBotWithTestsMSI.Tests.csproj", "{05D04C65-C6FC-4BCA-AFF4-7704F9BF0827}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F8FFA9CE-7579-476A-9838-C8FE0925DB51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8FFA9CE-7579-476A-9838-C8FE0925DB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8FFA9CE-7579-476A-9838-C8FE0925DB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8FFA9CE-7579-476A-9838-C8FE0925DB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05D04C65-C6FC-4BCA-AFF4-7704F9BF0827}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05D04C65-C6FC-4BCA-AFF4-7704F9BF0827}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05D04C65-C6FC-4BCA-AFF4-7704F9BF0827}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05D04C65-C6FC-4BCA-AFF4-7704F9BF0827}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A64A6283-0007-4F63-84D3-DEC0D3E21CF1}
+	EndGlobalSection
+EndGlobal
