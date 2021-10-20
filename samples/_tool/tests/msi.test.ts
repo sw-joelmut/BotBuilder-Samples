@@ -31,58 +31,12 @@ botParameterProvider.register("bot", ({ scope }) => ({
   name: `${scope.template.name}-${scope.bot.name}`,
 }));
 
-const samplesFolder = path.resolve(`C:/repos/BotBuilder-Samples/samples/csharp_dotnetcore`);
-
-const bots = [
-  { name: "2-echo-bot", folder: "02.echo-bot" },
-  { name: "3-welcome-user", folder: "03.welcome-user" },
-  { name: "5-multi-turn-prompt", folder: "05.multi-turn-prompt" },
-  { name: "6-using-cards", folder: "06.using-cards" },
-  { name: "7-using-adaptive-cards", folder: "07.using-adaptive-cards" },
-  { name: "8-suggested-actions", folder: "08.suggested-actions" },
-  { name: "11-qnamaker", folder: "11.qnamaker" },
-  { name: "13-core-bot", folder: "13.core-bot" },
-  { name: "14-nlp-with-orchestrator", folder: "14.nlp-with-orchestrator" },
-  { name: "15-handling-attachments", folder: "15.handling-attachments" },
-
-  // { name: "16-proactive-messages", folder: "16.proactive-messages" },
-  // { name: "17-multilingual-bot", folder: "17.multilingual-bot" },
-  // { name: "18-bot-auth", folder: "18.bot-authentication" },
-  // { name: "19-custom-dialogs", folder: "19.custom-dialogs" },
-  // { name: "21-corebot-insights", folder: "21.corebot-app-insights" },
-  // { name: "23-facebook-events", folder: "23.facebook-events" },
-  // { name: "24-bot-auth-msgraph", folder: "24.bot-authentication-msgraph" },
-  // { name: "25-message-reaction", folder: "25.message-reaction" },
-  // { name: "42-scaleout", folder: "42.scaleout" },
-  // { name: "43-complex-dialog", folder: "43.complex-dialog" },
-  
-  // { name: "44-prompt-users", folder: "44.prompt-users-for-input" },
-  // { name: "45-state-management", folder: "45.state-management" },
-  // { name: "46-teams-auth", folder: "46.teams-auth" },
-  // { name: "47-inspection", folder: "47.inspection" },
-  // { name: "49-qnamaker-all", folder: "49.qnamaker-all-features" },
-  // { name: "50-teams-search", folder: "50.teams-messaging-extensions-search" },
-  // { name: "51-teams-action", folder: "51.teams-messaging-extensions-action" },
-  // { name: "52-teams-search-auth", folder: "52.teams-messaging-extensions-search-auth-config" },
-  // { name: "53-teams-action-preview", folder: "53.teams-messaging-extensions-action-preview" },
-  // { name: "54-teams-task-module", folder: "54.teams-task-module" },
-
-  // { name: "55-teams-link-unfurling", folder: "55.teams-link-unfurling" },
-  // { name: "56-teams-file-upload", folder: "56.teams-file-upload" },
-  // { name: "57-teams-conversation", folder: "57.teams-conversation-bot" },
-  // { name: "58-teams-start-thread", folder: "58.teams-start-new-thread-in-channel" },
-  // { name: "60-slack-adapter", folder: "60.slack-adapter" },
-  // { name: "61-facebook-adapter", folder: "61.facebook-adapter" },
-  // { name: "62-webex-adapter", folder: "62.webex-adapter" },
-  // { name: "63-twilio-adapter", folder: "63.twilio-adapter" },
-  // { name: "80-echo-skill", folder: "80.skills-simple-bot-to-bot/EchoSkillBot" },
-  
-  // { name: "80.simple-root", folder: "80.skills-simple-bot-to-bot/SimpleRootBot" },
-  // { name: "81.dialog-skill", folder: "81.skills-skilldialog/DialogSkillBot" },
-  // { name: "81.dialog-root", folder: "81.skills-skilldialog/DialogRootBot" },
-];
+const root = (base) => (folder) => path.resolve(`${__dirname}/../../../${base}/${folder}`);
+const samples = root('samples/csharp_dotnetcore');
+const templts = root('generators/dotnet-templates');
 
 const appregs = [
+  // +10
   {
     id: "3953ae91-1d62-4c0e-8073-5fb9af2fec52",
     name: "msi-test-1-manx"
@@ -123,22 +77,149 @@ const appregs = [
     id: "d26c1fea-4938-4c0b-b56c-833e7f8159d4",
     name: "msi-test-10-manx"
   },
+
+  // +10
+  {
+    id: "a01d4674-4819-4dce-b548-63d96c78c3c9",
+    name: "msi-test-11-manx",
+  },
+  {
+    id: "4dbdb3bb-5fa7-4662-be13-bbd222483c11",
+    name: "msi-test-12-manx",
+  },
+  {
+    id: "9e4ecb27-52ae-486c-9103-8791ed198226",
+    name: "msi-test-13-manx",
+  },
+  {
+    id: "4bd60cae-8014-4878-a37e-3834f4d23c1b",
+    name: "msi-test-14-manx",
+  },
+  {
+    id: "fa7f3ba2-1801-4533-ae21-22aaa3821c66",
+    name: "msi-test-15-manx",
+  },
+  {
+    id: "82000c63-2d8b-4651-a0f6-ed04b4b57568",
+    name: "msi-test-16-manx",
+  },
+  {
+    id: "9a777801-825c-41f9-80a3-1920593b7ed9",
+    name: "msi-test-17-manx",
+  },
+  {
+    id: "df37055b-a295-4a24-ab45-cb37b73240e2",
+    name: "msi-test-18-manx",
+  },
+  {
+    id: "3efb9358-28c8-46c8-b99e-9f3ee057e8fc",
+    name: "msi-test-19-manx",
+  },
+  {
+    id: "ad7e0c3c-aef5-4dea-bf18-f3359450bf6e",
+    name: "msi-test-20-manx",
+  },
 ]
+
+const bots = [
+  // { name: "2-echo-bot", folder: samples("02.echo-bot") },
+  // { name: "3-welcome-user", folder: samples("03.welcome-user") },
+  // { name: "5-multi-turn-prompt", folder: samples("05.multi-turn-prompt") },
+  // { name: "6-using-cards", folder: samples("06.using-cards") },
+  // { name: "7-using-adaptive-cards", folder: samples("07.using-adaptive-cards") },
+  // { name: "8-suggested-actions", folder: samples("08.suggested-actions") },
+  // { name: "11-qnamaker", folder: samples("11.qnamaker") },
+  // { name: "13-core-bot", folder: samples("13.core-bot") },
+  // { name: "14-nlp-with-orchestrator", folder: samples("14.nlp-with-orchestrator") },
+  // { name: "15-handling-attachments", folder: samples("15.handling-attachments") },
+  // { name: "16-proactive-messages", folder: samples("16.proactive-messages") },
+  // { name: "17-multilingual-bot", folder: samples("17.multilingual-bot") },
+  // { name: "18-bot-auth", folder: samples("18.bot-authentication") },
+  // { name: "19-custom-dialogs", folder: samples("19.custom-dialogs") },
+  // { name: "21-corebot-insights", folder: samples("21.corebot-app-insights") },
+  // { name: "23-facebook-events", folder: samples("23.facebook-events") },
+  // { name: "24-bot-auth-msgraph", folder: samples("24.bot-authentication-msgraph") },
+  // { name: "25-message-reaction", folder: samples("25.message-reaction") },
+  // { name: "42-scaleout", folder: samples("42.scaleout") },
+  // { name: "43-complex-dialog", folder: samples("43.complex-dialog") },
+  // { name: "44-prompt-users", folder: samples("44.prompt-users-for-input") },
+  // { name: "45-state-management", folder: samples("45.state-management") },
+  // { name: "46-teams-auth", folder: samples("46.teams-auth") },
+  // { name: "47-inspection", folder: samples("47.inspection") },
+  // { name: "49-qnamaker-all", folder: samples("49.qnamaker-all-features") },
+  // { name: "50-teams-search", folder: samples("50.teams-messaging-extensions-search") },
+  // { name: "51-teams-action", folder: samples("51.teams-messaging-extensions-action") },
+  // { name: "52-teams-search-auth", folder: samples("52.teams-messaging-extensions-search-auth-config") },
+  // { name: "53-teams-action-preview", folder: samples("53.teams-messaging-extensions-action-preview") },
+  // { name: "54-teams-task-module", folder: samples("54.teams-task-module") },
+  // { name: "55-teams-link-unfurling", folder: samples("55.teams-link-unfurling") },
+  // { name: "56-teams-file-upload", folder: samples("56.teams-file-upload") },
+  // { name: "57-teams-conversation", folder: samples("57.teams-conversation-bot") },
+  // { name: "58-teams-start-thread", folder: samples("58.teams-start-new-thread-in-channel") },
+  // { name: "60-slack-adapter", folder: samples("60.slack-adapter") },
+  // { name: "61-facebook-adapter", folder: samples("61.facebook-adapter") },
+  // { name: "62-webex-adapter", folder: samples("62.webex-adapter") },
+  // { name: "63-twilio-adapter", folder: samples("63.twilio-adapter") },
+  { name: "80-echo-skill", folder: samples("80.skills-simple-bot-to-bot/EchoSkillBot") },
+  { name: "80-simple-root", folder: samples("80.skills-simple-bot-to-bot/SimpleRootBot") },
+  { name: "81-dialog-skill", folder: samples("81.skills-skilldialog/DialogSkillBot") },
+  { name: "81-dialog-root", folder: samples("81.skills-skilldialog/DialogRootBot") },
+  { name: "05a-multi-turn-lg", folder: samples("language-generation/05.a.multi-turn-prompt-with-language-fallback") },
+  { name: "05b-multi-turn-lg", folder: samples("language-generation/05.multi-turn-prompt") },
+  { name: "06-using-cards-lg", folder: samples("language-generation/06.using-cards") },
+  { name: "13-core-bot-lg", folder: samples("language-generation/13.core-bot") },
+  { name: "20-extending-lg", folder: samples("language-generation/20.extending-with-custom-functions") },
+  { name: "template-corebot", folder: samples("Template-bots/MyCoreBot") },
+  { name: "template-echobot", folder: samples("Template-bots/MyEchoBot") },
+  { name: "template-emptybot", folder: samples("Template-bots/MyEmptyBot") },
+  { name: "vsix-corebot", folder: samples("VSIX-bots/CoreBotMSI") },
+  { name: "vsix-corebottests", folder: samples("VSIX-bots/CoreBotWithTestsMSI/CoreBotWithTestsMSI") },
+  { name: "vsix-echobot", folder: samples("VSIX-bots/EchoBotMSI") },
+  { name: "vsix-emptybot", folder: samples("VSIX-bots/EmptyBotMSI") },
+].filter((e, i) => i < appregs.length && i >= 0);
+
 
 const appType = "UserAssignedMSI";
 const tenantId = "b25036e3-de39-4fec-a4aa-bda41b870d38";
 
 const templates = [
+  // {
+  //   name: "msi-new-jm",
+  //   path: "/DeploymentTemplates/template-with-new-rg.json",
+    // group: false,
+  //   parameters: {
+  //     groupLocation: { value: "westus" },
+  //     groupName: { value: "{{ bot.name }}" },
+  //     botId: { value: "{{ bot.name }}" },
+  //     botSku: { value: "F0" },
+  //     newAppServicePlanName: { value: "{{ bot.name }}" },
+  //     newAppServicePlanLocation: { value: "westus" },
+  //     newAppServicePlanSku: {
+  //       value: {
+  //         name: "S1",
+  //         tier: "Standard",
+  //         size: "S1",
+  //         family: "S",
+  //         capacity: 1,
+  //       },
+  //     },
+  //     appId: { value: "{{ app.id }}" },
+  //     appType: { value: appType },
+  //     tenantId: { value: tenantId },
+  //     existingUserAssignedMSIName: { value: "{{ app.name }}" },
+  //     existingUserAssignedMSIResourceGroupName: { value: "bffnbots-jmut" }
+  //   },
+  //   bots,
+  // },
   {
-    name: "msi-new-jm",
-    path: "/DeploymentTemplates/template-with-new-rg.json",
+    name: "msi-pre-jm",
+    path: "/DeploymentTemplates/template-with-preexisting-rg.json",
+    group: true,
     parameters: {
-      groupLocation: { value: "westus" },
-      groupName: { value: "{{ bot.name }}" },
       botId: { value: "{{ bot.name }}" },
       botSku: { value: "F0" },
       newAppServicePlanName: { value: "{{ bot.name }}" },
-      newAppServicePlanLocation: { value: "westus" },
+      appServicePlanLocation: { value: "westus" },
       newAppServicePlanSku: {
         value: {
           name: "S1",
@@ -154,35 +235,8 @@ const templates = [
       existingUserAssignedMSIName: { value: "{{ app.name }}" },
       existingUserAssignedMSIResourceGroupName: { value: "bffnbots-jmut" }
     },
-    bots: bots
-      .filter(({ name }) => ![].includes(name))
-      .filter((e, i) => i < appregs.length && i >= 0),
+    bots,
   },
-  // {
-  //   name: "multi-preex",
-  //   path: "/DeploymentTemplates/template-with-preexisting-rg.json",
-  //   group: { name: "pre-rg-jmut" },
-  //   parameters: {
-  //     botId: { value: "{{ bot.name }}" },
-  //     botSku: { value: "F0" },
-  //     newAppServicePlanName: { value: "{{ bot.name }}" },
-  //     appServicePlanLocation: { value: "westus" },
-  //     newAppServicePlanSku: {
-  //       value: {
-  //         name: "S1",
-  //         tier: "Standard",
-  //         size: "S1",
-  //         family: "S",
-  //         capacity: 1,
-  //       },
-  //     },
-  //     appId: { value: "{{ app.id }}" },
-  //     appSecret: { value: "{{ app.secret }}" },
-  //   },
-  //   bots: bots
-  //     .filter(({ name }) => ![].includes(name))
-  //     .filter((e, i) => i < appregs.length && i >= 0),
-  // },
 ];
 
 function chunkArray(myArray, chunk_size) {
@@ -234,7 +288,7 @@ for (const template of templates) {
                 },
               });
               const options = {
-                botFolder: `${samplesFolder}/${bot.folder}`,
+                botFolder: bot.folder,
                 template: template.path,
                 parameters,
                 bot: {
@@ -244,12 +298,12 @@ for (const template of templates) {
                   name:
                     (parameters.botId.value as string) ||
                     (parameters.groupName.value as string),
-                  exists: false, // new resource group
+                  exists: template.group, // new resource group
                 },
               };
 
               try {
-                if (!options.group.exists) {
+                if (options.group.exists) {
                   logger.info({
                     step: "Create Resource Group",
                     name: parameters.botId.value,
