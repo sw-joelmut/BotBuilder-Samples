@@ -9,7 +9,7 @@
         "start": "node ./index.js",
         "watch": "nodemon ./index.js",
         "lint": "eslint .",
-        "test": "nyc mocha tests/**/*.test.js"
+        "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
         "type": "git",
@@ -20,9 +20,8 @@
         "botbuilder": "~4.15.0-rc0",
         "botbuilder-ai": "~4.15.0-rc0",
         "botbuilder-dialogs": "~4.15.0-rc0",
-        "botbuilder-testing": "~4.15.0-rc0",
-        "dotenv": "^8.2.0",
-        "restify": "^8.5.1"
+        "dotenv": "~8.2.0",
+        "restify": "~8.5.1"
     },
     "devDependencies": {
         "eslint": "^7.0.0",
