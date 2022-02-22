@@ -13,7 +13,6 @@ const {
     ActivityTypes,
     ChannelServiceRoutes,
     CloudAdapter,
-    CloudSkillHandler,
     ConfigurationServiceClientCredentialFactory,
     ConversationState,
     createBotFrameworkAuthenticationFromConfiguration,
@@ -35,6 +34,7 @@ require('dotenv').config({ path: ENV_FILE });
 // This bot's main dialog.
 const { RootBot } = require('./bots/rootBot');
 const { MainDialog } = require('./dialogs/mainDialog');
+const { TokenExchangeSkillHandler } = require('./TokenExchangeSkillHandler');
 
 // Import Skills modules.
 const { SkillsConfiguration } = require('./skillsConfiguration');
@@ -170,7 +170,7 @@ const conversationIdFactory = new SkillConversationIdFactory(new MemoryStorage()
 const skillClient = botFrameworkAuthentication.createBotFrameworkClient();
 
 // Create the main dialog.
-const mainDialog = new MainDialog(conversationState, skillsConfig, skillClient, conversationIdFactory);
+const mainDialog = new MainDialog(skillClient, conversationState, conversationIdFactory, skillsConfig);
 const bot = new RootBot(conversationState, mainDialog);
 
 // Create HTTP server.
@@ -192,7 +192,7 @@ server.post('/api/messages', async (req, res) => {
 });
 
 // Create and initialize the skill classes.
-const handler = new CloudSkillHandler(adapter, (context) => bot.run(context), conversationIdFactory, botFrameworkAuthentication);
+const handler = new TokenExchangeSkillHandler(adapter, bot, conversationIdFactory, skillClient, skillsConfig);
 const skillEndpoint = new ChannelServiceRoutes(handler);
 skillEndpoint.register(server, '/api/skills');
 
