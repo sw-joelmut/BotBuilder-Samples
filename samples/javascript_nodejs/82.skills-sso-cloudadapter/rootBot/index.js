@@ -133,6 +133,7 @@ async function endSkillConversation(context) {
                 endOfConversation, TurnContext.getConversationReference(context.activity), true);
 
             await conversationState.saveChanges(context, true);
+            skillClient.createBotFrameworkClient();
             await skillClient.postActivity(botId, activeSkill.appId, activeSkill.skillEndpoint, skillsConfig.skillHostEndpoint, endOfConversation.conversation.id, endOfConversation);
         }
     } catch (err) {
@@ -167,7 +168,7 @@ const conversationState = new ConversationState(memoryStorage);
 const conversationIdFactory = new SkillConversationIdFactory(new MemoryStorage());
 
 // Create the skill client.
-const skillClient = botFrameworkAuthentication.createBotFrameworkClient();
+const skillClient = botFrameworkAuthentication;
 
 // Create the main dialog.
 const mainDialog = new MainDialog(skillClient, conversationState, conversationIdFactory, skillsConfig);

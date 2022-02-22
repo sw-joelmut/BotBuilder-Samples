@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityHandler, ActivityTypes, CardFactory } = require('botbuilder');
+const { ActivityHandler, ActivityTypes, MessageFactory } = require('botbuilder');
 const { runDialog } = require('botbuilder-dialogs');
-const WelcomeCard = require('../cards/welcomeCard.json');
 
 class RootBot extends ActivityHandler {
     /**
@@ -33,8 +32,7 @@ class RootBot extends ActivityHandler {
             for (let cnt = 0; cnt < membersAdded.length; cnt++) {
                 // To learn more about Adaptive Cards, see https://aka.ms/msbot-adaptivecards.
                 if (membersAdded[cnt].id !== context.activity.recipient.id) {
-                    const welcomeCard = CardFactory.adaptiveCard(WelcomeCard);
-                    await context.sendActivity({ attachments: [welcomeCard] }, 'Welcome to the Dialog Skill Sample!');
+                    await context.sendActivity(MessageFactory.text('Hello and welcome!'));
                     await runDialog(this.dialog, context, conversationState.createProperty('DialogState'));
                 }
             }

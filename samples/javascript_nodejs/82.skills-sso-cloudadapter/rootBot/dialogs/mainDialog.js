@@ -18,18 +18,18 @@ class MainDialog extends ComponentDialog {
         super(MAIN_DIALOG);
 
         if (!auth) throw new Error('[MainDialog]: Missing parameter \'auth\' is required');
-        this.auth = auth;
+        this.auth = auth.createBotFrameworkClient();
 
         const botId = process.env.MicrosoftAppId;
         if (!botId) throw new Error('[MainDialog]: MicrosoftAppId is not set in configuration');
 
-        const connectionName = process.env.connectionName;
-        if (!connectionName) throw new Error('[MainDialog]: ConnectionName is not set in configuration');
+        this.connectionName = process.env.ConnectionName;
+        if (!this.connectionName) throw new Error('[MainDialog]: ConnectionName is not set in configuration');
 
         // We use a single skill in this example.
         const targetSkillId = 'SkillBot';
-        const ssoSkill = skillsConfig.skills;
-        if (!ssoSkill) throw new Error(`[MainDialog]: Skill with ID ${ targetSkillId } not found in configuration`);
+        this.ssoSkill = skillsConfig.skills[targetSkillId];
+        if (!this.ssoSkill) throw new Error(`[MainDialog]: Skill with ID ${ targetSkillId } not found in configuration`);
 
         this.activeSkillPropertyName = `${ MAIN_DIALOG }.activeSkillProperty`;
 
@@ -37,7 +37,7 @@ class MainDialog extends ComponentDialog {
         // Add ChoicePrompt to render available skills.
         this.addDialog(new ChoicePrompt('ActionStepPrompt'))
         // Add ChoicePrompt to render skill actions.
-            .addDialog(new SsoSignInDialog(connectionName))
+            .addDialog(new SsoSignInDialog(this.connectionName))
         // Add main waterfall dialog for this bot.
             .addDialog(new SkillDialog(this.createSkillDialogOptions(skillsConfig, botId, conversationIdFactory, conversationState), SKILL_DIALOG));
 
@@ -87,9 +87,15 @@ class MainDialog extends ComponentDialog {
      */
     async getPromptOptions(stepContext) {
         const promptChoices = [];
-        const adapter = stepContext.context.adapter;
-        const token = await adapter.getUserToken(stepContext.context, this.connectionName);
-        if (!token) {
+        const userTokenClient = stepContext.context.turnState.get(stepContext.context.adapter.UserTokenClientKey);
+        const tokenResponse = await userTokenClient.getUserToken(
+            stepContext.context.activity.from.id,
+            this.connectionName,
+            stepContext.context.activity.channelId,
+            null
+        );
+
+        if (!tokenResponse || !tokenResponse.token) {
             // User is not signed in.
             promptChoices.push({ value: 'Login to the root bot' });
             // Token exchange will fail when the root is not logged on and the skill should
@@ -106,26 +112,31 @@ class MainDialog extends ComponentDialog {
 
     async handleActionStep(stepContext) {
         // Get the skill info based on the selected skill.
-        const action = stepContext.result.value.toLowerCase;
-        const userId = stepContext.context.activity.from.id;
-        const userTokenClient = stepContext.context.turnState.userTokenClient;
+        const action = stepContext.result.value.toLowerCase();
+        const userTokenClient = stepContext.context.turnState.get(stepContext.context.adapter.UserTokenClientKey);
 
         switch (action) {
             case 'login to the root bot': {
                 return await stepContext.beginDialog(SSO_SIGNIN_DIALOG, null);
             }
             case 'logout from the root bot': {
-                const adapter = stepContext.context.adapter;
-                await adapter.signOutUser(stepContext.context, this.connectionName);
+                const { activity } = stepContext.context;
+                await userTokenClient.signOutUser(activity.from.id, this.connectionName, activity.channelId);
                 await stepContext.context.sendActivity('You have been signed out.');
                 return await stepContext.next();
             }
             case 'show token': {
-                const token = await userTokenClient.getUserToken(userId, this.connectionName, stepContext.context.activity.channelId, null);
-                if (!token) {
+                const tokenResponse = await userTokenClient.getUserToken(
+                    stepContext.context.activity.from.id,
+                    this.connectionName,
+                    stepContext.context.activity.channelId,
+                    null
+                );
+
+                if (!tokenResponse || !tokenResponse.token) {
                     await stepContext.context.sendActivity('User has no cached token.');
                 } else {
-                    await stepContext.context.sendActivity(`Here is your current SSO token: ${ token.Token }`);
+                    await stepContext.context.sendActivity(`Here is your current SSO token: ${ tokenResponse.token }`);
                 }
                 return await stepContext.next();
             }

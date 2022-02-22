@@ -32,7 +32,7 @@ const {
 // This bot's main dialog.
 const { SkillBot } = require('./bots/skillBot');
 const { ActivityRouterDialog } = require('./dialogs/activityRouterDialog');
-const { FlightBookingRecognizer } = require('./dialogs/flightBookingRecognizer');
+const { SsoSaveStateMiddleware } = require('./middleware/ssoSaveStateMiddleware');
 
 const allowedCallers = (process.env.AllowedCallers || '').split(',').filter((val) => val) || [];
 
@@ -139,14 +139,10 @@ adapter.onTurnError = onTurnErrorHandler;
 const memoryStorage = new MemoryStorage();
 const conversationState = new ConversationState(memoryStorage);
 
-// Initialize LUIS Recognizer.
-const { LuisAppId, LuisAPIKey, LuisAPIHostName } = process.env;
-const luisConfig = { applicationId: LuisAppId, endpointKey: LuisAPIKey, endpoint: `https://${ LuisAPIHostName }` };
-
-const luisRecognizer = new FlightBookingRecognizer(luisConfig);
+adapter.use(new SsoSaveStateMiddleware(conversationState));
 
 // Create the activity router dialog.
-const activityRouterDialog = new ActivityRouterDialog(conversationState, luisRecognizer);
+const activityRouterDialog = new ActivityRouterDialog();
 const bot = new SkillBot(conversationState, activityRouterDialog);
 
 // Create HTTP server.

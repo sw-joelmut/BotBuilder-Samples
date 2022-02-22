@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-const { ActivityTypes, CardFactory, CloudSkillHandler, tokenExchangeOperationName, TurnContext } = require('botbuilder');
+const { ActivityEx, ActivityTypes, CardFactory, CloudSkillHandler, tokenExchangeOperationName, TurnContext } = require('botbuilder');
 const { JwtTokenValidation } = require('botframework-connector');
 const { v4 } = require('uuid');
 
@@ -45,7 +45,7 @@ class TokenExchangeSkillHandler extends CloudSkillHandler {
         if (!appId) {
             return null;
         }
-        return Object.values(this.skillsConfig.skills.entries).find(skill => skill.appId === appId);
+        return Object.values(this.skillsConfig.skills).find(skill => skill.appId === appId);
     }
 
     async interceptOAuthCards(claimsIdentity, activity) {
@@ -79,7 +79,7 @@ class TokenExchangeSkillHandler extends CloudSkillHandler {
     }
 
     async sendTokenExchangeInvokeToSkill(incomingActivity, id, token, connectionName, targetSkill) {
-        const activity = incomingActivity.createReply(incomingActivity);
+        const activity = ActivityEx.createReply(incomingActivity);
         activity.type = ActivityTypes.Invoke;
         activity.name = tokenExchangeOperationName;
         activity.value = {
