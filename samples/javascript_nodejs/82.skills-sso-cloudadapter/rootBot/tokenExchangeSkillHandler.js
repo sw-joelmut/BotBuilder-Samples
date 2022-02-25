@@ -9,8 +9,8 @@ const { v4 } = require('uuid');
  * A specialized import('botbuilder').CloudSkillHandler} that can handle token exchanges for SSO.
  */
 class TokenExchangeSkillHandler extends CloudSkillHandler {
-    constructor(adapter, bot, conversationIdFactory, auth, skillsConfiguration, logger = null) {
-        super(adapter, bot, conversationIdFactory, auth);
+    constructor(adapter, logic, conversationIdFactory, auth, skillsConfiguration, logger = null) {
+        super(adapter, logic, conversationIdFactory, auth);
         if (!adapter) throw new Error('[TokenExchangeSkillHandler]: Missing parameter \'adapter\' is required');
         if (!auth) throw new Error('[TokenExchangeSkillHandler]: Missing parameter \'auth\' is required');
         if (!conversationIdFactory) throw new Error('[TokenExchangeSkillHandler]: Missing parameter \'conversationIdFactory\' is required');

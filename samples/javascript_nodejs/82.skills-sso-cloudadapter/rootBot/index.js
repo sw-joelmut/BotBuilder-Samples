@@ -193,7 +193,7 @@ server.post('/api/messages', async (req, res) => {
 });
 
 // Create and initialize the skill classes.
-const handler = new TokenExchangeSkillHandler(adapter, bot, conversationIdFactory, skillClient, skillsConfig);
+const handler = new TokenExchangeSkillHandler(adapter, (context) => bot.run(context), conversationIdFactory, skillClient, skillsConfig);
 const skillEndpoint = new ChannelServiceRoutes(handler);
 skillEndpoint.register(server, '/api/skills');
 
